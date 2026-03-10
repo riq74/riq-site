@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Nosso começo",
+    "text": "Nossa primeira fotinha juntos.",
+    "image": "data/comeco.jpg",
+    "imageLabel": ""
+  },
+  {
+    "title": "Memória favorita",
+    "text": "Minha menininha se tornando uma Mulher.",
+    "image": "data/importante.jpg",
+    "imageLabel": ""
+  },
+  {
+    "title": "Próxima aventura",
+    "text": "Qual vai ser nossa proxima aventura?",
+    "image": "data/aventura.jpg",
+    "imageLabel": ""
+  }
+]
