@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>riq.ia.br</title>
+  <meta name="description" content="Sou o Riq. Resolvo problemas com tecnologia, do código à mecânica." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────────────────────────────────────
+       TOKENS
+    ───────────────────────────────────────── */
+    :root {
+      --bg:           #0E0F13;
+      --surface:      #13151B;
+      --surface-high: #1A1D26;
+      --border:       #1E2130;
+      --border-hover: #2A2E40;
+      --amber:        #E8943A;
+      --cyan:         #4ECDC4;
+      --text:         #E2E4EA;
+      --muted:        #525869;
+      --muted-light:  #8891A8;
+      --white:        #F0EEE9;
+
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-mono:  'DM Mono', 'Courier New', monospace;
+    }
+
+    /* ─────────────────────────────────────────
+       RESET
+    ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-serif);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: #E8943A30; }
+
+    /* ─────────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────────── */
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp  {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+    @keyframes pulse-ring {
+      0%   { transform: translate(-50%,-50%) scale(1); opacity: .5; }
+      100% { transform: translate(-50%,-50%) scale(2.6); opacity: 0; }
+    }
+
+    /* ─────────────────────────────────────────
+       LAYOUT
+    ───────────────────────────────────────── */
+    .wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      padding-top: clamp(72px, 13vw, 120px);
+      padding-bottom: clamp(56px, 9vw, 96px);
+      animation: fadeIn .8s ease both;
+    }
+
+    .hero-mark {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .hero-domain {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 4px;
+    }
+
+    .hero-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 4.5vw, 32px);
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--white);
+      max-width: 480px;
+      margin-bottom: 16px;
+      letter-spacing: -.4px;
+    }
+
+    .hero-sub {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted-light);
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .hero-motivation {
+      border-left: 2px solid #E8943A40;
+      padding-left: 16px;
+      max-width: 460px;
+    }
+
+    .hero-motivation p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .hero-motivation em {
+      color: var(--muted-light);
+      font-style: italic;
+    }
+
+    /* ─────────────────────────────────────────
+       DIVIDER
+    ───────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--border) 60%, transparent);
+      margin-bottom: clamp(40px, 7vw, 64px);
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION HEADER
+    ───────────────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--muted);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-count {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    /* ─────────────────────────────────────────
+       PROJECTS GRID
+    ───────────────────────────────────────── */
+    .projects {
+      margin-bottom: clamp(48px, 8vw, 80px);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+    }
+
+    /* ─────────────────────────────────────────
+       CARD
+    ───────────────────────────────────────── */
+    .card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease,
+                  background .25s ease, border-color .25s ease;
+      animation: fadeUp .5s ease both;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      background: var(--surface-high);
+    }
+
+    .card-preview {
+      height: 130px;
+      background: var(--surface-high);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle dot grid */
+    .card-preview::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, #ffffff08 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .card-glow {
+      position: absolute;
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      filter: blur(24px);
+      opacity: .04;
+      transition: opacity .3s;
+    }
+
+    .card:hover .card-glow { opacity: .12; }
+
+    .card-url {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      position: relative;
+      transition: color .25s;
+    }
+
+    .card:hover .card-url { color: var(--muted-light); }
+
+    .card-arrow {
+      position: absolute;
+      top: 10px; right: 10px;
+      color: var(--muted);
+      opacity: 0;
+      transition: opacity .25s, color .25s;
+    }
+
+    .card:hover .card-arrow {
+      opacity: 1;
+    }
+
+    .card-tag {
+      position: absolute;
+      bottom: 8px; left: 12px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: .6;
+    }
+
+    .card-body {
+      padding: 14px 16px 18px;
+    }
+
+    .card-name {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -.2px;
+      transition: color .2s;
+    }
+
+    .card:hover .card-name { color: var(--white); }
+
+    .card-desc {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted-light);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* ─────────────────────────────────────────
+       EM BREVE
+    ───────────────────────────────────────── */
+    .soon {
+      margin-bottom: clamp(48px, 8vw, 80px);
+    }
+
+    .soon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .soon-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 16px;
+      opacity: .4;
+    }
+
+    .soon-card-tag {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .soon-card-name {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .soon-caption {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 460px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-credit {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .footer-credit span { color: var(--muted-light); }
+
+    .footer-credit small {
+      font-size: 9px;
+      opacity: .4;
+      display: block;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      transition: color .2s;
+    }
+
+    .social-link:hover { color: var(--muted-light); }
+
+    .social-link svg {
+      flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .grid, .soon-grid {
+        grid-template-columns: 1fr;
+      }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- ── HERO ───────────────────────────── -->
+    <section class="hero">
+
+      <!-- mark + domain -->
+      <div class="hero-mark">
+        <!-- SVG mark (monograma RIQ) -->
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- circle (Q body) -->
+          <circle cx="21" cy="21" r="16"
+            stroke="#F0EEE9" stroke-width="2.2" stroke-linecap="round"
+            stroke-dasharray="89.5 12.2"
+            stroke-dashoffset="3.4"
+            transform="rotate(135 21 21)" />
+          <!-- stem (I / R vertical) -->
+          <rect x="18.7" y="9.9" width="2.3" height="24.2" rx="0.5" fill="#F0EEE9" />
+          <!-- bowl (R arc) -->
+          <path d="M18.7 9.9 Q30 11.4 30 18.8 Q30 23.4 18.7 24.7"
+            fill="none" stroke="#F0EEE9" stroke-width="2.3"
+            stroke-linecap="round" stroke-linejoin="round" />
+          <!-- R leg -->
+          <line x1="25" y1="22" x2="29.5" y2="30.5"
+            stroke="#F0EEE9" stroke-width="2.3" stroke-linecap="round" />
+          <!-- Q tail / accent -->
+          <line x1="27.5" y1="27.5" x2="33" y2="34"
+            stroke="#E8943A" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+        <span class="hero-domain">riq.ia.br</span>
+      </div>
+
+      <!-- headline -->
+      <h1 class="hero-headline">
+        Sou o Riq. Resolvo problemas com tecnologia, do código à mecânica.
+      </h1>
+
+      <!-- sub -->
+      <p class="hero-sub">
+        Este espaço é onde mostro minhas ideias e onde viram coisa real &mdash; sempre entre o digital e o físico. Construo ferramentas, experimentos e soluções, com bastante curiosidade e mais prática do que teoria.
+      </p>
+
+      <!-- motivation -->
+      <div class="hero-motivation">
+        <p>
+          Um hub para tudo que construo &mdash; ferramentas, experimentos e projetos que começaram como
+          <em> "e se eu tentasse?"</em>
+          Criei este espaço para que minhas ideias existam fora da minha cabeça.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ── DIVIDER ─────────────────────────── -->
+    <div class="divider"></div>
+
+    <!-- ── PROJECTS ───────────────────────── -->
+    <section class="projects">
+      <div class="section-header">
+        <span class="section-label">projetos</span>
+        <div class="section-line"></div>
+        <span class="section-count" id="project-count"></span>
+      </div>
+
+      <!-- =====================================================
+           PROJETOS — adicione/edite os cards aqui.
+           Para adicionar: copie um bloco <a class="card">
+           e edite os dados. Simples assim.
+           ===================================================== -->
+      <div class="grid" id="projects-grid">
+
+        <!-- Card: QR Generator -->
+        <a class="card" href="https://riq.ia.br/qr-code" target="_blank" rel="noopener"
+           style="animation-delay: 0s;">
+          <div class="card-preview">
+            <div class="card-glow" style="background: #4ECDC4;"></div>
+            <span class="card-url">riq.ia.br/qr-code</span>
+            <span class="card-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </span>
+            <span class="card-tag" style="color: #4ECDC4;">ferramenta</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">QR Generator</div>
+            <div class="card-desc">Gere QR codes de qualquer link ou texto, de maneira simples e direta.</div>
+          </div>
+        </a>
+
+        <!-- Card: Sudoku -->
+        <a class="card" href="https://riq.ia.br/sudoku" target="_blank" rel="noopener"
+           style="animation-delay: .08s;">
+          <div class="card-preview">
+            <div class="card-glow" style="background: #E8943A;"></div>
+            <span class="card-url">riq.ia.br/sudoku</span>
+            <span class="card-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </span>
+            <span class="card-tag" style="color: #E8943A;">jogo</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Sudoku</div>
+            <div class="card-desc">Jogo de Sudoku com diferentes níveis de dificuldade.</div>
+          </div>
+        </a>
+
+        <!-- Card: Lary -->
+        <a class="card" href="https://riq.ia.br/lary" target="_blank" rel="noopener"
+           style="animation-delay: .16s;">
+          <div class="card-preview">
+            <div class="card-glow" style="background: #d4a0c0;"></div>
+            <span class="card-url">riq.ia.br/lary</span>
+            <span class="card-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </span>
+            <span class="card-tag" style="color: #d4a0c0;">pessoal</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Lary</div>
+            <div class="card-desc">Um espaço especial. Você sabe pra quem é.</div>
+          </div>
+        </a>
+
+        <!-- Card: Remover Fundo -->
+        <a class="card" href="https://riq.ia.br/remover-fundo" target="_blank" rel="noopener"
+           style="animation-delay: .24s;">
+          <div class="card-preview">
+            <div class="card-glow" style="background: #4ECDC4;"></div>
+            <span class="card-url">riq.ia.br/remover-fundo</span>
+            <span class="card-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </span>
+            <span class="card-tag" style="color: #4ECDC4;">ferramenta</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Remover Fundo</div>
+            <div class="card-desc">Remova o fundo de qualquer imagem em segundos, sem instalar nada.</div>
+          </div>
+        </a>
+
+        <!-- Card: Montar Catálogo -->
+        <a class="card" href="https://riq.ia.br/montar-catalogo" target="_blank" rel="noopener"
+           style="animation-delay: .32s;">
+          <div class="card-preview">
+            <div class="card-glow" style="background: #E8943A;"></div>
+            <span class="card-url">riq.ia.br/montar-catalogo</span>
+            <span class="card-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </span>
+            <span class="card-tag" style="color: #E8943A;">ferramenta</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Montar Catálogo</div>
+            <div class="card-desc">Gerador de catálogos de peças automotivas. Organizado, simples, funcional.</div>
+          </div>
+        </a>
+
+        <!--
+          ┌─────────────────────────────────────────┐
+          │  PARA ADICIONAR UM NOVO PROJETO:         │
+          │  Copie o bloco abaixo e edite os dados.  │
+          └─────────────────────────────────────────┘
+
+        <a class="card" href="https://riq.ia.br/SLUG" target="_blank" rel="noopener"
+           style="animation-delay: .40s;">
+          <div class="card-preview">
+            <div class="card-glow" style="background: #4ECDC4;"></div>
+            <span class="card-url">riq.ia.br/SLUG</span>
+            <span class="card-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </span>
+            <span class="card-tag" style="color: #4ECDC4;">ferramenta</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Nome do Projeto</div>
+            <div class="card-desc">Descrição breve do que é e pra que serve.</div>
+          </div>
+        </a>
+        -->
+
+      </div>
+    </section><!-- /projects -->
+
+    <!-- ── EM BREVE ────────────────────────── -->
+    <!--
+      Para usar esta seção: descomente o bloco abaixo
+      e adicione cards com a classe "soon-card".
+      Para esconder: deixe comentado.
+    -->
+    <!--
+    <section class="soon">
+      <div class="section-header">
+        <span class="section-label">em breve</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="soon-grid">
+        <div class="soon-card">
+          <div class="soon-card-tag">ferramenta</div>
+          <div class="soon-card-name">Nome do Projeto</div>
+        </div>
+      </div>
+      <p class="soon-caption">
+        A maioria das coisas aqui nasceu de um problema que quis resolver,
+        ou de uma curiosidade que não quis deixar passar.
+      </p>
+    </section>
+    -->
+
+    <!-- caption always visible -->
+    <p style="
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 460px;
+      font-style: italic;
+      font-weight: 300;
+      margin-bottom: clamp(48px, 8vw, 80px);
+    ">
+      A maioria das coisas aqui nasceu de um problema que quis resolver,
+      ou de uma curiosidade que não quis deixar passar.
+    </p>
+
+    <!-- ── FOOTER ──────────────────────────── -->
+    <footer>
+      <div class="footer-credit">
+        feito por <span>riq</span>
+        <small>riq.ia.br</small>
+      </div>
+
+      <div class="social-links">
+        <a class="social-link" href="https://instagram.com/riq74_" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+          </svg>
+          @riq74_
+        </a>
+        <a class="social-link" href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+          henrique-coelho01
+        </a>
+      </div>
+    </footer>
+
+  </div><!-- /wrapper -->
+
+  <script>
+    // Conta projetos e atualiza o label
+    const grid  = document.getElementById('projects-grid');
+    const count = document.getElementById('project-count');
+    if (grid && count) {
+      const n = grid.querySelectorAll('.card').length;
+      count.textContent = String(n).padStart(2, '0');
+    }
+  </script>
+
+</body>
+</html>
