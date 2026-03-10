@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Linha do tempo do aniversário de namoro da Lary, com mensagens surpresa e contagem até 2040." />
+    <meta name="theme-color" content="#d90429" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Lary | Nosso namoro" />
+    <meta property="og:description" content="Timeline de 2022 até 2040 com comemorações e contagem regressiva." />
+    <title>Lary | Nosso namoro</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo-principal">Pular para conteúdo</a>
+
+    <header class="topbar" aria-label="Topo do site">
+      <div class="topbar__brand">🌻 Site para a melhor mulher desse mundo, Lary ❤️</div>
+      <nav aria-label="Navegação principal">
+        <a class="topbar__link" href="lary.html" aria-current="page">Lary</a>
+      </nav>
+    </header>
+
+    <main class="page" id="conteudo-principal">
+      <section class="hero" aria-labelledby="titulo-principal">
+        <p class="hero__eyebrow">Feito com carinho por Riq ❤️</p>
+        <h1 id="titulo-principal">Contador do nosso aniversário de namoro 🌹</h1>
+        <p class="hero__description">
+          Nossa data especial <strong>07 de março</strong>. Criei para a gente ir acompanhando nossa data e algumas memorias. 
+        </p>
+        <p class="hero__next" id="next-anniversary" aria-live="polite"></p>
+      </section>
+
+      <section class="message-wheel" aria-labelledby="mensagem-aleatoria-titulo">
+        <div class="message-wheel__header">
+          <h2 id="mensagem-aleatoria-titulo">Mensagem surpresa <a href="data/download.jpg" style="text-decoration: none;">🤭</a></h2>
+          <button class="btn" id="draw-message-btn" type="button" aria-describedby="message-status">
+            Pegar uma mensagem
+          </button>
+        </div>
+        <div class="message-wheel__result" id="message-status" role="status" aria-live="polite">
+          Clique para sortear uma mensagem bonitinha 
+        </div>
+      </section>
+
+      <section class="timeline" aria-labelledby="timeline-title">
+        <h2 id="timeline-title">Nossa Linha do tempo</h2>
+        <div class="timeline__grid" id="timeline-grid"></div>
+        <button class="btn btn--ghost" id="toggle-future-btn" type="button" aria-expanded="false">
+          Exibir mais datas
+        </button>
+      </section>
+
+      <section class="memories" aria-labelledby="memories-title">
+        <h2 id="memories-title">Nossas Memorias</h2>
+        <div class="memories__grid" id="memories-grid"></div>
+      </section>
+    </main>
+
+    <script type="module" src="lary.js"></script>
+  </body>
+</html>
