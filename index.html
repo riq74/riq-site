@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>riq.ia.br</title>
-  <meta name="description" content="Sou o Riq. Resolvo problemas com tecnologia, do código à mecânica." />
+  <title>Site do Riq</title>
+  <meta name="description" content="Oi eu sou o Riq e esse é meu site." />
 
   <!-- Fonts -->
+  <link rel="icon" type="image/png" sizes="32x32" href="Logo-RIQ-S-Fundo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─────────────────────────────────────────
-       TOKENS
-    ───────────────────────────────────────── */
+
     :root {
       --bg:           #0E0F13;
       --surface:      #13151B;
@@ -49,7 +48,7 @@
     ::selection { background: #E8943A30; }
 
     /* ─────────────────────────────────────────
-       ANIMATIONS
+       ANIMAÇÕES
     ───────────────────────────────────────── */
     @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
     @keyframes fadeUp  {
@@ -174,7 +173,7 @@
     }
 
     /* ─────────────────────────────────────────
-       PROJECTS GRID
+       PROJETOS GRID
     ───────────────────────────────────────── */
     .projects {
       margin-bottom: clamp(48px, 8vw, 80px);
@@ -187,7 +186,7 @@
     }
 
     /* ─────────────────────────────────────────
-       CARD
+       CARD'S
     ───────────────────────────────────────── */
     .card {
       display: block;
@@ -393,7 +392,7 @@
     }
 
     /* ─────────────────────────────────────────
-       RESPONSIVE
+       RESPONSIVIDADE
     ───────────────────────────────────────── */
     @media (max-width: 480px) {
       .grid, .soon-grid {
@@ -415,44 +414,34 @@
 
       <!-- mark + domain -->
       <div class="hero-mark">
-        <!-- SVG mark (monograma RIQ) -->
-        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- circle (Q body) -->
-          <circle cx="21" cy="21" r="16"
-            stroke="#F0EEE9" stroke-width="2.2" stroke-linecap="round"
-            stroke-dasharray="89.5 12.2"
-            stroke-dashoffset="3.4"
-            transform="rotate(135 21 21)" />
-          <!-- stem (I / R vertical) -->
-          <rect x="18.7" y="9.9" width="2.3" height="24.2" rx="0.5" fill="#F0EEE9" />
-          <!-- bowl (R arc) -->
-          <path d="M18.7 9.9 Q30 11.4 30 18.8 Q30 23.4 18.7 24.7"
-            fill="none" stroke="#F0EEE9" stroke-width="2.3"
-            stroke-linecap="round" stroke-linejoin="round" />
-          <!-- R leg -->
-          <line x1="25" y1="22" x2="29.5" y2="30.5"
-            stroke="#F0EEE9" stroke-width="2.3" stroke-linecap="round" />
-          <!-- Q tail / accent -->
-          <line x1="27.5" y1="27.5" x2="33" y2="34"
-            stroke="#E8943A" stroke-width="2.5" stroke-linecap="round" />
-        </svg>
-        <span class="hero-domain">riq.ia.br</span>
+        <img
+          src="Logo-RIQ-S-Fundo .png"
+          alt="riq"
+          width="48"
+          height="48"
+          style="
+            display: block;
+            mix-blend-mode: screen;
+            object-fit: contain;
+          "
+        />
+        <span class="hero-domain">riq</span>
       </div>
 
       <!-- headline -->
       <h1 class="hero-headline">
-        Sou o Riq. Resolvo problemas com tecnologia, do código à mecânica.
+        Sou o Riq. E tento resolver problemas com tecnologia.
       </h1>
 
       <!-- sub -->
       <p class="hero-sub">
-        Este espaço é onde mostro minhas ideias e onde viram coisa real &mdash; sempre entre o digital e o físico. Construo ferramentas, experimentos e soluções, com bastante curiosidade e mais prática do que teoria.
+        Este espaço é onde mostro minhas ideias e faço virarem coisa real | sempre entre o digital e o físico. Construo ferramentas, experimentos e soluções, com bastante curiosidade e mais prática do que teoria.
       </p>
 
       <!-- motivation -->
       <div class="hero-motivation">
         <p>
-          Um hub para tudo que construo &mdash; ferramentas, experimentos e projetos que começaram como
+          Um hub para tudo que construo | ferramentas, experimentos e projetos que começaram como
           <em> "e se eu tentasse?"</em>
           Criei este espaço para que minhas ideias existam fora da minha cabeça.
         </p>
@@ -471,11 +460,6 @@
         <span class="section-count" id="project-count"></span>
       </div>
 
-      <!-- =====================================================
-           PROJETOS — adicione/edite os cards aqui.
-           Para adicionar: copie um bloco <a class="card">
-           e edite os dados. Simples assim.
-           ===================================================== -->
       <div class="grid" id="projects-grid">
 
         <!-- Card: QR Generator -->
@@ -498,7 +482,7 @@
         </a>
 
         <!-- Card: Sudoku -->
-        <a class="card" href="https://riq.ia.br/sudoku" target="_blank" rel="noopener"
+        <a class="card" href="https://riq.ia.br/sudoku" target="paginas/sudoku-game.html" rel="noopener"
            style="animation-delay: .08s;">
           <div class="card-preview">
             <div class="card-glow" style="background: #E8943A;"></div>
@@ -517,7 +501,7 @@
         </a>
 
         <!-- Card: Lary -->
-        <a class="card" href="https://riq.ia.br/lary" target="_blank" rel="noopener"
+        <a class="card" href="https://riq.ia.br/lary" target="paginas/contador-lary/lary.html" rel="noopener"
            style="animation-delay: .16s;">
           <div class="card-preview">
             <div class="card-glow" style="background: #d4a0c0;"></div>
@@ -536,7 +520,7 @@
         </a>
 
         <!-- Card: Remover Fundo -->
-        <a class="card" href="https://riq.ia.br/remover-fundo" target="_blank" rel="noopener"
+        <a class="card" href="https://riq.ia.br/remover-fundo" target="paginas/Removedor-de-fundo-offline.html" rel="noopener"
            style="animation-delay: .24s;">
           <div class="card-preview">
             <div class="card-glow" style="background: #4ECDC4;"></div>
@@ -574,10 +558,6 @@
         </a>
 
         <!--
-          ┌─────────────────────────────────────────┐
-          │  PARA ADICIONAR UM NOVO PROJETO:         │
-          │  Copie o bloco abaixo e edite os dados.  │
-          └─────────────────────────────────────────┘
 
         <a class="card" href="https://riq.ia.br/SLUG" target="_blank" rel="noopener"
            style="animation-delay: .40s;">
@@ -593,7 +573,7 @@
           </div>
           <div class="card-body">
             <div class="card-name">Nome do Projeto</div>
-            <div class="card-desc">Descrição breve do que é e pra que serve.</div>
+            <div class="card-desc">Descrição.</div>
           </div>
         </a>
         -->
@@ -601,13 +581,6 @@
       </div>
     </section><!-- /projects -->
 
-    <!-- ── EM BREVE ────────────────────────── -->
-    <!--
-      Para usar esta seção: descomente o bloco abaixo
-      e adicione cards com a classe "soon-card".
-      Para esconder: deixe comentado.
-    -->
-    <!--
     <section class="soon">
       <div class="section-header">
         <span class="section-label">em breve</span>
@@ -615,13 +588,12 @@
       </div>
       <div class="soon-grid">
         <div class="soon-card">
-          <div class="soon-card-tag">ferramenta</div>
-          <div class="soon-card-name">Nome do Projeto</div>
+          <div class="soon-card-tag">pessoal</div>
+          <div class="soon-card-name">Log</div>
         </div>
       </div>
       <p class="soon-caption">
-        A maioria das coisas aqui nasceu de um problema que quis resolver,
-        ou de uma curiosidade que não quis deixar passar.
+        Breve
       </p>
     </section>
     -->
@@ -645,7 +617,7 @@
     <footer>
       <div class="footer-credit">
         feito por <span>riq</span>
-        <small>riq.ia.br</small>
+        <small>Email: dev@riq.ia.br</small>
       </div>
 
       <div class="social-links">
