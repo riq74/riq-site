@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Partida Remota | Criador RIQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏍️</text></svg>">
+
+<style>
+  :root {
+    --bg: #0c0e14;
+    --bg2: #12151f;
+    --bg3: #1a1e2e;
+    --border: #2a2f45;
+    --amber: #f5a623;
+    --amber2: #ffd166;
+    --red: #ef4444;
+    --green: #22c55e;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(12,14,20,0.97);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    padding: 0 1.5rem;
+    display: flex; align-items: center;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-brand {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--amber); letter-spacing: 2px;
+    white-space: nowrap;
+    padding: 0.9rem 1.25rem 0.9rem 0;
+    border-right: 1px solid var(--border);
+    margin-right: 0.5rem;
+  }
+  nav a {
+    color: var(--text2); text-decoration: none;
+    padding: 0.9rem 0.7rem;
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    white-space: nowrap; transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  nav a:hover { color: var(--amber); border-bottom-color: var(--amber); }
+
+  .hero {
+    background: linear-gradient(135deg, #0c0e14 0%, #131829 50%, #1a1220 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 25% 50%, rgba(245,166,35,0.07) 0%, transparent 55%),
+      radial-gradient(circle at 75% 50%, rgba(239,68,68,0.04) 0%, transparent 55%);
+  }
+  .hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.3rem; font-weight: 700;
+    color: var(--amber); letter-spacing: 2px;
+    position: relative;
+  }
+  .hero .subtitle { color: var(--text2); margin-top: 0.4rem; font-size: 0.95rem; position: relative; }
+  .hero .byline {
+    margin-top: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; color: var(--amber2);
+    position: relative;
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .hero .byline a {
+    color: var(--amber2); text-decoration: none;
+    border-bottom: 1px solid rgba(255, 212, 102, 0.3);
+    transition: border-color 0.2s; display: flex; align-items: center; gap: 0.4rem;
+  }
+  .hero .byline a:hover { border-bottom-color: var(--amber2); }
+  .tags {
+    display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 1rem; position: relative;
+  }
+  .tag {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 4px; padding: 0.2rem 0.6rem;
+    font-size: 0.74rem; color: var(--amber2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  main { max-width: 1060px; margin: 0 auto; padding: 2rem 1.5rem; }
+  section { margin-bottom: 3rem; }
+
+  section h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.55rem; font-weight: 700;
+    color: var(--amber); letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  section h2 .num {
+    font-size: 0.82rem; background: var(--amber); color: #000;
+    width: 1.55rem; height: 1.55rem; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; flex-shrink: 0;
+  }
+  h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--amber2); margin-bottom: 0.7rem; margin-top: 1.4rem;
+    letter-spacing: 0.4px;
+  }
+
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.2rem 1.4rem; margin-bottom: 1rem;
+  }
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem; margin-bottom: 1rem;
+  }
+
+  .box-warn {
+    background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.35);
+    border-radius: 6px; padding: 0.85rem 1rem; margin: 0.9rem 0;
+    font-size: 0.88rem; color: var(--amber2);
+  }
+  .box-warn strong { color: var(--amber); }
+  .box-danger {
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.35);
+    border-radius: 6px; padding: 0.85rem 1rem; margin: 0.9rem 0;
+    font-size: 0.88rem; color: #fca5a5;
+  }
+  .box-danger strong { color: var(--red); }
+  .box-ok {
+    background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.3);
+    border-radius: 6px; padding: 0.85rem 1rem; margin: 0.9rem 0;
+    font-size: 0.88rem; color: #86efac;
+  }
+  .box-ok strong { color: var(--green); }
+  .box-info {
+    background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.3);
+    border-radius: 6px; padding: 0.85rem 1rem; margin: 0.9rem 0;
+    font-size: 0.88rem; color: #bfdbfe;
+  }
+  .box-info strong { color: var(--blue); }
+  .box-purple {
+    background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.3);
+    border-radius: 6px; padding: 0.85rem 1rem; margin: 0.9rem 0;
+    font-size: 0.88rem; color: #ddd6fe;
+  }
+  .box-purple strong { color: var(--purple); }
+
+  .stat-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 0.75rem 0; }
+  .stat {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.5rem 0.9rem;
+    text-align: center; min-width: 105px;
+  }
+  .stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.25rem; font-weight: 500;
+    color: var(--amber); display: block;
+  }
+  .stat .lbl { font-size: 0.7rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .wire-legend { display: flex; gap: 1rem; flex-wrap: wrap; margin: 0.75rem 0; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace; }
+  .wire-item { display: flex; align-items: center; gap: 0.4rem; }
+  .wire-swatch { width: 30px; height: 5px; border-radius: 3px; flex-shrink: 0; }
+
+  .diagram-wrap {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1rem; margin: 1rem 0; overflow-x: auto;
+  }
+  .diagram-wrap svg { display: block; max-width: 100%; height: auto; }
+
+  .steps { counter-reset: step; list-style: none; }
+  .steps li { counter-increment: step; display: flex; gap: 0.8rem; margin-bottom: 0.65rem; font-size: 0.9rem; }
+  .steps li::before {
+    content: counter(step); background: var(--amber); color: #000;
+    font-weight: 700; font-size: 0.72rem;
+    min-width: 1.35rem; height: 1.35rem; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 0.12rem;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; margin: 0.75rem 0; }
+  th { background: var(--bg3); color: var(--amber2); padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; border-bottom: 1px solid var(--border); }
+  td { padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(42,47,69,0.5); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .badge { font-family: 'JetBrains Mono', monospace; background: var(--amber); color: #000; border-radius: 3px; padding: 0.1rem 0.4rem; font-size: 0.76rem; font-weight: 600; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width:640px) { .two-col { grid-template-columns: 1fr; } }
+
+  code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 0.05rem 0.35rem; font-size: 0.82rem; color: var(--amber2); }
+
+  p { margin-bottom: 0.7rem; color: var(--text2); }
+  p strong { color: var(--text); }
+  ul, ol { padding-left: 1.2rem; color: var(--text2); font-size: 0.9rem; }
+  li { margin-bottom: 0.35rem; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  .summary-block {
+    background: linear-gradient(135deg, rgba(245,166,35,0.07), rgba(239,68,68,0.04));
+    border: 1px solid rgba(245,166,35,0.35);
+    border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0;
+  }
+  .summary-block h3 { margin-top: 0; color: var(--amber); font-size: 1.2rem; }
+
+  .disclaimer {
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 8px; padding: 1.4rem 1.5rem;
+    margin-top: 2rem; font-size: 0.88rem; color: #fca5a5;
+    text-align: center; line-height: 2;
+  }
+  .disclaimer strong { color: var(--red); }
+
+  .ig-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    border-radius: 6px; padding: 0.35rem 0.9rem;
+    color: #fff; text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .ig-link:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">⚡Partida pelo Controle</div>
+  <a href="#visao-geral">Visão Geral</a>
+  <a href="#instalacao">LINKS DE COMPRA</a>
+  <a href="#modulo">Módulo RF</a>
+  <a href="#consumo">Consumo Bateria</a>
+  <a href="#mod1">Módulo 1</a>
+  <a href="#mod2">Módulo 2</a>
+  <a href="#embreagem">Embreagem</a>
+  <a href="#neutro">Neutro</a>
+  <a href="#chave-geral">Chave Geral</a>
+  <a href="#fusivel">Fusíveis</a>
+  <a href="#instalacao">Instalação</a>
+</nav>
+
+<div class="hero">
+  <h1>⚡ PARTIDA REMOTA PELO CONTROLE 433 MHz</h1>
+  <p class="subtitle">Guia completo para instalar um sistema de partida remota usando módulos receptor RF com relé</p>
+  <div class="byline">
+    <span>Criado por <strong>RIQ</strong></span>
+    <a href="https://instagram.com/riq74_" target="_blank">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      @riq74_
+    </a>
+  </div>
+  <div class="byline">
+    <a href="https://meli.la/1jYcjws" target="_blank">
+            LINK COM TODOS MATERIAIS USADO NO GUIA 
+    </a>
+
+  </div>
+  <div class="tags">
+    <span class="tag">TAGS:</span>
+    <span class="tag"><a href="https://meli.la/1PJua1X" target="_blank">2 Modulos relé</a></span>
+    <span class="tag"><a href="https://meli.la/2uqP3LL" target="_blank">Controle</a></span>
+    <span class="tag"><a href="https://meli.la/2Qvt3DU" target="_blank">Multímetro</a></span>
+    <span class="tag">Bateria 12V</span>
+    <span class="tag">Guia universal</span>
+  </div>
+</div>
+
+<main>
+
+<!-- VISÃO GERAL -->
+<section id="visao-geral">
+<h2><span class="num">★</span> Visão Geral do Projeto / GUIA</h2>
+
+<p>Este guia ensina como montar um sistema de <strong>partida remota via qualquer controle RF 433 MHz</strong> usando apenas 2 módulos receptores com relé. Compatível com a maioria das motos convencionais e mais comuns <strong>(Honda / Yamaha / Haojue / Shineray)</strong>  sem sistemas complexos de imobilizador eletrônico ou chave codificada.</p>
+
+<div class="summary-block">
+  <h3>🔧 O sistema completo em 4 itens</h3>
+  <div class="card-grid" style="margin:0.75rem 0 0">
+    <div style="background:var(--bg3); border:1px solid rgba(34,197,94,0.3); border-radius:6px; padding:1rem;">
+      <div style="color:var(--green); font-weight:700; margin-bottom:0.4rem; font-family:'Rajdhani',sans-serif; font-size:1.05rem;">MÓDULO 1 — Ignição</div>
+      <p style="margin:0; font-size:0.88rem; color:var(--text2)">Relé em paralelo com a chave de ignição. Liga todo o sistema elétrico da moto remotamente <strong>(como se tivesse com a chave na ignição)</strong>. Alimentado direto na bateria para estar sempre disponível.</p>
+    </div>
+    <div style="background:var(--bg3); border:1px solid rgba(96,165,250,0.3); border-radius:6px; padding:1rem;">
+      <div style="color:var(--blue); font-weight:700; margin-bottom:0.4rem; font-family:'Rajdhani',sans-serif; font-size:1.05rem;">MÓDULO 2 — Partida</div>
+      <p style="margin:0; font-size:0.88rem; color:var(--text2)">Relé em paralelo com o botão de arranque no manete direito. Alimentado pelo fio da luz do <strong>neutro</strong>. Assim só funciona com a moto em ponto morto <strong>(trazendo mais segurança para partida remota)</strong>.</p>
+    </div>
+    <div style="background:var(--bg3); border:1px solid rgba(167,139,250,0.3); border-radius:6px; padding:1rem;">
+      <div style="color:var(--purple); font-weight:700; margin-bottom:0.4rem; font-family:'Rajdhani',sans-serif; font-size:1.05rem;">JUMPER — Embreagem</div>
+      <p style="margin:0; font-size:0.88rem; color:var(--text2)">Um fio curto ou famoso jump nos terminais do sensor da manete de embreagem. Simula a embreagem sempre pressionada. <strong><em>Só necessário em motos que exigem a embreagem para partir.</em></strong></p>
+    </div>
+    <div style="background:var(--bg3); border:1px solid rgba(148,163,184,0.3); border-radius:6px; padding:1rem;">
+      <div style="color:var(--text2); font-weight:700; margin-bottom:0.4rem; font-family:'Rajdhani',sans-serif; font-size:1.05rem;">CHAVE GERAL</div>
+      <p style="margin:0; font-size:0.88rem; color:var(--text2)"><strong><em>Opcional porem recomendado.</em></strong> Interruptor 20Ah no positivo da Bateria. Para corta tudo durante viagens ou quando a moto ficar <strong>parada por muitos dias</strong> assim evitando consumo da bateria.</p>
+    </div>
+  </div>
+  <div class="box-ok" style="margin-top:0.75rem; margin-bottom:0">
+    <strong>✅ Segurança na Partida Remota:</strong> O Módulo 2 só recebe energia quando a luz do neutro está <strong>acesa.</strong> É fisicamente impossível dar partida remota com a moto engrenada se instalado da maneira correta.
+  </div>
+</div>
+
+<div class="box-warn">
+  <strong>⚠️ Compatibilidade:</strong> Funciona em motos com sistema elétrico convencional 12V. <br><br><strong>Não é indicado para motos com imobilizador por transponder, injeção eletrônica complexa ou chave codificada.
+</div>
+</section>
+
+<!-- MÓDULO RF -->
+<section id="modulo">
+<h2><span class="num">1</span> Entendendo o Módulo RF</h2>
+
+<p>O módulo receptor RF 433 MHz com relé recebe o sinal do controle e aciona o relé interno — funcionando como um <strong>interruptor sem fio</strong>. Temos 5 terminais no bloco verde:</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 660 280" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;">
+  <rect x="200" y="20" width="370" height="248" rx="8" fill="#0d3321" stroke="#1a6b40" stroke-width="1.5"/>
+  <line x1="200" y1="76" x2="570" y2="76" stroke="#0f4028" stroke-width="0.5"/>
+  <line x1="200" y1="134" x2="570" y2="134" stroke="#0f4028" stroke-width="0.5"/>
+  <line x1="200" y1="192" x2="570" y2="192" stroke="#0f4028" stroke-width="0.5"/>
+  <line x1="320" y1="20" x2="320" y2="268" stroke="#0f4028" stroke-width="0.5"/>
+  <line x1="440" y1="20" x2="440" y2="268" stroke="#0f4028" stroke-width="0.5"/>
+
+  <!-- Terminal block -->
+  <rect x="200" y="45" width="48" height="195" rx="4" fill="#1a6b30" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="208" y="57" width="32" height="21" rx="3" fill="#0d3321" stroke="#22c55e" stroke-width="1"/>
+  <rect x="208" y="94" width="32" height="21" rx="3" fill="#0d3321" stroke="#22c55e" stroke-width="1"/>
+  <rect x="208" y="131" width="32" height="21" rx="3" fill="#0d3321" stroke="#22c55e" stroke-width="1"/>
+  <rect x="208" y="168" width="32" height="21" rx="3" fill="#0d3321" stroke="#22c55e" stroke-width="1"/>
+  <rect x="208" y="205" width="32" height="21" rx="3" fill="#0d3321" stroke="#22c55e" stroke-width="1"/>
+  <circle cx="224" cy="67" r="5" fill="#334155" stroke="#64748b" stroke-width="0.8"/>
+  <line x1="221" y1="67" x2="227" y2="67" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="224" y1="64" x2="224" y2="70" stroke="#94a3b8" stroke-width="1"/>
+  <circle cx="224" cy="104" r="5" fill="#334155" stroke="#64748b" stroke-width="0.8"/>
+  <line x1="221" y1="104" x2="227" y2="104" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="224" y1="101" x2="224" y2="107" stroke="#94a3b8" stroke-width="1"/>
+  <circle cx="224" cy="141" r="5" fill="#334155" stroke="#64748b" stroke-width="0.8"/>
+  <line x1="221" y1="141" x2="227" y2="141" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="224" y1="138" x2="224" y2="144" stroke="#94a3b8" stroke-width="1"/>
+  <circle cx="224" cy="178" r="5" fill="#334155" stroke="#64748b" stroke-width="0.8"/>
+  <line x1="221" y1="178" x2="227" y2="178" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="224" y1="175" x2="224" y2="181" stroke="#94a3b8" stroke-width="1"/>
+  <circle cx="224" cy="215" r="5" fill="#334155" stroke="#64748b" stroke-width="0.8"/>
+  <line x1="221" y1="215" x2="227" y2="215" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="224" y1="212" x2="224" y2="218" stroke="#94a3b8" stroke-width="1"/>
+
+  <!-- Relay -->
+  <rect x="290" y="155" width="110" height="98" rx="4" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+  <text x="345" y="191" text-anchor="middle" fill="#60a5fa" font-size="9">RELÉ</text>
+  <text x="345" y="205" text-anchor="middle" fill="#93c5fd" font-size="8">SRD-5VDC-SL-C</text>
+  <text x="345" y="218" text-anchor="middle" fill="#64748b" font-size="7">10A 250VAC</text>
+  <text x="345" y="228" text-anchor="middle" fill="#64748b" font-size="7">10A 30VDC</text>
+
+  <!-- Caps -->
+  <rect x="355" y="52" width="28" height="34" rx="13" fill="#1a1a2e" stroke="#64748b" stroke-width="1.5"/>
+  <text x="369" y="73" text-anchor="middle" fill="#94a3b8" font-size="7">470µF</text>
+  <rect x="393" y="57" width="24" height="28" rx="12" fill="#1a1a2e" stroke="#64748b" stroke-width="1.5"/>
+  <text x="405" y="75" text-anchor="middle" fill="#94a3b8" font-size="7">100µF</text>
+  <path d="M 325 50 Q 330 42 335 50 Q 340 58 345 50 Q 350 42 355 50" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="335" y="105" width="40" height="24" rx="2" fill="#1a1a2e" stroke="#475569" stroke-width="1"/>
+  <text x="355" y="120" text-anchor="middle" fill="#64748b" font-size="7">RF RX IC</text>
+
+  <!-- Antenna coil -->
+  <path d="M 540 72 Q 546 55 553 72 Q 560 89 567 72 Q 574 55 561 72 Q 558 82 552 77 Q 546 97 541 117 Q 536 140 540 160 Q 544 180 546 200 Q 548 218 544 240"
+        fill="none" stroke="#94a3b8" stroke-width="3"/>
+  <text x="580" y="108" text-anchor="start" fill="#64748b" font-size="10">ANTENA</text>
+  <text x="580" y="120" text-anchor="start" fill="#64748b" font-size="9">433MHz</text>
+
+  <!-- Learn button -->
+  <rect x="520" y="27" width="20" height="12" rx="2" fill="#334155" stroke="#64748b" stroke-width="1"/>
+  <text x="530" y="21" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="bold">BOTÃO</text>
+  <line x1="530" y1="22" x2="530" y2="27" stroke="#fbbf24" stroke-width="1" opacity="0.5"/>
+
+  <!-- LED -->
+  <circle cx="278" cy="36" r="5" fill="#22c55e" opacity="0.8"/>
+  <text x="278" y="24" text-anchor="middle" fill="#22c55e" font-size="10">LED</text>
+
+  <!-- LEFT LABELS -->
+  <line x1="48" y1="67" x2="200" y2="67" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="43" y="62" text-anchor="end" fill="#60a5fa" font-size="11" font-weight="bold">GND</text>
+  <text x="60" y="79" text-anchor="end" fill="#475569" font-size="8">Negativo 0V</text>
+
+  <line x1="48" y1="104" x2="200" y2="104" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="43" y="99" text-anchor="end" fill="#ef4444" font-size="11" font-weight="bold">VCC</text>
+  <text x="63" y="116" text-anchor="end" fill="#475569" font-size="8">DE 5 a 30V DC</text>
+
+  <line x1="48" y1="141" x2="200" y2="141" stroke="#a78bfa" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="43" y="136" text-anchor="end" fill="#a78bfa" font-size="11" font-weight="bold">NO</text>
+  <text x="67" y="152" text-anchor="end" fill="#475569" font-size="8">Contato Aberto</text>
+
+  <line x1="48" y1="178" x2="200" y2="178" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="43" y="173" text-anchor="end" fill="#f59e0b" font-size="11" font-weight="bold">COM</text>
+  <text x="43" y="186" text-anchor="end" fill="#475569" font-size="8">Comum</text>
+
+  <line x1="48" y1="215" x2="200" y2="215" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="43" y="210" text-anchor="end" fill="#94a3b8" font-size="11" font-weight="bold">NC</text>
+  <text x="72" y="226" text-anchor="end" fill="#475569" font-size="8">Contato Fechado</text>
+</svg>
+<div style="display: flex; justify-content: center;">
+  <a href="https://meli.la/1PJua1X" target="_blank">
+    <img src="https://i.ibb.co/JwPq1cSK/D-NQ-NP-2-X-675798-MLB101080176524-122025-F.webp">
+  </a>
+</div>
+</div>
+
+<div class="card-grid">
+  <div class="card">
+    <h3 style="margin-top:0">⚡ Alimentação</h3>
+    <p>Aceita de 5V até 30V DC (continuo). <br>A bateria de 12V de qualquer moto convencional alimenta direto, sem regulador externo.</p>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">🔌 Contatos do modulo usados neste projeto</h3>
+    <p>Sempre <strong style="color:#f59e0b">COM + NO</strong>. Quando o controle é acionado, o relé fecha esse par, como um interruptor que aciona ao receber o sinal.</p>
+    <ul style="margin-top:0.4rem">
+      <li><strong style="color:#a78bfa">NO:</strong> Aberto em repouso → fecha com sinal =<br>Fica desligado e quando acionado Liga<br></li>
+      <li><strong style="color:#f59e0b">COM:</strong> Terminal comum do relé</li>
+      <li><strong style="color:#94a3b8">NC:</strong> Não utilizado aqui no projeto</li>
+    </ul>
+  </div>
+</div>
+
+<div class="wire-legend">
+  <div class="wire-item"></div>As cores dos fios pode mudar de moto para moto, consulte as cores do chicote da sua moto.</div>
+  <div class="wire-item"><div class="wire-swatch" style="background:#ef4444"></div>+12V constante (bateria)</div>
+  <div class="wire-item"><div class="wire-swatch" style="background:#f97316"></div>+12V pós-chave (só c/ chave ON)</div>
+  <div class="wire-item"><div class="wire-swatch" style="background:#1e293b;border:1px solid #475569"></div>GND / Negativo</div>
+  <div class="wire-item"><div class="wire-swatch" style="background:#eab308"></div>Sinal / relé</div>
+  <div class="wire-item"><div class="wire-swatch" style="background:#22c55e"></div>Fio da luz do neutro</div>
+</div>
+</section>
+
+<!-- CONSUMO -->
+<section id="consumo">
+<h2><span class="num">2</span> Consumo e Duração da Bateria</h2>
+
+<p>Apenas o <strong>Módulo 1</strong> fica sempre ligado. O Módulo 2 é alimentado pela luz do neutro - Sem a moto ligada em ponto morto, <strong>ele não consome nada.</strong></p>
+
+<div class="card-grid">
+  <div class="card">
+    <h3 style="margin-top:0">📊 Consumo do módulo RF</h3>
+    <div class="stat-row">
+      <div class="stat"><span class="val">~10 mA</span><span class="lbl">Standby<br>moto desligada</span></div>
+      <div class="stat"><span class="val">~80 mA</span><span class="lbl">Relé acionado<br>Moto ligada</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">🔋 Exemplo: bateria 12V 6Ah</h3>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; background:var(--bg3); padding:0.8rem; border-radius:6px; line-height:2.1;">
+      <div style="color:#64748b">// Capacidade segura (50% descarga) = </div>
+      <div>6000 mAh × 0,5 = <span style="color:#f5a623">3000 mAh</span></div>
+      <div>3000 ÷ 10 mA = <span style="color:#22c55e">300h +- 13 dias</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="box-ok">
+  <strong>✅ Na prática</strong> qualquer moto de uso diário é recarregada muito antes disso. Para viagens longas, use a Chave Geral na bateria para cortar toda energia.
+</div>
+</section>
+
+<!-- MÓDULO 1 -->
+<section id="mod1">
+<h2><span class="num">3</span> Módulo 1 — Simulando a Chave de Ignição</h2>
+
+<p>A chave de ignição é um interruptor que conecta o positivo da bateria ao sistema elétrico. O relé do Módulo 1 vai <strong>fechar esse mesmo caminho em paralelo</strong> (ligar direto simulando como se tivesse com a chave) quando o controle for acionado.</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 660 185" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace; font-size:9px;">
+  <rect x="20" y="68" width="75" height="52" rx="6" fill="#1a1e2e" stroke="#f59e0b" stroke-width="2"/>
+  <text x="57" y="90" text-anchor="middle" fill="#f59e0b" font-size="9" font-weight="bold">BATERIA</text>
+  <text x="57" y="103" text-anchor="middle" fill="#94a3b8" font-size="8">12V DC</text>
+  <line x1="95" y1="82" x2="165" y2="82" stroke="#ef4444" stroke-width="3"/>
+  <circle cx="165" cy="82" r="4" fill="#ef4444"/>
+  <line x1="165" y1="82" x2="165" y2="50" stroke="#ef4444" stroke-width="3"/>
+  <line x1="165" y1="50" x2="255" y2="50" stroke="#ef4444" stroke-width="3"/>
+  <rect x="255" y="37" width="88" height="26" rx="5" fill="#1a1e2e" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="299" y="50" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="bold">CHAVE</text>
+  <text x="299" y="60" text-anchor="middle" fill="#64748b" font-size="7">IGNIÇÃO</text>
+  <circle cx="268" cy="50" r="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <circle cx="330" cy="50" r="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <line x1="271" y1="50" x2="327" y2="50" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="343" y1="50" x2="420" y2="50" stroke="#f97316" stroke-width="3"/>
+  <line x1="420" y1="50" x2="420" y2="82" stroke="#f97316" stroke-width="3"/>
+  <circle cx="420" cy="82" r="4" fill="#f97316"/>
+  <line x1="420" y1="82" x2="550" y2="82" stroke="#f97316" stroke-width="3"/>
+  <rect x="550" y="63" width="100" height="38" rx="5" fill="#1a1e2e" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="600" y="79" text-anchor="middle" fill="#60a5fa" font-size="9" font-weight="bold">SISTEMA</text>
+  <text x="600" y="92" text-anchor="middle" fill="#60a5fa" font-size="8">ELÉTRICO</text>
+  <line x1="95" y1="118" x2="650" y2="118" stroke="#334155" stroke-width="2.5"/>
+  <line x1="600" y1="101" x2="600" y2="118" stroke="#334155" stroke-width="2"/>
+  <text x="370" y="136" text-anchor="middle" fill="#334155" font-size="7">GND</text>
+  <!-- Relay Module 1 -->
+  <rect x="165" y="142" width="255" height="36" rx="6" fill="rgba(34,197,94,0.08)" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="292" y="159" text-anchor="middle" fill="#22c55e" font-size="9" font-weight="bold">RELÉ MÓDULO 1 — paralelo à chave de ignição</text>
+  <text x="292" y="171" text-anchor="middle" fill="#64748b" font-size="8">COM → positivo constante · NO → saída pós-chave</text>
+  <line x1="195" y1="142" x2="195" y2="82" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <circle cx="195" cy="82" r="4" fill="#22c55e"/>
+  <text x="205" y="114" fill="#22c55e" font-size="8">COM</text>
+  <line x1="390" y1="142" x2="390" y2="82" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <circle cx="390" cy="82" r="4" fill="#22c55e"/>
+  <text x="398" y="114" fill="#22c55e" font-size="8">NO</text>
+  <path d="M 195 82 Q 292 38 390 82" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.5"/>
+  <polygon points="385,77 393,82 385,87" fill="#22c55e" opacity="0.5"/>
+  <text x="292" y="32" text-anchor="middle" fill="#22c55e" font-size="8">↑ relé fecha este caminho ao receber sinal do controle</text>
+  <text x="138" y="78" text-anchor="end" fill="#ef4444" font-size="7">+12V fixo</text>
+  <text x="478" y="78" text-anchor="middle" fill="#f97316" font-size="7">pós-chave →</text>
+</svg>
+</div>
+
+<h3>📍 Identificando os fios da chave de ignição</h3>
+<div class="card">
+  <ul class="steps">
+    <li>Localize o conetor da chave de ignição (geralmente atrás do painel ou farol)</li>
+    <li>Com o<a href="https://meli.la/2Qvt3DU" target="_blank">multímetro</a>em DC ! meça cada fio em relação ao negativo da bateria</li>
+    <li><code>~12V com chave OFF</code> = positivo constante da bateria</li>
+    <li><code>0V com chave OFF</code> e <code>~12V com chave ON</code> = saída pós-chave</li>
+    <li>Relé <strong>COM → positivo constante</strong> · <strong>NO → pós-chave</strong> (bem facil)</li>
+  </ul>
+  <div class="box-warn" style="margin-bottom:0">
+    <strong>⚠️ Cores de fio variam entre marcas e modelos.</strong> Sempre confirme com o multímetro antes de conectar.
+  </div>
+</div>
+</section>
+
+<!-- MÓDULO 2 -->
+<section id="mod2">
+<h2><span class="num">4</span> Módulo 2 — Simulando o Botão de Partida</h2>
+
+<p>O relé do Módulo 2 fica ligado <strong>em paralelo com o botão de arranque no manete direito</strong>. Quando acionado, fecha exatamente o mesmo circuito que o seu dedo fecha ao pressionar o botão. Não toca no relé de arranque, não corre risco de tensão reversa, não modifica nada do sistema original.</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 620 170" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace; font-size:9px;">
+  <!-- Handlebar -->
+  <rect x="20" y="52" width="125" height="68" rx="6" fill="#1a1e2e" stroke="#60a5fa" stroke-width="2"/>
+  <text x="82" y="76" text-anchor="middle" fill="#60a5fa" font-size="10" font-weight="bold">MANETE</text>
+  <text x="82" y="89" text-anchor="middle" fill="#60a5fa" font-size="9">DIREITO</text>
+  <circle cx="63" cy="104" r="4" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+  <circle cx="101" cy="104" r="4" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+  <line x1="67" y1="102" x2="97" y2="102" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="82" y="118" text-anchor="middle" fill="#64748b" font-size="7">BOTÃO START</text>
+  <!-- Wires -->
+  <line x1="145" y1="86" x2="215" y2="86" stroke="#f97316" stroke-width="3"/>
+  <circle cx="215" cy="86" r="4" fill="#f97316"/>
+  <line x1="215" y1="86" x2="340" y2="86" stroke="#f97316" stroke-width="3"/>
+  <circle cx="340" cy="86" r="4" fill="#f97316"/>
+  <line x1="340" y1="86" x2="455" y2="86" stroke="#f97316" stroke-width="3"/>
+  <!-- Starter relay OEM -->
+  <rect x="455" y="65" width="80" height="42" rx="4" fill="#1a1e2e" stroke="#eab308" stroke-width="1.5"/>
+  <text x="495" y="82" text-anchor="middle" fill="#eab308" font-size="9" font-weight="bold">RELÉ OEM</text>
+  <text x="495" y="95" text-anchor="middle" fill="#64748b" font-size="7">ARRANQUE</text>
+  <line x1="495" y1="107" x2="495" y2="130" stroke="#334155" stroke-width="1.5"/>
+  <!-- GND -->
+  <line x1="20" y1="140" x2="600" y2="140" stroke="#334155" stroke-width="2.5"/>
+  <text x="310" y="158" text-anchor="middle" fill="#334155" font-size="7">GND</text>
+  <!-- Module 2 relay -->
+  <rect x="183" y="22" width="190" height="36" rx="6" fill="rgba(96,165,250,0.08)" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="278" y="38" text-anchor="middle" fill="#60a5fa" font-size="9" font-weight="bold">RELÉ MÓDULO 2</text>
+  <text x="278" y="50" text-anchor="middle" fill="#64748b" font-size="8">Em paralelo com o botão do manete</text>
+  <line x1="215" y1="58" x2="215" y2="86" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="222" y="74" fill="#60a5fa" font-size="8">COM</text>
+  <line x1="340" y1="58" x2="340" y2="86" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="347" y="74" fill="#60a5fa" font-size="8">NO</text>
+  <text x="278" y="15" text-anchor="middle" fill="#22c55e" font-size="8">VCC → fio da luz do neutro (seção 6)</text>
+</svg>
+</div>
+
+<h3>📍 Encontrando os fios do botão no manete</h3>
+<div class="card">
+  <ul class="steps">
+    <li>Localize o conetor dos fios dos interruptores do manete direito</li>
+    <li>Com o multímetro em modo continuidade (bip), teste os pares de pinos do conetor</li>
+    <li>O par que fecha continuidade (FIZER O SOM DO BIP) só quando o botão de partida é pressionado = esses são os dois terminais que precisa</li>
+    <li>Conecte Relé <strong>COM</strong> a um fio e o <strong>NO</strong> ao outro fio (não importa o lado)</li>
+  </ul>
+  <div class="box-ok" style="margin-bottom:0">
+    <strong>✅ Vantagem deste método:</strong> Você não toca no relé de arranque OEM, não há risco de tensão reversa, e todos os fusíveis e proteções originais continuam ativos. <BR> A função de ligar a moto no botão continua.
+  </div>
+</div>
+</section>
+
+<!-- EMBREAGEM -->
+<section id="embreagem">
+<h2><span class="num">5</span> Sensor de Embreagem — Jumper Fixo</h2>
+
+<div class="box-purple">
+  <strong>📌 Esta etapa é necessária apenas em motos que exigem a embreagem pressionada para dar a partida.</strong> - Motos sem esse sensor podem pular esta seção completamente.
+</div>
+
+<p>Em motos com esse sistema, existe um sensor simples (dois contatos) na alavanca de embreagem. A solução é instalar um <strong>jumper fixo</strong> — um fio curto nos dois terminais do sensor — simulando a embreagem sempre pressionada.</p>
+
+<div class="two-col">
+  <div class="card" style="border-color:rgba(34,197,94,0.3)">
+    <h3 style="margin-top:0; color:#22c55e">✅ Não faz mal à moto?</h3>
+    <p>Nenhum. O sensor é apenas um interruptor, como se fosse um fio partido no meio que se junta quando aperta a embreagem.  - Nele não passa corrente de carga, não há aquecimento nem desgaste.</p>
+  </div>
+  <div class="card" style="border-color:rgba(245,166,35,0.3)">
+    <h3 style="margin-top:0; color:var(--amber)">⚠️ O que muda no uso manual?</h3>
+    <p>Com o jumper, a moto vai dar partida manualmente sem precisar segurar a embreagem. como já sabe da modificação não terá surpresas. <br><br>No modo remoto, a proteção de só ligar no neutro <a href="#neutro">(seção 6)</a> ainda estará ativa.</p>
+  </div>
+</div>
+
+<h3>📍 Como instalar o jumper</h3>
+<div class="card">
+  <ul class="steps">
+    <li>O sensor fica na alavanca de embreagem (manete esquerdo) ou próximo a ela</li>
+    <li>Siga os fios da manete de embreagem até o conetor</li>
+    <li>Com multímetro em continuidade, confirme: fechado com embreagem pressionada, aberto sem pressionar</li>
+    <li>Desconecte o conetor e instale um jumper (fio curto) nos dois pinos do lado do chicote da moto</li>
+    <li>O sensor original fica intacto — você apenas o ignorou com o fio</li>
+  </ul>
+</div>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 490 118" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace; font-size:9px;">
+  <text x="110" y="18" text-anchor="middle" fill="#64748b" font-size="9">SEM JUMPER (original)</text>
+  <line x1="20" y1="57" x2="78" y2="57" stroke="#f97316" stroke-width="2.5"/>
+  <rect x="78" y="46" width="80" height="22" rx="4" fill="#1a1e2e" stroke="#22c55e" stroke-width="1.5"/>
+  <circle cx="90" cy="57" r="3" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <circle cx="146" cy="57" r="3" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="93" y1="55" x2="140" y2="50" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="118" y="42" text-anchor="middle" fill="#22c55e" font-size="8">SENSOR</text>
+  <line x1="158" y1="57" x2="218" y2="57" stroke="#f97316" stroke-width="2.5"/>
+  <text x="118" y="82" text-anchor="middle" fill="#64748b" font-size="7">abre/fecha com a alavanca</text>
+
+  <line x1="245" y1="15" x2="245" y2="105" stroke="#2a2f45" stroke-width="1"/>
+
+  <text x="370" y="18" text-anchor="middle" fill="#22c55e" font-size="9">COM JUMPER ✅</text>
+  <line x1="265" y1="57" x2="323" y2="57" stroke="#f97316" stroke-width="2.5"/>
+  <rect x="323" y="49" width="28" height="16" rx="3" fill="#1a1e2e" stroke="#475569" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="337" y="59" text-anchor="middle" fill="#475569" font-size="7">orig.</text>
+  <path d="M 351 57 Q 380 27 410 57" fill="none" stroke="#22c55e" stroke-width="2.5"/>
+  <text x="380" y="27" text-anchor="middle" fill="#22c55e" font-size="8">JUMPER</text>
+  <line x1="410" y1="57" x2="470" y2="57" stroke="#f97316" stroke-width="2.5"/>
+  <text x="370" y="82" text-anchor="middle" fill="#22c55e" font-size="7">sempre fechado</text>
+  <text x="370" y="94" text-anchor="middle" fill="#64748b" font-size="7">sensor original intacto</text>
+</svg>
+</div>
+</section>
+
+<!-- NEUTRO -->
+<section id="neutro">
+<h2><span class="num">6</span> Segurança: Fio da Luz do Neutro como energia do Módulo 2</h2>
+
+<p>O Módulo 2 recebe sua alimentação diretamente pelo <strong>fio que acende a luz "N" de ponto morto no painel</strong>. Com isso a Segurança vira automática: <br><em>[A moto tem que ter Luz indicadora de neutro]<br>[E o indicador de neutro funcionando]</em></p>
+
+<div class="card-grid" style="margin:1rem 0">
+  <div class="card" style="border-color:rgba(34,197,94,0.4); background:rgba(34,197,94,0.05)">
+    <div style="font-size:1.8rem; text-align:center; margin-bottom:0.4rem">🟢 N</div>
+    <div style="text-align:center; color:var(--green); font-weight:700; margin-bottom:0.4rem">NEUTRO / PONTO MORTO</div>
+    <p style="text-align:center; margin:0; font-size:0.88rem">Luz N acesa → fio tem energia → Módulo 2 energizado → partida remota funciona <br><strong style="color:#22c55e">PERMITIDA</strong></p>
+  </div>
+  <div class="card" style="border-color:rgba(239,68,68,0.4); background:rgba(239,68,68,0.05)">
+    <div style="font-size:1.8rem; text-align:center; margin-bottom:0.4rem">⚫ —</div>
+    <div style="text-align:center; color:var(--red); font-weight:700; margin-bottom:0.4rem">MOTO ENGRENADA</div>
+    <p style="text-align:center; margin:0; font-size:0.88rem">Luz N apagada → fio sem energia → Módulo 2 sem energia → partida remota <strong style="color:#ef4444">IMPOSSÍVEL</strong></p>
+  </div>
+</div>
+
+<div class="box-ok">
+  <strong>✅ Proteção física, não software.</strong> O módulo literalmente não tem energia para funcionar quando a moto está engrenada. Não tem como ser contornado pelo controle remoto. Sem relé extra, sem componentes adicionais.
+</div>
+
+<h3>📍 Encontrando o fio da luz do neutro</h3>
+<div class="card">
+  <ul class="steps">
+    <li>Ligue a ignição da moto e coloque em neutro -  a luz "N" acende no painel</li>
+    <li>Com o multímetro em DC, localize o fio que mostra ~12V com o neutro e ~0V quando engrenado</li>
+    <li>Este fio sai do sensor de neutro (caixa de câmbio) e vai até o painel de instrumentos</li>
+    <li>Conecte o VCC do Módulo 2 neste fio, com fusível de 1A no fio (se possivel) = mais segurança</li>
+    <li>GND do Módulo 2 vai para a massa normalmente</li>
+  </ul>
+  <div class="box-warn" style="margin-bottom:0">
+    <strong>⚠️ Teste antes de finalizar:</strong> (Muito raro acontecer, porem teste) <br>Com a moto em neutro e o relé do módulo sendo acionado, verifique se a luz N permanece acesa e estável. Se fraquejar, o fio não tem corrente suficiente — nesse caso, use um transistor NPN (BC547) como intermediário para não sobrecarregar o sensor.<br> Em casos de duvidas leve em um mecânico. <br><em> ou faça do jeitinho brasileiro, veja um tutoraial.</em>
+  </div>
+</div>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 610 188" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace; font-size:9px;">
+  <!-- Neutral sensor -->
+  <rect x="20" y="66" width="98" height="52" rx="5" fill="#1a1e2e" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="69" y="86" text-anchor="middle" fill="#22c55e" font-size="9" font-weight="bold">SENSOR</text>
+  <text x="69" y="99" text-anchor="middle" fill="#22c55e" font-size="9">NEUTRO</text>
+  <text x="69" y="110" text-anchor="middle" fill="#64748b" font-size="7">caixa câmbio</text>
+  <line x1="118" y1="92" x2="194" y2="92" stroke="#22c55e" stroke-width="2.5"/>
+  <circle cx="194" cy="92" r="4" fill="#22c55e"/>
+  <!-- Branch to panel light -->
+  <line x1="194" y1="92" x2="194" y2="52" stroke="#22c55e" stroke-width="2"/>
+  <line x1="194" y1="52" x2="272" y2="52" stroke="#22c55e" stroke-width="2"/>
+  <rect x="272" y="40" width="76" height="24" rx="4" fill="#1a1e2e" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="310" y="52" text-anchor="middle" fill="#22c55e" font-size="9" font-weight="bold">LUZ "N"</text>
+  <text x="310" y="61" text-anchor="middle" fill="#22c55e" font-size="7">PAINEL</text>
+  <!-- Branch to Mod2 -->
+  <line x1="194" y1="92" x2="332" y2="92" stroke="#22c55e" stroke-width="2.5"/>
+  <rect x="318" y="80" width="58" height="14" rx="2" fill="#1a1e2e" stroke="#f59e0b" stroke-width="1"/>
+  <text x="346" y="90" text-anchor="middle" fill="#f59e0b">Fusivel 3</text>
+  <text x="346" y="108" text-anchor="middle" fill="#64748b">1A</text>
+  <line x1="360" y1="92" x2="408" y2="92" stroke="#22c55e" stroke-width="2.5"/>
+  <!-- Module 2 -->
+  <rect x="408" y="68" width="128" height="52" rx="6" fill="#0a1a30" stroke="#3b82f6" stroke-width="2"/>
+  <text x="472" y="89" text-anchor="middle" fill="#60a5fa" font-size="10" font-weight="bold">MÓDULO 2</text>
+  <text x="472" y="102" text-anchor="middle" fill="#64748b" font-size="8">VCC ← luz neutro</text>
+  <text x="472" y="113" text-anchor="middle" fill="#64748b" font-size="7">GND → massa</text>
+  <!-- Output -->
+  <line x1="536" y1="92" x2="590" y2="92" stroke="#eab308" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="568" y="85" fill="#eab308" font-size="7">→ botão</text>
+  <!-- GND -->
+  <line x1="20" y1="152" x2="590" y2="152" stroke="#334155" stroke-width="2.5"/>
+  <line x1="69" y1="118" x2="69" y2="152" stroke="#334155" stroke-width="1.5"/>
+  <line x1="472" y1="120" x2="472" y2="152" stroke="#334155" stroke-width="1.5"/>
+  <text x="300" y="170" text-anchor="middle" fill="#334155" font-size="7">GND</text>
+  <!-- State labels -->
+  <rect x="20" y="175" width="185" height="12" rx="3" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+  <text x="112" y="184" text-anchor="middle" fill="#22c55e" font-size="7">Neutro: ~12V → Módulo 2 LIGADO ✅</text>
+  <rect x="215" y="175" width="215" height="12" rx="3" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+  <text x="322" y="184" text-anchor="middle" fill="#ef4444" font-size="7">Engrenada: ~0V → Módulo 2 SEM ENERGIA ❌</text>
+</svg>
+</div>
+</section>
+
+<!-- CHAVE GERAL -->
+<section id="chave-geral">
+<h2><span class="num">7</span> Chave Geral — Para Viagens e Segurança Extra</h2>
+
+<p>Um interruptor no positivo da bateria que corta tudo: zera o consumo quando parada por muito tempo e impede qualquer acionamento remoto. Ideal para quando a moto ficar parada por muitos dias ou em viagens. <br><br>Duas Opções:</p>
+
+<div class="card-grid">
+  <div class="card" style="border-color:rgba(34,197,94,0.35)">
+    <h3 style="margin-top:0; color:#22c55e">✅ Toggle Switch (recomendado)</h3>
+    <p>Interruptor de <strong>20A ou mais</strong> no fio positivo, após o fusível F1 caso escolha por os 2.</p>
+  </div>
+  <div class="card" style="border-color:rgba(96,165,250,0.35)">
+    <h3 style="margin-top:0; color:#60a5fa">⚡ Fusível, o mais acessível</h3>
+    <p>Posicione o portafusível F1 de 15A onde você consegue alcançar sem desmontar nada. Para viagens, basta tirar o fusível e pronto. Custo zero extra.</p>
+  </div>
+</div>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 560 95" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace; font-size:9px;">
+  <rect x="10" y="28" width="68" height="38" rx="5" fill="#1a1e2e" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="44" y="44" text-anchor="middle" fill="#f59e0b" font-weight="bold">BATERIA</text>
+  <text x="44" y="56" text-anchor="middle" fill="#64748b">12V</text>
+  <line x1="78" y1="40" x2="108" y2="40" stroke="#ef4444" stroke-width="3"/>
+  <rect x="108" y="33" width="28" height="14" rx="2" fill="#1a1e2e" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="122" y="43" text-anchor="middle" fill="#f59e0b">F1</text>
+  <text x="122" y="56" text-anchor="middle" fill="#64748b">15A</text>
+  <line x1="136" y1="40" x2="164" y2="40" stroke="#ef4444" stroke-width="3"/>
+  <rect x="164" y="30" width="62" height="20" rx="3" fill="#1a1e2e" stroke="#94a3b8" stroke-width="2"/>
+  <circle cx="176" cy="40" r="3" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+  <line x1="179" y1="38" x2="216" y2="34" stroke="#94a3b8" stroke-width="2"/>
+  <circle cx="218" cy="40" r="3" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="194" y="61" text-anchor="middle" fill="#94a3b8">CHAVE GERAL</text>
+  <text x="194" y="72" text-anchor="middle" fill="#64748b" font-size="7">20A — escondida</text>
+  <line x1="226" y1="40" x2="268" y2="40" stroke="#ef4444" stroke-width="3"/>
+  <circle cx="268" cy="40" r="4" fill="#ef4444"/>
+  <line x1="268" y1="40" x2="268" y2="22" stroke="#ef4444" stroke-width="2"/>
+  <rect x="253" y="12" width="28" height="14" rx="2" fill="#1a1e2e" stroke="#f59e0b" stroke-width="1"/>
+  <text x="267" y="22" text-anchor="middle" fill="#f59e0b">F2 1A</text>
+  <line x1="267" y1="12" x2="320" y2="12" stroke="#ef4444" stroke-width="2"/>
+  <rect x="320" y="5" width="68" height="16" rx="3" fill="#0d2b1a" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="354" y="16" text-anchor="middle" fill="#22c55e" font-size="8">MÓDULO 1</text>
+  <line x1="268" y1="40" x2="440" y2="40" stroke="#ef4444" stroke-width="3"/>
+  <rect x="440" y="30" width="58" height="20" rx="3" fill="#1a1e2e" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="469" y="41" text-anchor="middle" fill="#60a5fa" font-size="8" font-weight="bold">CHAVE</text>
+  <text x="469" y="51" text-anchor="middle" fill="#64748b" font-size="7">IGNIÇÃO</text>
+  <line x1="498" y1="40" x2="548" y2="40" stroke="#f97316" stroke-width="3"/>
+  <text x="530" y="33" text-anchor="middle" fill="#f97316" font-size="7">pós-chave</text>
+  <line x1="44" y1="66" x2="530" y2="66" stroke="#334155" stroke-width="2"/>
+  <text x="280" y="82" text-anchor="middle" fill="#334155" font-size="7">GND</text>
+</svg>
+</div>
+
+<div class="box-danger">
+  <strong>❌ Nunca corte o Negativo / GND.</strong> Sempre interrompa o fio positivo. Cortar o negativo pode gerar diferenças de potencial perigosas no sistema elétrico.
+</div>
+</section>
+
+<!-- FUSÍVEIS -->
+<section id="fusivel">
+<h2><span class="num">8</span> Proteção com Fusíveis</h2>
+
+<p>O fusível protege o fio, não o dispositivo. Coloque sempre o mais próximo possível da bateria, antes de qualquer derivação.</p>
+
+<table>
+  <tr><th>Fusível</th><th>Posição</th><th>Valor</th><th>Protege</th></tr>
+  <tr>
+    <td><span class="badge">F1</span></td>
+    <td>No positivo da bateria, ≤ 15 cm do terminal</td>
+    <td><span class="badge">15A</span></td>
+    <td>Toda a instalação extra</td>
+  </tr>
+  <tr>
+    <td><span class="badge">F2</span></td>
+    <td>No VCC do Módulo 1, saindo do positivo constante</td>
+    <td><span class="badge">1A</span></td>
+    <td>Módulo 1 e seu fio</td>
+  </tr>
+  <tr>
+    <td><span class="badge">F3</span></td>
+    <td>No VCC do Módulo 2, saindo do fio da luz do neutro</td>
+    <td><span class="badge">1A</span></td>
+    <td>Módulo 2 e seu fio</td>
+  </tr>
+</table>
+
+<div class="box-ok">
+  <strong>✅ Use fusíveis lâmina (blade fuse)</strong> — os mesmos de carro. Portafusíveis inline com tampa são ideais. Guarde alguns de reserva dos mesmos valores.
+</div>
+</section>
+
+<!-- INSTALAÇÃO -->
+<section id="instalacao">
+<h2><span class="num">9</span> Guia de Instalação</h2>
+
+<div class="two-col">
+  <div>
+    <h3>🛠️ Ferramentas</h3>
+    <ul>
+      <li><span class="tag"><a href="https://meli.la/2Qvt3DU" target="_blank">Multímetro digital</a></span></li>
+      <li><span class="tag"><a href="https://meli.la/2eTsg5w" target="_blank">Alicate decapagem</a> (ajuda desemcapar fio)</span></li>
+      <li><span class="tag"><a href="https://meli.la/2g5GJNH" target="_blank">Kit Fio varias cores 0,5 mm</a></span></li>
+      <li><span class="tag"><a href="https://meli.la/2kCg8qD" target="_blank">Termo Retratil</a> (Otimo para vedar da chuva)</span> </li>
+      <li><span class="tag">ou Fita isolante</span></li>
+      <li><span class="tag">Abraçadeiras / enforca gato</span></li>
+    </ul>
+  </div>
+  <div>
+    <h3>📦 Materiais</h3>
+    <ul>
+      <li><span class="tag"><a href="https://meli.la/1wajpe4" target="_blank">2× Módulos receptor RF 433MHz c/ relé</a></span></li>
+      <li><span class="tag"><a href="https://meli.la/28HzHgm" target="_blank">1× Chave Geral</a></span></li>
+      <li><span class="tag"><a href="https://meli.la/2ae2Zf4" target="_blank">Fusíveis: 1× 15A, 2× 1A</a></span></li>
+      <li><span class="tag">3× Portafusível inline</span></li>
+    </ul>
+  </div>
+</div>
+
+<h3>📋 Sequência de instalação</h3>
+<ol class="steps">
+  <li><strong>Desconecte a bateria</strong> antes de qualquer trabalho elétrico</li>
+  <li>Identifique e <strong>confirme com o multímetro</strong> todos os fios antes de cortar ou emendar</li>
+  <li>Instale o fusível F1 (15A) direto no positivo da bateria, +- 8 cm do terminal</li>
+  <li>Isole e posicione os módulos RF em local protegido de chuva e vibração (sob o banco / dentro do painel é ótimo)</li>
+  <li>Conecte o Módulo 1: VCC (via F2) → positivo constante · GND → negativo · COM/NO → chave de ignição</li>
+  <li><em>(Se necessário)</em> Instale o jumper nos terminais do sensor de embreagem</li>
+  <li>Conecte o Módulo 2: VCC (via F3) → fio da luz do neutro · GND → neutro · COM/NO → botão arranque no manete</li>
+  <li>Reconecte a bateria e realize os testes abaixo</li>
+  <li>Faça o pareamento dos módulos com o controle (botão LEARN)</li>
+  <li>Proteja todas as emendas e organize os fios com abraçadeiras</li>
+</ol>
+
+<h3>🧪 Sequência de teste</h3>
+<ol class="steps">
+  <li>Acione o Módulo 1 → painel da moto deve ligar (farol, instrumentos)</li>
+  <li>Coloque a moto em ponto morto — a luz "N" deve acender</li>
+  <li>Acione o Módulo 2 → moto deve dar a partida</li>
+  <li>Teste de segurança: Coloque em 1ª marcha e tente acionar o Módulo 2 → não deve partir (luz N apagada = módulo sem energia)</li>
+</ol>
+
+<h3>⚙️ Modos de operação do relé <a href="https://ibb.co/cc5Vwk5g" target="_blank">(Clicando aqui tem as configurações)</a></h3>
+<div class="card-grid">
+  <div class="card" style="border-color:rgba(245,166,35,0.3)">
+    <div style="color:var(--amber); font-weight:700; margin-bottom:0.3rem">Toggle (Alternado)</div>
+    <p style="margin:0">Recomendado para o <strong>Módulo 1</strong>. Cada toque alterna entre ligado e desligado — perfeito para simular a chave de ignição.</p>
+  </div>
+  <div class="card" style="border-color:rgba(96,165,250,0.3)">
+    <div style="color:var(--blue); font-weight:700; margin-bottom:0.3rem">Momentâneo (Jog)</div>
+    <p style="margin:0">Recomendado para o <strong>Módulo 2</strong>. Fecha apenas enquanto o botão é pressionado — simula o dedo no botão de partida.</p>
+  </div>
+</div>
+<div class="box-info">
+  <strong>ℹ️ Trocando o modo:</strong> Consulte o manual do seu módulo. <a href="https://ibb.co/cc5Vwk5g">(Clique aqui)</a>
+</div>
+
+<hr class="divider">
+
+<div class="summary-block">
+  <h3>📊 Resumo Final</h3>
+  <div class="stat-row">
+    <div class="stat"><span class="val">~10 mA</span><span class="lbl">Standby total</span></div>
+    <div class="stat"><span class="val">~13 dias</span><span class="lbl">Bateria s/ uso</span></div>
+    <div class="stat"><span class="val">2 módulos</span><span class="lbl">RF + relé</span></div>
+    <div class="stat"><span class="val">3 fusíveis</span><span class="lbl">Proteção total</span></div>
+  </div>
+  <p style="margin-top:0.75rem; margin-bottom:0; font-size:0.88rem">
+    <strong style="color:var(--text)">Sistema original preservado:</strong> Todos os módulos ficam em paralelo com os circuitos existentes. Nenhum fio original é cortado. A moto continua funcionando normalmente no modo manual.
+  </p>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>⚠️ AVISO IMPORTANTE</strong><br><br>
+  Este é um <strong>guia amador</strong>, criado por mim, um entusiasta com base em experiência prática e pesquisa.<br>
+  Não substitui o trabalho de um profissional qualificado.<br><br>
+  <strong>Recomendo fortemente levar sua moto a um eletricista automotivo ou mecânico especializado<br>
+  em sistemas elétricos para realizar ou revisar a instalação.</strong><br><br>
+  <span style="font-size:0.82rem; color:#94a3b8">O autor não se responsabiliza por danos elétricos, mecânicos ou de qualquer natureza decorrentes da aplicação deste guia.</span>
+</div>
+
+</section>
+</main>
+
+<footer style="background:var(--bg2); border-top:1px solid var(--border); padding:1.5rem 2rem; text-align:center;">
+  <div style="font-family:'Rajdhani',sans-serif; font-size:1.2rem; color:var(--amber); letter-spacing:2px; margin-bottom:0.6rem">
+    Criado por <strong>RIQ</strong>
+  </div>
+  <div style="margin-bottom:0.9rem">
+    <a href="https://instagram.com/riq74_" target="_blank" class="ig-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      instagram.com/riq74_
+    </a>
+  </div>
+    <div style="margin-bottom:0.9rem">
+    <a href="https://meli.la/1jYcjws" target="_blank" class="ig-link">
+      LISTA COMPLETA DE PRODUTOS
+    </a>
+  </div>
+  <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#1e293b">
+    Guia Partida Remota RF 433MHz · SRD-5VDC-SL-C · Para motos com sistema elétrico 12V
+  </div>
+</footer>
+
+</body>
+</html>
