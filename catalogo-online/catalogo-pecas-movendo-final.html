@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo de Peças</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../Logo-RIQ-S-Fundo.png">
+<link rel="stylesheet" href="../shared/theme.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#c0392b;--dark:#1a1a2e;--red2:#16213e}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#e0e0e0;min-height:100vh}
+html[data-theme="dark"] body{background:#0f1117;color:#eef2ff}
+/* TOP BAR */
+#topbar{background:linear-gradient(90deg,var(--dark),var(--red));padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 3px 14px rgba(0,0,0,.35);flex-wrap:wrap;gap:8px}
+.tb-brand{color:#fff;font-weight:900;font-size:17px;letter-spacing:2px;font-family:Georgia,serif}
+.tb-sub{color:rgba(255,255,255,.45);font-size:10px;margin-top:1px}
+.tb-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+#status-text{color:rgba(255,255,255,.75);font-size:10px}
+.btn{border:none;border-radius:5px;padding:5px 13px;cursor:pointer;font-weight:700;font-size:11px;line-height:1.4;transition:opacity .15s}
+.btn:hover{opacity:.85}.btn:disabled{opacity:.5;cursor:default}
+.btn-outline{background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.22)}
+.btn-green{background:#27ae60;color:#fff}
+.btn-red{background:var(--red);color:#fff;min-width:130px;box-shadow:0 2px 8px rgba(192,57,43,.4)}
+.btn-ai{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
+.btn-group{display:flex;border-radius:5px;overflow:hidden;border:2px solid rgba(255,255,255,.22)}
+.btn-group .btn{border-radius:0;border:none;background:rgba(255,255,255,.11);color:#fff}
+.btn-group .btn+.btn{border-left:1px solid rgba(255,255,255,.15)}
+/* TIPS */
+#tips{background:#fff8e1;border-bottom:2px solid #f9a825;padding:5px 18px;font-size:10px;color:#795548;display:flex;gap:14px;flex-wrap:wrap}
+html[data-theme="dark"] #tips{background:#251b0c;border-bottom-color:#8a5a11;color:#f2d29a}
+/* MAIN */
+#pages-wrap{max-width:920px;margin:0 auto;padding:16px 12px}
+/* PAGE BLOCK */
+.page-block{background:#fff;border:2px solid var(--red);border-radius:8px;margin-bottom:24px;overflow:hidden;box-shadow:0 4px 16px rgba(192,57,43,.1)}
+html[data-theme="dark"] .page-block{background:#171a23;box-shadow:0 12px 28px rgba(0,0,0,.3)}
+.page-header{background:linear-gradient(90deg,var(--dark),var(--red2));padding:12px 14px;display:flex;align-items:center;gap:12px;border-bottom:3px solid var(--red)}
+.logo-slot{width:112px;min-width:112px;height:56px;background:rgba(255,255,255,.07);border:2px dashed rgba(192,57,43,.4);border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex-shrink:0}
+.logo-slot img{width:100%;height:100%;object-fit:contain}
+.logo-placeholder{color:rgba(192,57,43,.7);font-size:8.5px;text-align:center;line-height:1.4}
+.header-center{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.header-title-input{width:100%;text-align:center;background:transparent;border:none;border-bottom:2px solid rgba(192,57,43,.4);color:#fff;font-weight:800;font-size:14px;letter-spacing:2px;outline:none;font-family:Georgia,serif;text-transform:uppercase;padding:2px 0}
+.header-subtitle-input{width:80%;text-align:center;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:7.5pt;outline:none;padding:1px 0;letter-spacing:.5px}
+.header-subtitle-input::placeholder{color:rgba(255,255,255,.3)}
+.page-label-bar{background:var(--red);padding:3px 12px;display:flex;justify-content:space-between;align-items:center}
+.page-label-bar span{color:#fff;font-weight:700;font-size:10px;letter-spacing:1px}
+.page-label-bar button{background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:3px;padding:1px 8px;cursor:pointer;font-size:9px}
+/* FILL METER */
+.fill-meter{padding:6px 12px 8px;border-bottom:1px solid rgba(192,57,43,.1)}
+.fill-meter-row1{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:2px}
+.fill-meter-label{font-size:9px;color:#888;font-weight:600;letter-spacing:.5px;text-transform:uppercase;flex-shrink:0}
+.fill-meter-pct{font-size:9px;font-weight:700;flex-shrink:0}
+.fill-meter-detail{font-size:8.5px;color:#999;text-align:center;margin-bottom:4px;min-height:11px}
+.fill-meter-track{height:5px;background:#eee;border-radius:3px;overflow:hidden;margin-bottom:5px}
+html[data-theme="dark"] .fill-meter-track{background:#2b3240}
+.fill-meter-bar{height:100%;border-radius:3px;transition:width .4s,background .4s}
+.fill-meter-warn{display:none;border-radius:5px;padding:6px 10px;line-height:1.5;margin-top:2px;border:2px solid #fca5a5;background:#fff0f0}
+.fill-meter-warn.show{display:block}
+.fill-meter-warn-title{font-size:10px;font-weight:800;color:#c0392b;display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.fill-meter-warn-body{font-size:9px;color:#7f1d1d;line-height:1.6}
+/* PAGE MOVE BUTTONS */
+.page-move-btns{display:flex;gap:4px;align-items:center}
+.page-move-btn{background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:3px;padding:2px 9px;cursor:pointer;font-size:12px;font-weight:700;line-height:1.4}
+.page-move-btn:disabled{opacity:.3;cursor:default}
+.page-move-btn:not(:disabled):hover{background:rgba(255,255,255,.32)}
+
+/* PHOTO PANEL MODAL */
+#photo-panel-modal .modal-box{max-width:760px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;padding:0}
+.pp-header{padding:18px 22px 14px;border-bottom:2px solid rgba(192,57,43,.15);flex-shrink:0}
+.pp-title{font-weight:900;font-size:15px;font-family:Georgia,serif;color:var(--dark);margin-bottom:4px}
+.pp-sub{font-size:10px;color:#888}
+.pp-search-row{display:flex;gap:8px;align-items:center;margin-top:10px}
+.pp-search{flex:1;border:2px solid #ddd;border-radius:6px;padding:6px 10px;font-size:11px;outline:none}
+.pp-search:focus{border-color:var(--red)}
+html[data-theme="dark"] .pp-search{background:#111827;border-color:#374151;color:#eef2ff}
+.pp-count{font-size:10px;color:#aaa;white-space:nowrap}
+.pp-body{overflow-y:auto;padding:14px 22px 18px;flex:1}
+.pp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.pp-card{border:2px solid #e5e5e5;border-radius:8px;overflow:hidden;background:#fafafa;transition:border-color .15s}
+html[data-theme="dark"] .pp-card{border-color:#334155;background:#111827}
+.pp-card:hover{border-color:var(--red)}
+.pp-card-title{background:var(--dark);color:#fff;font-family:Georgia,serif;font-weight:700;font-size:11px;padding:5px 10px;display:flex;justify-content:space-between;align-items:center}
+.pp-card-count{font-size:9px;font-weight:400;opacity:.6}
+.pp-slots{display:flex;gap:0;height:90px}
+.pp-slot{flex:1;position:relative;cursor:pointer;background:#f0f0f0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-right:1px solid #e0e0e0}
+html[data-theme="dark"] .pp-slot{background:#1f2937;border-right-color:#334155}
+.pp-slot:last-child{border-right:none}
+.pp-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.pp-slot-ph{display:flex;flex-direction:column;align-items:center;gap:3px;color:#bbb;font-size:8px}
+.pp-slot-ph span:first-child{font-size:20px}
+.pp-slot-rm{position:absolute;top:3px;right:3px;background:rgba(192,57,43,.85);color:#fff;border:none;border-radius:50%;width:16px;height:16px;cursor:pointer;font-size:8px;padding:0;line-height:16px;text-align:center;z-index:3}
+.pp-footer{padding:10px 22px 14px;border-top:1px solid #eee;flex-shrink:0;display:flex;justify-content:space-between;align-items:center}
+.pp-footer-note{font-size:9.5px;color:#999;line-height:1.5}
+
+/* PAGE ITEMS */
+.page-items{padding:10px}
+.empty-page{text-align:center;padding:22px 0;color:#ccc;font-size:11px;border:2px dashed #eee;border-radius:5px}
+html[data-theme="dark"] .empty-page{color:#94a3b8;border-color:#334155}
+.add-item-btn{width:100%;padding:7px;background:transparent;border:2px dashed var(--red);border-radius:5px;color:var(--red);cursor:pointer;font-weight:700;font-size:11px;letter-spacing:1px;margin-top:4px}
+.add-item-btn:hover{background:rgba(192,57,43,.04)}
+/* ITEM CARD */
+.item-card{display:flex;gap:8px;border:3px solid var(--red);border-radius:6px;overflow:hidden;background:#fff;margin-bottom:7px;box-shadow:0 1px 6px rgba(192,57,43,.12);cursor:grab;transition:opacity .2s}
+html[data-theme="dark"] .item-card{background:#171a23;box-shadow:0 10px 24px rgba(0,0,0,.22)}
+.item-card.dragging{opacity:.4}
+.item-left{width:155px;min-width:155px;display:flex;flex-direction:column;flex-shrink:0}
+.images-container{display:flex;height:88px;overflow:hidden;position:relative;flex:1}
+.img-slot{flex:1;height:100%;position:relative;cursor:pointer;overflow:hidden;background:#f0f0f0}
+html[data-theme="dark"] .img-slot{background:#1f2937}
+.img-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.img-separator{position:absolute;left:50%;top:8%;bottom:8%;width:1px;background:rgba(192,57,43,.3);pointer-events:none;z-index:2}
+.img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#bbb;font-size:8px;gap:2px}
+.img-remove-btn{position:absolute;top:3px;right:3px;background:rgba(192,57,43,.85);color:#fff;border:none;border-radius:50%;width:17px;height:17px;cursor:pointer;font-size:9px;padding:0;line-height:17px;text-align:center;z-index:3}
+.lusar-bar{border-top:2px solid var(--red);padding:4px;display:flex;align-items:center;justify-content:center;gap:4px;background:#fff;flex-shrink:0}
+html[data-theme="dark"] .lusar-bar{background:#111827}
+.lusar-text{color:var(--red);font-weight:900;font-size:13px;letter-spacing:1px;font-family:Georgia,serif}
+.lusar-code{width:58px;border:none;border-bottom:2px solid var(--red);outline:none;font-size:12px;font-weight:800;color:var(--red);background:transparent;text-align:center;font-family:Georgia,serif;padding:0 2px}
+.item-divider{width:2px;background:rgba(192,57,43,.22);flex-shrink:0;align-self:stretch;margin:10% 0}
+/* ITEM FIELDS */
+.item-fields{flex:1;display:flex;flex-direction:column;gap:3px;padding:7px 4px 7px 2px;min-width:0}
+.field-row{display:flex;align-items:center;gap:6px;padding-bottom:3px;flex-wrap:wrap}
+.field-row.border-bottom{border-bottom:1px solid #eee}
+html[data-theme="dark"] .field-row.border-bottom{border-bottom-color:#334155}
+.field-group{display:flex;align-items:center;gap:3px;flex:1;min-width:0}
+.field-label{font-weight:700;font-size:10px;white-space:nowrap;color:var(--dark)}
+.field-input{flex:1;border:none;border-bottom:1.5px solid var(--red);outline:none;font-size:10px;padding:1px 3px;background:transparent;min-width:0;width:0}
+.pipe{color:var(--red);font-weight:700;font-size:10px;flex-shrink:0}
+.radio-label{display:flex;align-items:center;gap:3px;cursor:pointer;font-size:10px;white-space:nowrap}
+.radio-label input{accent-color:var(--red)}
+.aplicacao-area{width:100%;border:1px solid #ddd;border-radius:4px;font-size:6.5pt;padding:3px 5px;resize:vertical;outline:none;background:#fafafa;font-family:inherit}
+.aplicacao-area:focus{border-color:var(--red)}
+html[data-theme="dark"] .field-label{color:#e5e7eb}
+html[data-theme="dark"] .field-input{color:#eef2ff}
+html[data-theme="dark"] .aplicacao-area{border-color:#374151;background:#111827;color:#eef2ff}
+/* ITEM ACTIONS */
+.item-actions{display:flex;flex-direction:column;gap:3px;align-items:center;width:24px;padding:6px 4px 6px 0;flex-shrink:0}
+.act-btn{border:none;border-radius:3px;width:22px;height:22px;cursor:pointer;font-size:11px;line-height:22px;text-align:center;padding:0;display:flex;align-items:center;justify-content:center;transition:opacity .15s}
+.act-btn:hover{opacity:.8}.act-btn:disabled{background:#e0e0e0!important;cursor:default;opacity:1}
+.act-btn-dark{background:var(--dark);color:#fff}
+.act-btn-green{background:#27ae60;color:#fff;font-size:13px}
+.act-btn-red{background:var(--red);color:#fff;margin-top:auto}
+.move-select{font-size:9px;border:1px solid var(--red);border-radius:3px;color:var(--red);background:#fff;width:22px;cursor:pointer;padding:0;height:22px;text-align:center}
+html[data-theme="dark"] .move-select{background:#111827}
+/* ADD PAGE */
+#add-page-bottom{max-width:920px;margin:0 auto;padding:0 12px 20px}
+.add-page-btn{width:100%;padding:11px;background:transparent;border:2px dashed var(--red);border-radius:7px;color:var(--red);cursor:pointer;font-weight:800;font-size:12px;letter-spacing:2px}
+.add-page-btn:hover{background:rgba(192,57,43,.04)}
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:12px;padding:24px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal-title{font-weight:900;font-size:15px;margin-bottom:14px;font-family:Georgia,serif;color:var(--dark)}
+html[data-theme="dark"] .modal-box{background:#171a23;color:#eef2ff}
+html[data-theme="dark"] .modal-title{color:#eef2ff}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+.modal-btn{border:none;border-radius:5px;padding:7px 18px;cursor:pointer;font-weight:700;font-size:12px}
+.modal-btn-cancel{background:#eee;color:#333}
+.modal-btn-confirm{background:var(--red);color:#fff}
+.modal-btn-green{background:#27ae60;color:#fff}
+.modal-info{font-size:12px;color:#555;margin-bottom:8px;line-height:1.6}
+.modal-warn{background:#fff8e1;border:1px solid #f9a825;border-radius:5px;padding:7px 12px;font-size:11px;color:#795548;margin-bottom:14px}
+html[data-theme="dark"] .modal-info{color:#cbd5e1}
+html[data-theme="dark"] .modal-btn-cancel{background:#374151;color:#eef2ff}
+html[data-theme="dark"] .modal-warn{background:#251b0c;border-color:#8a5a11;color:#f2d29a}
+/* CROP */
+#crop-canvas{width:100%;height:auto;border-radius:8px;cursor:crosshair;display:block;touch-action:none;user-select:none}
+.crop-actions{display:flex;gap:7px;margin-top:12px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.crop-btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:5px;padding:6px 13px;cursor:pointer;font-size:12px}
+.crop-btn-plain{background:transparent;color:#999;border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:6px 11px;cursor:pointer;font-size:11px}
+.crop-hint{color:rgba(255,255,255,.25);font-size:9.5px;margin-top:8px}
+/* IMPORT JSON */
+#import-modal .modal-box{max-width:640px}
+.import-info{font-size:11px;color:#666;background:#f8f8f8;border-radius:6px;padding:10px 12px;border:1px solid #eee;margin-bottom:12px;line-height:1.7}
+.import-info code{font-size:10px}
+#import-textarea{width:100%;border:2px solid #ddd;border-radius:6px;font-size:11px;font-family:monospace;padding:10px 12px;outline:none;resize:vertical;background:#fafafa;min-height:180px}
+#import-textarea:focus{border-color:var(--red)}
+html[data-theme="dark"] .import-info{color:#cbd5e1;background:#111827;border-color:#334155}
+html[data-theme="dark"] #import-textarea{background:#111827;border-color:#374151;color:#eef2ff}
+#import-error{color:var(--red);font-size:11px;font-weight:600;margin-top:6px;min-height:16px}
+#import-preview{background:#eaf7ea;border:1px solid #27ae60;border-radius:6px;padding:8px 14px;font-size:11px;color:#1a5e1a;font-weight:600;margin-top:6px;display:none}
+/* COMPONENTES LAYOUT */
+.componente-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.comp-item{display:flex;align-items:stretch;background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;min-height:110px}
+.comp-item:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.comp-left{display:flex;flex-direction:column;width:35%;min-width:120px;background:#f8f8f8;border-right:none}
+.comp-img-slot{width:100%;height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;border-bottom:1px solid #eee;overflow:hidden}
+.comp-img-slot img{max-width:100%;max-height:100%;object-fit:contain}
+.comp-lusar-bar{padding:6px 8px;display:flex;flex-direction:column;gap:2px;background:#f0f0f0}
+.comp-lusar-bar .lusar-text{font-size:8px;font-weight:700;color:var(--dark);text-transform:uppercase}
+.comp-lusar-bar .lusar-code{width:100%;border:1px solid #ccc;border-radius:3px;padding:3px 5px;font-size:11px;font-family:monospace}
+.comp-separator{width:1px;background:#ddd;flex-shrink:0}
+.comp-right{flex:1;padding:8px 10px;display:flex;flex-direction:column;gap:6px}
+.comp-field-row{display:flex;align-items:center;gap:6px}
+.comp-field-row .field-label{font-size:9px;font-weight:700;color:var(--dark);white-space:nowrap}
+.comp-field-row .field-input{flex:1;border:1px solid #ddd;border-radius:4px;padding:4px 6px;font-size:10px;outline:none}
+.comp-field-row .field-input:focus{border-color:var(--red)}
+.comp-desc-area{width:100%;border:1px solid #ddd;border-radius:4px;font-size:10px;padding:4px 6px;resize:vertical;outline:none;font-family:inherit;min-height:40px}
+.comp-desc-area:focus{border-color:var(--red)}
+html[data-theme="dark"] .comp-item{background:#171a23;border-color:#334155}
+html[data-theme="dark"] .comp-left{background:#111827}
+html[data-theme="dark"] .comp-img-slot{background:#0f172a;border-bottom-color:#334155}
+html[data-theme="dark"] .comp-lusar-bar{background:#1f2937}
+html[data-theme="dark"] .comp-separator{background:#334155}
+html[data-theme="dark"] .comp-field-row .field-label{color:#e5e7eb}
+html[data-theme="dark"] .comp-field-row .field-input,
+html[data-theme="dark"] .comp-desc-area{background:#111827;border-color:#374151;color:#eef2ff}
+</style>
+</head>
+<body data-home-href="../index.html" data-default-theme="light">
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div>
+    <div class="tb-brand">CATÁLOGO DE PEÇAS</div>
+    <div class="tb-sub" id="topbar-counter">1 pág · 1 item</div>
+  </div>
+   <div class="tb-actions">
+      <span data-theme-slot></span>
+      <span id="status-text"></span>
+      <button class="btn btn-outline" onclick="addPage()">+ Página</button>
+      <button class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.22)" onclick="addPage('componente')">+ Página de Componentes</button>
+      <button class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.22)" onclick="showPhotoPanel()">🖼️ Painel de Fotos</button>
+      <button class="btn btn-green" onclick="showImportModal()">📥 Importar JSON</button>
+      <div class="btn-group">
+        <button class="btn" onclick="saveBackup()">💾 Backup</button>
+        <button class="btn" onclick="document.getElementById('backup-input').click()">📂 Carregar</button>
+        <input type="file" id="backup-input" accept=".catbak,application/json" style="display:none" onchange="loadBackupFile(this)">
+      </div>
+      <button class="btn btn-red" id="pdf-btn" onclick="generatePDF()">⬇️ Baixar PDF</button>
+      <button class="btn" id="docx-btn" style="background:linear-gradient(135deg,#2b579a,#3a7bc8);color:#fff;box-shadow:0 2px 8px rgba(43,87,154,.35);min-width:130px" onclick="generateDOCX()">⬇️ Baixar Word</button>
+    </div>
+</div>
+
+<!-- TIPS -->
+<div id="tips">
+  <span>📥 <b>Importar JSON</b> — 5 peças por página automático</span>
+  <span>📷 Foto abre editor de corte/rotação</span>
+  <span>⎘ Duplicar · ▲▼ Reordenar · ↗ Mover página</span>
+  <span>💾 Backup completo com fotos</span>
+</div>
+
+<!-- PAGES -->
+<div id="pages-wrap">
+  <div id="pages-container"></div>
+  <div id="add-page-bottom">
+    <button class="add-page-btn" onclick="addPage()">+ ADICIONAR NOVA PÁGINA</button>
+  </div>
+</div>
+
+<!-- CROP MODAL -->
+<div class="modal-overlay" id="crop-modal" style="z-index:600;">
+  <div class="modal-box" style="background:#111827;max-width:600px">
+    <div class="modal-title" style="color:#fff">✂️ Editar Imagem</div>
+    <canvas id="crop-canvas" width="560" height="400"></canvas>
+    <div class="crop-actions">
+      <div style="display:flex;gap:6px">
+        <button class="crop-btn" onclick="CE.rotate(-90)">↺ −90°</button>
+        <button class="crop-btn" onclick="CE.rotate(90)">↻ +90°</button>
+        <button class="crop-btn-plain" onclick="CE.resetCrop()">↩ Sem corte</button>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="modal-btn modal-btn-cancel" style="background:#1f2937;color:#aaa" onclick="CE.close()">Cancelar</button>
+        <button class="modal-btn modal-btn-confirm" onclick="CE.confirm()">✓ Usar Imagem</button>
+      </div>
+    </div>
+    <div class="crop-hint">Clique e arraste para criar área de corte · Cantos para redimensionar · Centro para mover</div>
+  </div>
+</div>
+
+<!-- IMPORT JSON MODAL -->
+<div class="modal-overlay" id="import-modal">
+  <div class="modal-box" style="max-width:640px">
+    <div class="modal-title">📥 Importar JSON de Peças</div>
+    <div class="import-info">
+      <b>Estrutura esperada:</b> Objeto JSON onde cada chave é o código da peça.<br>
+      Campos: <code>LUSAR, Marca (opcional), N_Original, Similar, FRAS_LE, LONAFLEX, THERMOID, Freio, Obs, Aplicacao, Descricao (para componentes)</code><br>
+      <span style="color:var(--red);font-weight:700">A cada 5 peças é criada uma nova página automaticamente.</span>
+    </div>
+    <textarea id="import-textarea" oninput="onImportChange()"
+      placeholder='{"900":{"LUSAR":"900","Marca":"FORD, VW","N_Original":"A3222E2111","Similar":"S-614A","FRAS_LE":"FD/87","LONAFLEX":"L-223","Freio":"AR","Obs":"","Aplicacao":"Ford F-12000...'}'>></textarea>
+    <div id="import-error"></div>
+    <div id="import-preview"></div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeImportModal()">Cancelar</button>
+      <button class="modal-btn modal-btn-green" id="import-confirm-btn" disabled onclick="confirmImport()">✓ Importar</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESTORE MODAL -->
+<div class="modal-overlay" id="restore-modal">
+  <div class="modal-box">
+    <div class="modal-title">📂 Restaurar Backup</div>
+    <div class="modal-info" id="restore-info"></div>
+    <div class="modal-warn">⚠️ O trabalho atual será substituído. Continuar?</div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeRestoreModal()">Cancelar</button>
+      <button class="modal-btn modal-btn-confirm" onclick="confirmRestore()">Restaurar</button>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTO PANEL MODAL -->
+<div class="modal-overlay" id="photo-panel-modal">
+  <div class="modal-box" style="max-width:780px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;padding:0">
+    <div class="pp-header">
+      <div class="pp-title">🖼️ Painel de Fotos por Peça</div>
+      <div class="pp-sub">Adicione fotos aqui e elas aparecem em <b>todos os cards</b> com o mesmo código LUSAR automaticamente.</div>
+      <div class="pp-search-row">
+        <input class="pp-search" id="pp-search" type="text" placeholder="Filtrar por código LUSAR..." oninput="ppFilter()">
+        <span class="pp-count" id="pp-count"></span>
+      </div>
+    </div>
+    <div class="pp-body">
+      <div class="pp-grid" id="pp-grid"></div>
+    </div>
+    <div class="pp-footer">
+      <div class="pp-footer-note">📷 Clique em um slot para adicionar foto · Clicar na foto existente substitui · ✕ remove<br>As fotos são aplicadas a <b>todos</b> os cards com o mesmo LUSAR ao fechar.</div>
+      <div class="modal-actions" style="margin-top:10px; width:100%; display:flex; justify-content:flex-end; gap:8px;">
+        <button class="modal-btn modal-btn-cancel" onclick="closePhotoPanelNoSave()">Cancelar</button>
+        <button class="modal-btn modal-btn-confirm" onclick="closePhotoPanel()">✓ Fechar e Aplicar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+'use strict';
+// ═══════════════════════════════════════════════════════
+//  CONSTANTS
+// ═══════════════════════════════════════════════════════
+const RED = '#c0392b';
+const DARK = '#1a1a2e';
+const PDF_W = 2480;
+const PDF_H = 3508;
+const PDF_W_LARGE = 2900;
+const PDF_H_LARGE = 3925;
+const ITEMS_PER_PAGE = 5;
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+const S = {
+  pages: [],
+  drag: { id: null, fromPageId: null },
+  pdfLoading: false,
+};
+
+// ═══════════════════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════════════════
+function gid() { return Math.random().toString(36).substr(2, 9); }
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function defaultItem() {
+  return { id:gid(), images:[null,null], lusarCode:'', nOriginal:'',
+           similar:'', lonasLe:'', lonasLona:'', lonasThermoid:'', obs:'', freio:'Óleo', aplicacao:'', descricao:'' };
+}
+function defaultPage(t, type = 'sapata') {
+  return { id:gid(), headerTitle:t||'SAPATAS DE FREIO A ÓLEO', headerSubtitle:'',
+           pageType: type,
+           leftLogoUrl:null, rightLogoUrl:null, items:[defaultItem()] };
+}
+
+// Normaliza páginas antigas (backward compatibility)
+function normalizePages() {
+  S.pages = S.pages.map(pg => {
+    if (!pg.pageType) pg.pageType = 'sapata';
+    return pg;
+  });
+}
+function getPage(pid) { return S.pages.find(p => p.id === pid); }
+function getItem(pid, iid) { return getPage(pid)?.items.find(it => it.id === iid); }
+function setStatus(msg) { document.getElementById('status-text').textContent = msg; }
+function updateCounter() {
+  const el = document.getElementById('topbar-counter');
+  if (el) el.textContent = `${S.pages.length} pág · ${S.pages.reduce((a,p) => a + p.items.length, 0)} itens`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDERING
+// ═══════════════════════════════════════════════════════
+function renderAll() {
+  const wrap = document.getElementById('pages-container');
+  if (!wrap) return;
+  const fa = document.activeElement;
+  const fid = fa?.dataset?.uid;
+  const fss = fa?.selectionStart, fse = fa?.selectionEnd;
+  wrap.innerHTML = S.pages.map((pg, i) => renderPage(pg, i)).join('');
+  updateCounter();
+  S.pages.forEach(pg => updateFillMeter(pg.id));
+  if (fid) {
+    const el = wrap.querySelector(`[data-uid="${fid}"]`);
+    if (el) { el.focus(); try { if (el.setSelectionRange) el.setSelectionRange(fss, fse); } catch(e){} }
+  }
+}
+
+function renderPage(pg, idx) {
+  const otherPgs = S.pages.filter(p => p.id !== pg.id);
+  const isComponente = (pg.pageType === 'componente');
+  const itemsHTML = isComponente
+    ? pg.items.map((it, i) => renderComponenteItem(it, pg.id, i===0, i===pg.items.length-1)).join('')
+    : pg.items.map((it, i) => renderItem(it, pg.id, i===0, i===pg.items.length-1, (S.pages.filter(p=>p.id!==pg.id)))).join('');
+  const itemsSection = isComponente
+    ? `<div class="page-items componente-grid" id="pi-${pg.id}">
+         ${pg.items.length===0?'<div class="empty-page">Sem componentes. Adicione abaixo.</div>':''}
+         ${itemsHTML}
+         <button class="add-item-btn" onclick="addItem('${pg.id}')">+ ADICIONAR ITEM</button>
+       </div>`
+    : `<div class="page-items" id="pi-${pg.id}">
+         ${pg.items.length === 0 ? '<div class="empty-page">Solte itens aqui ou adicione abaixo</div>' : ''}
+         ${pg.items.map((it, i) => renderItem(it, pg.id, i===0, i===pg.items.length-1, (S.pages.filter(p=>p.id!==pg.id)))).join('')}
+         <button class="add-item-btn" onclick="addItem('${pg.id}')">+ ADICIONAR ITEM</button>
+       </div>`;
+  return `
+<div class="page-block" data-page-id="${pg.id}"
+  ondragover="event.preventDefault()" ondrop="handleDrop(event,'${pg.id}')">
+  <div class="page-header">
+    <div class="logo-slot" onclick="triggerLogo('${pg.id}','left')" title="Logo do Produto">
+      ${pg.leftLogoUrl ? `<img src="${pg.leftLogoUrl}" alt="">` : '<span class="logo-placeholder">Logo<br>Produto</span>'}
+      <input type="file" accept="image/*" id="logo-l-${pg.id}" style="display:none" onchange="onLogoFile(event,'${pg.id}','left')">
+    </div>
+    <div class="header-center">
+      <input class="header-title-input" value="${esc(pg.headerTitle)}"
+        data-uid="htit-${pg.id}" data-page="${pg.id}"
+        oninput="onPageField(this,'headerTitle')" placeholder="Título da página">
+      <input class="header-subtitle-input" value="${esc(pg.headerSubtitle||'')}"
+        data-uid="hsub-${pg.id}" data-page="${pg.id}"
+        oninput="onPageField(this,'headerSubtitle')" placeholder="nome da marca / subtítulo...">
+    </div>
+    <div class="logo-slot" onclick="triggerLogo('${pg.id}','right')" title="Logo da Empresa">
+      ${pg.rightLogoUrl ? `<img src="${pg.rightLogoUrl}" alt="">` : '<span class="logo-placeholder">Logo<br>Empresa</span>'}
+      <input type="file" accept="image/*" id="logo-r-${pg.id}" style="display:none" onchange="onLogoFile(event,'${pg.id}','right')">
+    </div>
+  </div>
+   <div class="page-label-bar">
+     <span>PÁGINA ${idx+1}</span>
+     <div style="display:flex;gap:6px;align-items:center">
+       <div class="page-move-btns">
+         <button class="page-move-btn" ${idx===0?'disabled':''} onclick="movePageUp('${pg.id}')" title="Mover página para cima">▲</button>
+         <button class="page-move-btn" ${idx===S.pages.length-1?'disabled':''} onclick="movePageDown('${pg.id}')" title="Mover página para baixo">▼</button>
+       </div>
+       ${otherPgs.length > 1 ? `
+       <select class="move-select" onchange="if(this.value){movePageTo('${pg.id}',this.value);this.value=''}">
+         <option value="" disabled selected>↗</option>
+         ${otherPgs.map(p => `<option value="${p.id}">P${S.pages.indexOf(p)+1}</option>`).join('')}
+       </select>` : ''}
+       <button onclick="removePage('${pg.id}')">✕ Remover</button>
+     </div>
+   </div>
+  <div class="fill-meter" id="fm-${pg.id}">
+    <div class="fill-meter-row1">
+      <span class="fill-meter-label">Preenchimento PDF</span>
+      <span class="fill-meter-pct" id="fm-txt-${pg.id}" style="color:#27ae60">—</span>
+    </div>
+    <div class="fill-meter-detail" id="fm-det-${pg.id}">calculando...</div>
+    <div class="fill-meter-track"><div class="fill-meter-bar" id="fm-bar-${pg.id}" style="width:0%;background:#27ae60"></div></div>
+    <div class="fill-meter-warn" id="fm-warn-${pg.id}">
+      <div class="fill-meter-warn-title" id="fm-warn-title-${pg.id}"></div>
+      <div class="fill-meter-warn-body" id="fm-warn-body-${pg.id}"></div>
+    </div>
+  </div>
+  ${itemsSection}
+</div>`;
+}
+
+function renderItem(it, pid, isFirst, isLast, otherPgs) {
+  const img0 = it.images[0], img1 = it.images[1];
+  const moveOpts = otherPgs.length > 0 ? `
+    <select class="move-select" onchange="if(this.value){moveToPage('${it.id}','${pid}',this.value);this.value=''}">
+      <option value="" disabled selected>↗</option>
+      ${otherPgs.map(p => `<option value="${p.id}">P${S.pages.indexOf(p)+1}</option>`).join('')}
+    </select>` : '';
+  return `
+<div class="item-card" id="ic-${it.id}" data-item="${it.id}" data-page="${pid}"
+  draggable="true" ondragstart="onDragStart(event,'${it.id}','${pid}')" ondragend="onDragEnd(event)">
+  <div class="item-left">
+    <div class="images-container">
+      <div class="img-slot" id="is-${it.id}-0" onclick="onImgSlotClick(event,'${pid}','${it.id}',0)">
+        ${img0
+          ? `<img src="${img0}" alt=""><button class="img-remove-btn" onclick="event.stopPropagation();setImg('${pid}','${it.id}',0,null)">✕</button>`
+          : `<div class="img-placeholder"><span style="font-size:18px">📷</span><span>Foto 1</span></div>`}
+      </div>
+      <div class="img-separator"></div>
+      <div class="img-slot" id="is-${it.id}-1" onclick="onImgSlotClick(event,'${pid}','${it.id}',1)">
+        ${img1
+          ? `<img src="${img1}" alt=""><button class="img-remove-btn" onclick="event.stopPropagation();setImg('${pid}','${it.id}',1,null)">✕</button>`
+          : `<div class="img-placeholder"><span style="font-size:18px">📷</span><span>Foto 2</span></div>`}
+      </div>
+      <input type="file" accept="image/*" id="ii-${it.id}-0" style="display:none" onchange="onImgFile(event,'${pid}','${it.id}',0)">
+      <input type="file" accept="image/*" id="ii-${it.id}-1" style="display:none" onchange="onImgFile(event,'${pid}','${it.id}',1)">
+    </div>
+    <div class="lusar-bar">
+      <span class="lusar-text">LUSAR</span>
+      <input class="lusar-code" value="${esc(it.lusarCode)}" placeholder="000/000"
+        data-uid="lus-${it.id}" data-item="${it.id}" data-page="${pid}"
+        oninput="onItemField(this,'lusarCode')">
+    </div>
+  </div>
+  <div class="item-divider"></div>
+  <div class="item-fields">
+    <div class="field-row border-bottom">
+      <div class="field-group">
+        <span class="field-label">Nº Original:</span>
+        <input class="field-input" style="flex:1" value="${esc(it.nOriginal)}"
+          data-uid="no-${it.id}" data-item="${it.id}" data-page="${pid}" oninput="onItemField(this,'nOriginal')">
+      </div>
+    </div>
+    <div class="field-row border-bottom" style="flex-wrap:nowrap">
+      <div class="field-group">
+        <span class="field-label">FRAS-LE:</span>
+        <input class="field-input" value="${esc(it.lonasLe)}"
+          data-uid="fl-${it.id}" data-item="${it.id}" data-page="${pid}" oninput="onItemField(this,'lonasLe')">
+      </div>
+      <span class="pipe">|</span>
+      <div class="field-group">
+        <span class="field-label">LONAFLEX:</span>
+        <input class="field-input" value="${esc(it.lonasLona)}"
+          data-uid="lf-${it.id}" data-item="${it.id}" data-page="${pid}" oninput="onItemField(this,'lonasLona')">
+      </div>
+      <span class="pipe">|</span>
+      <div class="field-group">
+        <span class="field-label">THERMOID:</span>
+        <input class="field-input" value="${esc(it.lonasThermoid)}"
+          data-uid="th-${it.id}" data-item="${it.id}" data-page="${pid}" oninput="onItemField(this,'lonasThermoid')">
+      </div>
+    </div>
+    <div class="field-row border-bottom">
+      <span class="field-label">Similar:</span>
+      <input class="field-input" style="flex:1" value="${esc(it.similar||'')}" placeholder="Números similares..."
+        data-uid="si-${it.id}" data-item="${it.id}" data-page="${pid}" oninput="onItemField(this,'similar')">
+    </div>
+     <div class="field-row border-bottom">
+       <label class="radio-label"><input type="radio" data-page="${pid}" data-item="${it.id}" name="fr-${it.id}" value="Óleo" ${it.freio==='Óleo'?'checked':''} onchange="onItemField(this,'freio')"> Freio Óleo</label>
+       <label class="radio-label"><input type="radio" data-page="${pid}" data-item="${it.id}" name="fr-${it.id}" value="Ar" ${it.freio==='Ar'?'checked':''} onchange="onItemField(this,'freio')"> Freio Ar</label>
+       <span class="pipe">|</span>
+       <span class="field-label">OBS:</span>
+       <input class="field-input" style="flex:1" value="${esc(it.obs||'')}" placeholder="Observação..."
+         data-uid="ob-${it.id}" data-item="${it.id}" data-page="${pid}" oninput="onItemField(this,'obs')">
+     </div>
+    <div class="field-row" style="flex-direction:column;align-items:flex-start;gap:2px">
+      <span class="field-label">Aplicação:</span>
+      <textarea class="aplicacao-area" rows="2"
+        data-uid="ap-${it.id}" data-item="${it.id}" data-page="${pid}"
+        oninput="onItemField(this,'aplicacao');schedFM('${pid}')">${esc(it.aplicacao)}</textarea>
+    </div>
+  </div>
+  <div class="item-actions">
+    <button class="act-btn act-btn-dark" ${isFirst?'disabled':''} onclick="moveUp('${pid}','${it.id}')">▲</button>
+    <button class="act-btn act-btn-dark" ${isLast?'disabled':''} onclick="moveDown('${pid}','${it.id}')">▼</button>
+    <button class="act-btn act-btn-green" onclick="copyItem('${pid}','${it.id}')" title="Duplicar">⎘</button>
+    ${moveOpts}
+    <button class="act-btn act-btn-red" onclick="removeItem('${pid}','${it.id}')">✕</button>
+  </div>
+</div>`;
+}
+
+function renderComponenteItem(it, pid, isFirst, isLast) {
+  return `
+<div class="comp-item" data-item="${it.id}" data-page="${pid}" draggable="true" ondragstart="onDragStart(event,'${it.id}','${pid}')" ondragend="onDragEnd(event)">
+  <div class="comp-left">
+    <div class="comp-img-slot" onclick="onImgSlotClick(event,'${pid}','${it.id}',0)">
+      ${it.images[0] ? `<img src="${it.images[0]}" alt="">` : `<div class="img-placeholder" style="height:80px"><span style="font-size:18px">📷</span><span>Foto</span></div>`}
+      <input type="file" accept="image/*" id="ii-${it.id}-0" style="display:none" onchange="onImgFile(event,'${pid}','${it.id}',0)">
+    </div>
+    <div class="comp-lusar-bar">
+      <span class="lusar-text">LUSAR</span>
+      <input class="lusar-code" value="${esc(it.lusarCode)}" placeholder="000/000"
+        data-uid="lus-${it.id}" data-item="${it.id}" data-page="${pid}"
+        oninput="onItemField(this,'lusarCode')">
+    </div>
+  </div>
+  <div class="comp-separator"></div>
+  <div class="comp-right">
+    <div class="comp-field-row">
+      <span class="field-label">Nº Original:</span>
+      <input class="field-input" value="${esc(it.nOriginal)}" placeholder="Nº original..."
+        data-uid="no-${it.id}" data-item="${it.id}" data-page="${pid}" oninput="onItemField(this,'nOriginal')">
+    </div>
+    <div class="comp-field-row">
+      <span class="field-label">Nº Similar:</span>
+      <input class="field-input" value="${esc(it.similar||'')}" placeholder="Nº similar..."
+        data-uid="si-${it.id}" data-item="${it.id}" data-page="${pid}" oninput="onItemField(this,'similar')">
+    </div>
+    <div class="comp-field-row" style="flex-direction:column;align-items:flex-start;gap:2px">
+      <span class="field-label">Descrição:</span>
+      <textarea class="comp-desc-area" rows="2" placeholder="Descrição do componente..."
+        data-uid="desc-${it.id}" data-item="${it.id}" data-page="${pid}"
+        oninput="onItemField(this,'descricao')">${esc(it.descricao||'')}</textarea>
+    </div>
+  </div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  INPUT HANDLERS
+// ═══════════════════════════════════════════════════════
+function onItemField(el, field) {
+  const it = getItem(el.dataset.page, el.dataset.item);
+  if (it) it[field] = el.value;
+}
+function onPageField(el, field) {
+  const pg = getPage(el.dataset.page);
+  if (pg) pg[field] = el.value;
+}
+
+// ═══════════════════════════════════════════════════════
+//  STRUCTURAL MUTATIONS
+// ═══════════════════════════════════════════════════════
+function addPage(template) {
+  let type = 'sapata';
+  
+  if (template === 'componente') {
+    type = 'componente';
+  } else if (template && typeof template === 'object') {
+    type = template.pageType || 'sapata';
+  }
+
+  const pg = defaultPage('SAPATAS DE FREIO A ÓLEO', type);
+  if (S.pages.length > 0) {
+    const tmpl = S.pages[0];
+    pg.headerSubtitle = tmpl.headerSubtitle || '';
+    pg.leftLogoUrl = tmpl.leftLogoUrl;
+    pg.rightLogoUrl = tmpl.rightLogoUrl;
+  }
+  S.pages.push(pg);
+  renderAll();
+  setTimeout(() => document.getElementById(`pi-${pg.id}`)?.scrollIntoView({behavior:'smooth'}), 100);
+}
+function removePage(pid) {
+  if (S.pages.length <= 1) return;
+  if (!confirm('Remover esta página?')) return;
+  S.pages = S.pages.filter(p => p.id !== pid);
+  renderAll();
+}
+function addItem(pid) {
+  const pg = getPage(pid);
+  if (pg) { pg.items.push(defaultItem()); renderAll(); }
+}
+function removeItem(pid, iid) {
+  const pg = getPage(pid);
+  if (pg) { pg.items = pg.items.filter(it => it.id !== iid); renderAll(); }
+}
+function copyItem(pid, iid) {
+  const pg = getPage(pid); if (!pg) return;
+  const idx = pg.items.findIndex(it => it.id === iid); if (idx < 0) return;
+  const copy = { ...JSON.parse(JSON.stringify(pg.items[idx])), id: gid() };
+  pg.items.splice(idx+1, 0, copy);
+  renderAll();
+}
+function moveUp(pid, iid) {
+  const pg = getPage(pid); if (!pg) return;
+  const i = pg.items.findIndex(it => it.id === iid); if (i <= 0) return;
+  [pg.items[i-1], pg.items[i]] = [pg.items[i], pg.items[i-1]];
+  renderAll();
+}
+function moveDown(pid, iid) {
+  const pg = getPage(pid); if (!pg) return;
+  const i = pg.items.findIndex(it => it.id === iid); if (i < 0 || i >= pg.items.length-1) return;
+  [pg.items[i], pg.items[i+1]] = [pg.items[i+1], pg.items[i]];
+  renderAll();
+}
+function moveToPage(iid, fromPid, toPid) {
+  const from = getPage(fromPid), to = getPage(toPid); if (!from || !to) return;
+  const item = from.items.find(it => it.id === iid); if (!item) return;
+  from.items = from.items.filter(it => it.id !== iid);
+  to.items.push(item);
+  renderAll();
+}
+function movePageUp(pid) {
+  const i = S.pages.findIndex(p => p.id === pid); if (i <= 0) return;
+  [S.pages[i-1], S.pages[i]] = [S.pages[i], S.pages[i-1]];
+  renderAll();
+  setTimeout(() => document.querySelector(`[data-page-id="${pid}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest'}), 80);
+}
+function movePageDown(pid) {
+  const i = S.pages.findIndex(p => p.id === pid); if (i < 0 || i >= S.pages.length-1) return;
+  [S.pages[i], S.pages[i+1]] = [S.pages[i+1], S.pages[i]];
+  renderAll();
+  setTimeout(() => document.querySelector(`[data-page-id="${pid}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest'}), 80);
+}
+function movePageTo(pid, targetPid) {
+  if (pid === targetPid) return;
+  const i = S.pages.findIndex(p => p.id === pid);
+  const j = S.pages.findIndex(p => p.id === targetPid);
+  if (i === -1 || j === -1) return;
+  const [pg] = S.pages.splice(i, 1);
+  // Ajusta o índice de destino caso a página tenha sido movida para antes do destino
+  const newJ = S.pages.findIndex(p => p.id === targetPid);
+  S.pages.splice(newJ, 0, pg);
+  renderAll();
+  setTimeout(() => document.querySelector(`[data-page-id="${pid}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest'}), 80);
+}
+
+// ═══════════════════════════════════════════════════════
+//  PHOTO PANEL
+//  — Gathers all unique LUSAR codes across all pages
+//  — Shows 2 image slots per code
+//  — On apply (close), propagates images to every card
+//    that shares the same LUSAR code
+// ═══════════════════════════════════════════════════════
+
+// ppImages: Map<lusarCode, [img0|null, img1|null]>
+// codeTypeMap: Map<lusarCode, 'sapata'|'componente'>
+const PP = { images: new Map(), freioMap: new Map(), codeTypeMap: new Map() };
+
+function showPhotoPanel() {
+  PP.images.clear();
+  PP.freioMap.clear();
+  PP.codeTypeMap.clear();
+  for (const pg of S.pages) {
+    const isComp = (pg.pageType === 'componente');
+    for (const it of pg.items) {
+      const code = (it.lusarCode || '').trim();
+      if (!code) continue;
+      if (!PP.images.has(code)) {
+        PP.images.set(code, [it.images[0] || null, it.images[1] || null]);
+        PP.freioMap.set(code, it.freio || 'Óleo');
+        PP.codeTypeMap.set(code, isComp ? 'componente' : 'sapata');
+      } else {
+        const cur = PP.images.get(code);
+        if (!cur[0] && it.images[0]) cur[0] = it.images[0];
+        if (!cur[1] && it.images[1]) cur[1] = it.images[1];
+      }
+    }
+  }
+  document.getElementById('pp-search').value = '';
+  ppRender();
+  document.getElementById('photo-panel-modal').classList.add('show');
+}
+
+function ppFilter() {
+  ppRender(document.getElementById('pp-search').value.trim().toLowerCase());
+}
+
+function ppRender(filter) {
+  filter = filter || '';
+  const grid  = document.getElementById('pp-grid');
+  const count = document.getElementById('pp-count');
+  const codes = [...PP.images.keys()].filter(c => !filter || c.toLowerCase().includes(filter));
+  codes.sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
+
+  // Count how many cards each code covers
+  const codeCount = new Map();
+  for (const pg of S.pages)
+    for (const it of pg.items) {
+      const c = (it.lusarCode||'').trim();
+      if (c) codeCount.set(c, (codeCount.get(c)||0)+1);
+    }
+
+  count.textContent = codes.length + ' peça(s)';
+  if (codes.length === 0) {
+    grid.innerHTML = '<div style="color:#aaa;font-size:12px;padding:20px 0;text-align:center">Nenhuma peça encontrada.</div>';
+    return;
+  }
+
+   grid.innerHTML = codes.map(code => {
+     const imgs = PP.images.get(code);
+     const n    = codeCount.get(code) || 1;
+     const isComponente = (PP.codeTypeMap.get(code) === 'componente');
+     const currentFreio = PP.freioMap.get(code) || 'Óleo';
+     const slots = [0,1].map(si => {
+       const url = imgs[si];
+       return url
+         ? `<div class="pp-slot" onclick="ppSlotClick('${encodeURIComponent(code)}',${si})">
+              <img src="${url}" alt="">
+              <button class="pp-slot-rm" onclick="event.stopPropagation();ppRemoveSlot('${encodeURIComponent(code)}',${si})">✕</button>
+            </div>`
+         : `<div class="pp-slot" onclick="ppSlotClick('${encodeURIComponent(code)}',${si})">
+              <div class="pp-slot-ph"><span>📷</span><span>Foto ${si+1}</span></div>
+            </div>`;
+     }).join('');
+     const freioRow = isComponente ? '' : `
+        <div class="pp-freio-row" style="padding:8px 10px; border-top:1px solid #eee; display:flex; align-items:center; gap:8px;">
+          <span style="font-size:10px; font-weight:700; color:var(--dark);">Freio:</span>
+          <label class="radio-label" style="font-size:10px;"><input type="radio" name="fr-pp-${code}" value="Óleo" ${currentFreio==='Óleo'?'checked':''} onchange="ppSetFreio('${encodeURIComponent(code)}','Óleo')"> Óleo</label>
+          <label class="radio-label" style="font-size:10px;"><input type="radio" name="fr-pp-${code}" value="Ar" ${currentFreio==='Ar'?'checked':''} onchange="ppSetFreio('${encodeURIComponent(code)}','Ar')"> Ar</label>
+        </div>`;
+     return `<div class="pp-card">
+       <div class="pp-card-title">
+         <span>LUSAR ${esc(code)}</span>
+         <span class="pp-card-count">${n} card${n>1?'s':''}</span>
+       </div>
+       <div class="pp-slots">${slots}</div>
+       ${freioRow}
+     </div>`;
+   }).join('');
+}
+
+function ppSlotClick(encodedCode, slot) {
+  const code = decodeURIComponent(encodedCode);
+  const inp = document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange = e => {
+    const f=e.target.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload = ev => CE.open(ev.target.result, url => {
+      const imgs = PP.images.get(code); if(!imgs) return;
+      imgs[slot] = url;
+      ppRender(document.getElementById('pp-search').value.trim().toLowerCase());
+    });
+    r.readAsDataURL(f);
+  };
+  inp.click();
+}
+
+function ppRemoveSlot(encodedCode, slot) {
+  const code = decodeURIComponent(encodedCode);
+  const imgs = PP.images.get(code); if(!imgs) return;
+  imgs[slot] = null;
+  ppRender(document.getElementById('pp-search').value.trim().toLowerCase());
+}
+
+function ppSetFreio(encodedCode, value) {
+  const code = decodeURIComponent(encodedCode);
+  PP.freioMap.set(code, value);
+  // Atualizar apenas o estado, sem aplicar ainda (só será aplicado ao fechar)
+}
+
+function closePhotoPanelNoSave() {
+  // Fecha o painel sem aplicar nenhuma alteração (nem fotos, nem freio)
+  document.getElementById('photo-panel-modal').classList.remove('show');
+}
+
+function closePhotoPanel() {
+  let applied = 0;
+  for (const pg of S.pages) {
+    const isComp = (pg.pageType === 'componente');
+    for (const it of pg.items) {
+      const code = (it.lusarCode || '').trim();
+      if (!code || !PP.images.has(code)) continue;
+      const imgs = PP.images.get(code);
+      let changed = false;
+      if (it.images[0] !== imgs[0]) { it.images[0] = imgs[0]; changed = true; }
+      if (it.images[1] !== imgs[1]) { it.images[1] = imgs[1]; changed = true; }
+      if (!isComp && PP.freioMap.has(code) && it.freio !== PP.freioMap.get(code)) {
+        it.freio = PP.freioMap.get(code);
+        changed = true;
+      }
+      if (changed) applied++;
+    }
+  }
+  document.getElementById('photo-panel-modal').classList.remove('show');
+  if (applied > 0) renderAll();
+}
+
+// ═══════════════════════════════════════════════════════
+//  IMAGE HANDLING
+// ═══════════════════════════════════════════════════════
+function setImg(pid, iid, slot, dataUrl) {
+  const it = getItem(pid, iid); if (!it) return;
+  it.images[slot] = dataUrl;
+  // Para sapatas: atualização direta do DOM
+  const slotEl = document.getElementById(`is-${iid}-${slot}`);
+  if (slotEl) {
+    if (dataUrl) {
+      slotEl.innerHTML = `<img src="${dataUrl}" alt=""><button class="img-remove-btn" onclick="event.stopPropagation();setImg('${pid}','${iid}',${slot},null)">✕</button>`;
+    } else {
+      slotEl.innerHTML = `<div class="img-placeholder"><span style="font-size:18px">📷</span><span>Foto ${slot+1}</span></div>`;
+    }
+  } else {
+    // Para componentes: re-renderizar tudo
+    renderAll();
+  }
+}
+function onImgSlotClick(e, pid, iid, slot) {
+  if (e.target.classList.contains('img-remove-btn')) return;
+  document.getElementById(`ii-${iid}-${slot}`)?.click();
+}
+function onImgFile(e, pid, iid, slot) {
+  const f = e.target.files[0]; if (!f) return;
+  e.target.value = '';
+  const r = new FileReader();
+  r.onload = ev => CE.open(ev.target.result, url => setImg(pid, iid, slot, url));
+  r.readAsDataURL(f);
+}
+function triggerLogo(pid, side) {
+  document.getElementById(`logo-${side==='left'?'l':'r'}-${pid}`)?.click();
+}
+function onLogoFile(e, pid, side) {
+  const f = e.target.files[0]; if (!f) return;
+  e.target.value = '';
+  const r = new FileReader();
+  r.onload = ev => {
+    const pg = getPage(pid); if (!pg) return;
+    pg[side + 'LogoUrl'] = ev.target.result;
+    const slot = document.querySelector(`.logo-slot[onclick*="'${pid}','${side}'"]`);
+    if (slot) { const inp = slot.querySelector('input'); slot.innerHTML = `<img src="${ev.target.result}" alt="">`; if (inp) slot.appendChild(inp); }
+  };
+  r.readAsDataURL(f);
+}
+
+// ═══════════════════════════════════════════════════════
+//  DRAG AND DROP
+// ═══════════════════════════════════════════════════════
+function onDragStart(e, iid, pid) {
+  S.drag = { id: iid, fromPageId: pid };
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => { const el = document.getElementById(`ic-${iid}`); if (el) el.classList.add('dragging'); }, 0);
+}
+function onDragEnd() {
+  const el = document.getElementById(`ic-${S.drag.id}`);
+  if (el) el.classList.remove('dragging');
+  S.drag = { id: null, fromPageId: null };
+}
+function handleDrop(e, toPid) {
+  e.preventDefault();
+  if (!S.drag.id || !S.drag.fromPageId || S.drag.fromPageId === toPid) return;
+  moveToPage(S.drag.id, S.drag.fromPageId, toPid);
+}
+
+// ═══════════════════════════════════════════════════════
+//  FILL METER
+// ═══════════════════════════════════════════════════════
+const _fmTimers = {};
+function schedFM(pid) { clearTimeout(_fmTimers[pid]); _fmTimers[pid] = setTimeout(() => updateFillMeter(pid), 120); }
+
+function updateFillMeter(pid) {
+  const pg = getPage(pid); if (!pg) return;
+  const Sp = PDF_W / 210;
+  const isComp = (pg.pageType === 'componente');
+  const lo = isComp ? calcComponenteLayout(pg, PDF_W_LARGE, PDF_H_LARGE, Sp) : calcLayout(pg, PDF_W_LARGE, PDF_H_LARGE, Sp);
+
+  const pct    = Math.min(200, Math.round((lo.totalNeeded / lo.availH) * 100));
+  const barPct = Math.min(100, pct);
+
+  const txt   = document.getElementById('fm-txt-'        + pid);
+  const bar   = document.getElementById('fm-bar-'        + pid);
+  const det   = document.getElementById('fm-det-'        + pid);
+  const warn  = document.getElementById('fm-warn-'       + pid);
+  const wtit  = document.getElementById('fm-warn-title-' + pid);
+  const wbody = document.getElementById('fm-warn-body-'  + pid);
+
+  if (lo.nItems === 0) {
+    if (txt)  { txt.textContent = '—'; txt.style.color = '#aaa'; }
+    if (bar)  { bar.style.width = '0%'; bar.style.background = '#eee'; }
+    if (det)  { det.textContent = isComp ? 'Nenhum componente' : 'Nenhum item'; det.style.color = '#aaa'; }
+    if (warn) warn.classList.remove('show');
+    return;
+  }
+
+  if (lo.overflows) {
+    const over   = (lo.totalNeededMm - lo.availHmm).toFixed(1);
+    const toMove = lo.nItems - lo.itemsFit;
+    if (txt)  { txt.textContent = pct + '%'; txt.style.color = '#c0392b'; }
+    if (bar)  { bar.style.width = '100%'; bar.style.background = '#c0392b'; }
+    const label = isComp ? 'componentes' : 'cards';
+    if (det)  { det.textContent = lo.nItems + ' ' + label + ' · ' + lo.totalNeededMm.toFixed(1) + 'mm necessários · ' + lo.availHmm.toFixed(1) + 'mm disponíveis'; det.style.color = '#c0392b'; }
+    if (warn) warn.classList.add('show');
+    if (wtit) wtit.innerHTML = '⛔ Conteúdo ultrapassa a página em ' + over + 'mm';
+    if (wbody) {
+      if (isComp) {
+        const cardH = (lo.CARD_H / Sp).toFixed(1);
+        const lines = lo.rows + ' linhas × ' + lo.itemsPerRow + ' por linha = ' + lo.rows * lo.itemsPerRow + ' slots';
+        wbody.innerHTML = '<b>Mova ' + toMove + ' componente(s) para outra página.</b> Detalhes:<br>' + lines + '<br>Cada componente: ' + cardH + 'mm de altura';
+      } else {
+        const lines = lo.rawH.map((h, i) => {
+          const hmm = (h / Sp).toFixed(1);
+          const fits = lo.itemsFit > i;
+          return (fits ? '✅' : '⚠️') + ' Card ' + (i+1) + ': ' + hmm + 'mm' + (fits ? '' : ' — vai ser cortado no PDF');
+        }).join('<br>');
+        wbody.innerHTML = '<b>Mova ' + toMove + ' item(s) para outra página.</b> Detalhes:<br>' + lines;
+      }
+    }
+  } else {
+    const usedMm = lo.totalNeededMm.toFixed(1);
+    const freeMm = (lo.availHmm - lo.totalNeededMm).toFixed(1);
+    const color  = pct > 88 ? '#e67e22' : '#27ae60';
+    if (txt)  { txt.textContent = pct + '%'; txt.style.color = color; }
+    if (bar)  { bar.style.width = barPct + '%'; bar.style.background = color; }
+    const label = isComp ? 'componentes' : 'cards';
+    if (det)  { det.textContent = lo.nItems + ' ' + label + ' · ' + usedMm + 'mm usados · sobram ' + freeMm + 'mm · todo texto legível ✓'; det.style.color = '#999'; }
+    if (warn) warn.classList.remove('show');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  LAYOUT CALCULATION
+//
+//  Design rules:
+//  ① IMG_H is FIXED — image slot never stretches regardless of card height
+//  ② minH matches drawCard's exact rendering path (no approximation)
+//  ③ CARD_MAX_H is a GROWTH CAP only — rawH is always respected (no compression)
+//  ④ overflows → fill meter warns per card; no text is ever silently clipped
+// ═══════════════════════════════════════════════════════
+function wrapText(ctx, text, maxW) {
+  const res = [];
+  for (const para of (text||'').split('\n')) {
+    const words = para.split(' '); let line = '';
+    for (const w of words) {
+      const t = line ? line+' '+w : w;
+      if (ctx.measureText(t).width > maxW && line) { res.push(line); line=w; } else line=t;
+    }
+    res.push(line);
+  }
+  return res;
+}
+
+// wrapTextComp: versão que também trunca palavras muito longas
+function wrapTextComp(ctx, text, maxW) {
+  const res = [];
+  for (const para of (text||'').split('\n')) {
+    const words = para.split(' '); let line = '';
+    for (const w of words) {
+      const t = line ? line+' '+w : w;
+      if (ctx.measureText(t).width > maxW && line) {
+        res.push(line);
+        // Se a palavra sozinha também é maior que maxW, trunca
+        if (ctx.measureText(w).width > maxW) {
+          let tw = w;
+          while (tw.length > 1 && ctx.measureText(tw+'…').width > maxW) tw = tw.slice(0,-1);
+          res.push(tw+'…');
+          line = '';
+        } else {
+          line = w;
+        }
+      } else {
+        line = t;
+      }
+    }
+    if (line) res.push(line);
+  }
+  return res;
+}
+
+function calcLayout(pg, W, H, Sp) {
+  const ml=8*Sp, mr=12*Sp, mf=8*Sp, cw=W-ml-mr, hdrH=28*Sp;
+  const curYStart = hdrH + 2*Sp;
+  const availH    = H - curYStart - mf;
+  const nItems    = pg.items.length;
+  const GAP       = 2.5*Sp;
+
+  // Fixed typography — never changes
+  const fs_ap    = 2.1*Sp,  lh_ap    = fs_ap    * 1.55;
+  const fs_field = 3.15*Sp, lh_field = fs_field * 1.65;
+
+  // Fixed geometry
+  const imgZoneW = cw * 0.28;
+  const lusarH   = 5.5*Sp;
+  const fieldW   = cw - imgZoneW - 6*Sp;
+  const pad      = 2*Sp;
+
+  // ① Fixed image slot height — images never stretch with card height
+  const IMG_H  = 32 * Sp;                    // ~32mm
+  const LEFT_H = IMG_H + lusarH + pad * 2;   // left column fixed total
+
+  // ③ Growth cap — only limits added space, rawH always wins
+  const CARD_MAX_H = 48 * Sp;                // ~48mm
+
+  // ② Exact match with drawCard field-rendering path:
+  //    drawCard starts:  fy = y + pad + fs_field*1.2
+  //    4 data rows:      +lh_field each
+  //    "Aplicação:" row: +lh_field*0.85
+  //    Total offset to start of aplicacao text from card-top y:
+  const FY_AP_OFFSET = pad + fs_field * 1.2 + lh_field * 4.85;
+  // drawCard clips at: bot = y + h - pad*0.5
+  // Last line baseline:  FY_AP_OFFSET + (apLines-1)*lh_ap
+  // Last line bottom:    + fs_ap  →  must be <= bot
+  // ⟹ h >= FY_AP_OFFSET + apLines*lh_ap - (lh_ap - fs_ap) + pad*0.5
+  // Add pad*0.75 safety margin
+
+  const mc = document.createElement('canvas'), mctx = mc.getContext('2d');
+  function minH(it) {
+    mctx.font = fs_ap + 'px sans-serif';
+    const apLines = Math.max(1, wrapText(mctx, it.aplicacao, fieldW).length);
+    const rightH  = FY_AP_OFFSET
+                  + apLines * lh_ap
+                  - (lh_ap - fs_ap)   // one line-gap at bottom is spare
+                  + pad * 0.5         // bottom boundary clearance
+                  + pad * 0.75;       // safety margin
+    return Math.max(LEFT_H, rightH);
+  }
+
+  const rawH        = nItems > 0 ? pg.items.map(minH) : [];
+  const totalGaps   = GAP * Math.max(0, nItems - 1);
+  const totalNeeded = rawH.reduce((a, b) => a + b, 0) + totalGaps;
+  const overflows   = totalNeeded > availH;
+
+  // ③ Distribute extra space — GROWTH cap only, rawH always wins
+  let itemHeights;
+  if (overflows || nItems === 0) {
+    itemHeights = rawH.slice();         // keep natural sizes; fill meter warns
+  } else {
+    const extra     = availH - totalNeeded;
+    const extraEach = extra / nItems;
+    itemHeights = rawH.map(h => {
+      if (h >= CARD_MAX_H) return h;                     // content-rich: keep rawH
+      return Math.min(h + extraEach, CARD_MAX_H);        // content-sparse: grow up to cap
+    });
+  }
+
+  // Count how many items actually fit (for overflow warning)
+  let itemsFit = 0, acc = 0;
+  for (const h of rawH) {
+    const need = acc + h + (itemsFit > 0 ? GAP : 0);
+    if (need > availH + 0.5) break;
+    acc = need; itemsFit++;
+  }
+
+  return {
+    ml, mr, mf, cw, hdrH, curYStart, availH, GAP,
+    itemHeights, rawH,
+    overflows, totalNeeded, nItems,
+    imgZoneW, lusarH, fieldW, pad,
+    IMG_H, LEFT_H, CARD_MAX_H,
+    fs_ap, fs_field, lh_ap, lh_field,
+    itemsFit,
+    totalNeededMm: totalNeeded / Sp,
+    availHmm:      availH      / Sp,
+  };
+}
+
+// ═══════════════════════════════════════════════════════
+//  LAYOUT COMPONENTES
+//  Altura fixa por card (~3.5cm), 2 cards por linha
+// ═══════════════════════════════════════════════════════
+function calcComponenteLayout(pg, W, H, Sp) {
+  const ml = 8*Sp, mr = 12*Sp, mf = 8*Sp, cw = W - ml - mr;
+  const hdrH = 28*Sp;
+  const curYStart = hdrH + 2*Sp;
+  const availH = H - curYStart - mf;
+  const nItems = pg.items.length;
+
+  // 2 colunas com gap de 8mm (0.8cm)
+  const GAP_X = 8 * Sp;
+  const GAP_Y = 4 * Sp;
+  const cardW = (cw - GAP_X) / 2;
+
+  // Altura fixa do card: ~35mm (3.5cm)
+  const CARD_H = 35 * Sp;
+
+  // 2 cards por linha
+  const itemsPerRow = 2;
+  const rows = Math.ceil(nItems / itemsPerRow);
+  const totalNeeded = rows * CARD_H + Math.max(0, rows - 1) * GAP_Y;
+
+  // Colunas: esquerda 35%, direita 65%
+  const leftW = cardW * 0.35;
+  const rightW = cardW * 0.65;
+  const sepX = leftW + 1*Sp; // posição do separador
+
+  // Count how many items fit
+  const maxRows = Math.floor((availH + GAP_Y) / (CARD_H + GAP_Y));
+  const itemsFit = Math.min(nItems, maxRows * itemsPerRow);
+  const overflows = totalNeeded > availH;
+
+  return {
+    ml, mr, mf, cw, hdrH, curYStart, availH,
+    cardW, CARD_H, GAP_X, GAP_Y,
+    leftW, rightW, sepX,
+    itemsPerRow, rows, nItems, itemsFit,
+    totalNeeded, totalNeededMm: totalNeeded / Sp,
+    availHmm: availH / Sp, overflows
+  };
+}
+
+// ═══════════════════════════════════════════════════════
+//  PDF RENDERING
+// ═══════════════════════════════════════════════════════
+function trunc(ctx, text, maxW) {
+  let t = text||''; if (ctx.measureText(t).width <= maxW) return t;
+  while (t.length > 1 && ctx.measureText(t+'…').width > maxW) t = t.slice(0,-1);
+  return t+'…';
+}
+function rr(ctx, x, y, w, h, r) {
+  r = r||0;
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r,y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x,y+r); ctx.arcTo(x,y,x+r,y,r); ctx.closePath();
+}
+function preloadImgs(pages) {
+  const urls = new Set();
+  for (const p of pages) {
+    if (p.leftLogoUrl) urls.add(p.leftLogoUrl);
+    if (p.rightLogoUrl) urls.add(p.rightLogoUrl);
+    for (const it of p.items) for (const img of it.images) if (img) urls.add(img);
+  }
+  const map = {};
+  return Promise.all([...urls].map(url => new Promise(res => {
+    const img = new Image(); img.onload = () => { map[url]=img; res(); }; img.onerror = res; img.src = url;
+  }))).then(() => map);
+}
+function drawCard(ctx, it, x, y, w, h, Sp, imgMap, layout) {
+  const { pad, imgZoneW, lusarH, fieldW, fs_ap, fs_field, lh_ap, lh_field, IMG_H } = layout;
+  const RADIUS = 3.5*Sp;
+  rr(ctx,x,y,w,h,RADIUS); ctx.strokeStyle=RED; ctx.lineWidth=3.5; ctx.stroke();
+  ctx.fillStyle='#fff'; rr(ctx,x,y,w,h,RADIUS); ctx.fill();
+
+  // ① Image area height is FIXED (IMG_H) — independent of card height h
+  //    This prevents image distortion when cards are tall due to long text
+  const imgAreaH = IMG_H;
+
+  // ── Espaço entre as duas fotos ───────────────────────
+  // Mude IMG_GAP para ajustar o espaço (em mm × Sp = pixels no PDF)
+  const IMG_GAP  = 0 * Sp;             // ← 0mm entre foto 1 e foto 2
+  const slotW    = (imgZoneW - IMG_GAP) / 2;   // largura de cada slot
+
+  // Posição X de cada slot:
+  //   slot 0: começa em x (borda esquerda da zona de imagens)
+  //   slot 1: começa em x + slotW + IMG_GAP
+  const slotXs = [x, x + slotW + IMG_GAP];
+
+  for (let i=0; i<2; i++) {
+    const slotX=slotXs[i], slotY=y+pad;
+    ctx.save(); ctx.beginPath();
+    if (i===0) {
+      // Canto arredondado só no lado esquerdo
+      ctx.moveTo(slotX+RADIUS,slotY); ctx.lineTo(slotX+slotW,slotY);
+      ctx.lineTo(slotX+slotW,slotY+imgAreaH); ctx.lineTo(slotX+RADIUS,slotY+imgAreaH);
+      ctx.arcTo(slotX,slotY+imgAreaH,slotX,slotY+imgAreaH-RADIUS,RADIUS);
+      ctx.lineTo(slotX,slotY+RADIUS); ctx.arcTo(slotX,slotY,slotX+RADIUS,slotY,RADIUS);
+    } else {
+      // Canto arredondado só no lado direito
+      ctx.moveTo(slotX,slotY); ctx.lineTo(slotX+slotW-RADIUS,slotY);
+      ctx.arcTo(slotX+slotW,slotY,slotX+slotW,slotY+RADIUS,RADIUS);
+      ctx.lineTo(slotX+slotW,slotY+imgAreaH-RADIUS);
+      ctx.arcTo(slotX+slotW,slotY+imgAreaH,slotX+slotW-RADIUS,slotY+imgAreaH,RADIUS);
+      ctx.lineTo(slotX,slotY+imgAreaH);
+    }
+    ctx.closePath(); ctx.clip();
+    // Fundo branco — evita fundo preto em PNGs com transparência ao exportar JPEG
+    ctx.fillStyle='#ffffff'; ctx.fillRect(slotX,slotY,slotW,imgAreaH);
+    const url = it.images[i];
+    if (url && imgMap && imgMap[url]) {
+      const img=imgMap[url];
+      const sc=Math.min(slotW/img.naturalWidth,imgAreaH/img.naturalHeight);
+      const dw=img.naturalWidth*sc, dh=img.naturalHeight*sc;
+      ctx.drawImage(img, slotX+(slotW-dw)/2, slotY+(imgAreaH-dh)/2, dw, dh);
+    }
+    ctx.restore();
+  }
+
+  // Sem linha divisória — o espaço IMG_GAP já separa as fotos visualmente
+
+  // LUSAR label at fixed position (below image area)
+  ctx.fillStyle=RED; ctx.font=`bold ${4.2*Sp}px Arial`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('LUSAR '+(it.lusarCode||''), x+imgZoneW/2, y+pad+imgAreaH+lusarH*0.55);
+  ctx.textBaseline='alphabetic';
+
+  // Right column fields — start at exact position matching minH calculation
+  const fx = x+imgZoneW+4*Sp; ctx.textAlign='left';
+  let fy = y + pad + fs_field*1.2;   // ← matches FY_AP_OFFSET formula in calcLayout
+
+  const div = function(dy) {
+    ctx.strokeStyle='#e5e5e5'; ctx.lineWidth=0.5;
+    ctx.beginPath(); ctx.moveTo(fx,dy+fs_field*0.45); ctx.lineTo(fx+fieldW,dy+fs_field*0.45); ctx.stroke();
+  };
+  const bold = function(t,bx,by) {
+    ctx.font=`bold ${fs_field}px sans-serif`; ctx.fillStyle=DARK;
+    ctx.fillText(t,bx,by); return ctx.measureText(t).width;
+  };
+  const norm = function(t,bx,by,mw) {
+    ctx.font=`${fs_field}px sans-serif`; ctx.fillStyle='#333';
+    ctx.fillText(trunc(ctx,t,mw),bx,by);
+  };
+
+  // Linha 1: Nº Original — linha inteira
+  var lw = bold('Nº Original:',fx,fy); norm(it.nOriginal,fx+lw+2,fy,fieldW-lw-4);
+  div(fy); fy+=lh_field;
+
+  // Linha 2: FRAS-LE | LONAFLEX | THERMOID
+  const col = fieldW/3;
+  [['FRAS-LE:',it.lonasLe],['LONAFLEX:',it.lonasLona],['THERMOID:',it.lonasThermoid]].forEach(function(pair,i) {
+    var bw = bold(pair[0],fx+col*i,fy); norm(pair[1],fx+col*i+bw+2,fy,col-bw-8);
+    if (i<2) { ctx.fillStyle=RED; ctx.font=`bold ${fs_field}px sans-serif`; ctx.fillText('|',fx+col*(i+1)-4,fy); }
+  });
+  div(fy); fy+=lh_field;
+
+  // Linha 3: Similar (era OBS)
+  var sw2 = bold('Similar:',fx,fy); norm(it.similar||'',fx+sw2+2,fy,fieldW-sw2-4);
+  div(fy); fy+=lh_field;
+
+  // Linha 4: Freio  |  OBS na mesma linha
+  var fw = bold('Freio '+it.freio,fx,fy);
+  ctx.fillStyle=RED; ctx.font=`bold ${fs_field}px sans-serif`;
+  var pipeStr='  |  '; var pw=ctx.measureText(pipeStr).width;
+  ctx.fillText(pipeStr,fx+fw,fy);
+  var ow=bold('OBS:',fx+fw+pw,fy); norm(it.obs||'',fx+fw+pw+ow+2,fy,fieldW-fw-pw-ow-4);
+  div(fy); fy+=lh_field;
+
+  bold('Aplicação:',fx,fy); fy+=lh_field*0.85;
+
+  // Aplicação text — bottom boundary matches calcLayout's minH formula
+  ctx.font=`${fs_ap}px sans-serif`; ctx.fillStyle='#333';
+  var lns = wrapText(ctx,it.aplicacao,fieldW), bot=y+h-pad*0.5;
+  for (var li=0; li<lns.length; li++) {
+    if (fy+fs_ap > bot) break;   // safety: shouldn't trigger if minH was correct
+    ctx.fillText(lns[li],fx,fy); fy+=lh_ap;
+  }
+}
+
+// ── Draw Component Card (PDF) ──────────────────────────
+function drawComponenteCard(ctx, it, x, y, w, h, Sp, imgMap) {
+  const RADIUS = 3.5*Sp;
+  const pad = 2*Sp;
+  const leftW = w * 0.35;
+  const rightW = w * 0.65;
+  const imgH = h * 0.55;
+
+  // Card background — borda vermelha igual sapata
+  ctx.fillStyle='#fff';
+  rr(ctx, x, y, w, h, RADIUS); ctx.fill();
+  ctx.strokeStyle=RED; ctx.lineWidth=3.5;
+  rr(ctx, x, y, w, h, RADIUS); ctx.stroke();
+
+  // ── LEFT BLOCK: Image + LUSAR ──
+  const imgX = x + pad;
+  const imgY = y + pad;
+  const imgZoneW = leftW - pad*2;
+  const imgZoneH = imgH - pad*2;
+
+  ctx.fillStyle='#ffffff';
+  ctx.fillRect(imgX, imgY, imgZoneW, imgZoneH);
+
+  const url = it.images[0];
+  if (url && imgMap && imgMap[url]) {
+    const img = imgMap[url];
+    const sc = Math.min(imgZoneW/img.naturalWidth, imgZoneH/img.naturalHeight);
+    const dw = img.naturalWidth*sc, dh = img.naturalHeight*sc;
+    ctx.drawImage(img, imgX+(imgZoneW-dw)/2, imgY+(imgZoneH-dh)/2, dw, dh);
+  }
+
+  // LUSAR abaixo da imagem
+  ctx.fillStyle=RED; ctx.font=`bold ${3.5*Sp}px Arial`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('LUSAR '+(it.lusarCode||''), x+leftW/2, y+imgH+imgH*0.25);
+
+  // ── SEPARATOR: linha vertical VERMELHA, fixa, entre os blocos ──
+  const sepX = x + leftW;
+  const sepTop = y + h*0.08;
+  const sepBot = y + h*0.92;
+  ctx.strokeStyle=RED; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(sepX, sepTop); ctx.lineTo(sepX, sepBot); ctx.stroke();
+
+  // ── RIGHT BLOCK: Fields ──
+  // Resetar alinhamento para left (estava center do LUSAR)
+  ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+
+  const textStartX = sepX + 4*Sp;
+  const fieldW = (x + w - 3*Sp) - textStartX;
+  const fs = 3*Sp;
+  const lh = fs * 1.65;
+  let fy = y + pad + fs*1.2;
+
+  const bold = function(t,bx,by) {
+    ctx.font=`bold ${fs}px sans-serif`; ctx.fillStyle='#1a1a2e';
+    ctx.fillText(t,bx,by); return ctx.measureText(t).width;
+  };
+  const norm = function(t,bx,by,mw) {
+    ctx.font=`${fs}px sans-serif`; ctx.fillStyle='#333';
+    ctx.fillText(trunc(ctx,t,mw),bx,by);
+  };
+
+  // Linha 1: Nº Original
+  var lw = bold('Nº Original:', textStartX, fy);
+  norm(it.nOriginal||'', textStartX+lw+2, fy, fieldW-lw-4);
+  fy += lh * 1.3;
+
+  // Linha 2: Nº Similar (abaixo)
+  var sw = bold('Nº Similar:', textStartX, fy);
+  norm(it.similar||'', textStartX+sw+2, fy, fieldW-sw-4);
+  fy += lh * 1.3;
+
+  // Linha 3: Descrição (com quebra de linha)
+  bold('Descrição:', textStartX, fy);
+  fy += lh * 0.85;
+
+  // Quebra de linha da descrição — usa wrapTextComp que trunca palavras longas
+  ctx.font=`${fs*0.9}px sans-serif`; ctx.fillStyle='#333';
+  const descText = it.descricao||'';
+  const descLines = wrapTextComp(ctx, descText, fieldW);
+  const bot = y + h - pad*0.5;
+  for (let li = 0; li < descLines.length; li++) {
+    if (fy + fs*0.9 > bot) break;
+    ctx.fillText(descLines[li], textStartX, fy);
+    fy += lh * 0.9;
+  }
+}
+
+function renderPageCanvas(pg, W, H, imgMap) {
+  const canvas = document.createElement('canvas'); canvas.width=W; canvas.height=H;
+  const ctx = canvas.getContext('2d'), Sp=W/210;
+  const isComp = (pg.pageType === 'componente');
+  const lo = isComp ? calcComponenteLayout(pg,W,H,Sp) : calcLayout(pg,W,H,Sp);
+  const { ml,mr,hdrH,cw,curYStart } = lo;
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  const grad = ctx.createLinearGradient(0,0,W,0);
+  grad.addColorStop(0,DARK); grad.addColorStop(1,'#16213e');
+  ctx.fillStyle=grad; ctx.fillRect(0,0,W,hdrH);
+  ctx.fillStyle=RED; ctx.fillRect(0,hdrH-2.5*Sp,W,2.5*Sp);
+  const logoW=40*Sp, logoH=19*Sp, logoY=(hdrH-logoH)/2;
+  function drawLogo(url,lx) { if (url&&imgMap&&imgMap[url]) { var img=imgMap[url]; var sc=Math.min(logoW/img.naturalWidth,logoH/img.naturalHeight); var dw=img.naturalWidth*sc,dh=img.naturalHeight*sc; ctx.drawImage(img,lx+(logoW-dw)/2,logoY+(logoH-dh)/2,dw,dh); } }
+  drawLogo(pg.leftLogoUrl,ml); drawLogo(pg.rightLogoUrl,W-mr-logoW);
+  const tFS=5.8*Sp, sFS=2.2*Sp, txY=hdrH/2-(tFS+(pg.headerSubtitle?sFS*1.6:0))/2+tFS;
+  ctx.fillStyle='#fff'; ctx.font=`bold ${tFS}px Georgia`; ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+  ctx.fillText((pg.headerTitle||'').toUpperCase(),W/2,txY-1.5*Sp);
+  if (pg.headerSubtitle) { ctx.fillStyle='rgba(255,255,255,0.72)'; ctx.font=`${sFS}px sans-serif`; ctx.fillText(pg.headerSubtitle,W/2,txY+sFS*1.4); }
+
+  if (isComp) {
+    // Component layout: 2 cards per row, fixed height
+    const { cardW, CARD_H, GAP_X, GAP_Y, itemsPerRow } = lo;
+    let row = 0, col = 0;
+    let cy = curYStart;
+    for (let i = 0; i < pg.items.length; i++) {
+      const cx = ml + col * (cardW + GAP_X);
+      if (isComp) {
+        drawComponenteCard(ctx, pg.items[i], cx, cy, cardW, CARD_H, Sp, imgMap);
+      }
+      col++;
+      if (col >= itemsPerRow) {
+        col = 0;
+        row++;
+        cy += CARD_H + GAP_Y;
+      }
+    }
+  } else {
+    // Sapata layout: 1 card per column
+    const { GAP, itemHeights } = lo;
+    let cy = curYStart;
+    for (let i=0; i<pg.items.length; i++) { drawCard(ctx,pg.items[i],ml,cy,cw,itemHeights[i],Sp,imgMap,lo); cy+=itemHeights[i]+GAP; }
+  }
+  return canvas;
+}
+
+// ═══════════════════════════════════════════════════════
+//  PDF BUILDER
+// ═══════════════════════════════════════════════════════
+function buildPDF(canvases) {
+  const A4W=595.28, A4H=841.89;
+  function toL1(s) { var a=new Uint8Array(s.length); for (var i=0;i<s.length;i++) a[i]=s.charCodeAt(i)&0xFF; return a; }
+  function b64b(b64) { return toL1(atob(b64)); }
+  var cks=[]; var pos=0; var off={};
+  function push(u8) { cks.push(u8); pos+=u8.length; }
+  function pt(s) { push(toL1(s)); }
+  var n=canvases.length;
+  var pgN=canvases.map(function(_,i){return 3+i*3+2;});
+  pt('%PDF-1.4\n%\xFF\xFF\xFF\xFF\n');
+  off[1]=pos; pt('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  off[2]=pos; pt('2 0 obj\n<< /Type /Pages /Kids ['+pgN.map(function(x){return x+' 0 R';}).join(' ')+'] /Count '+n+' >>\nendobj\n');
+  for (var i=0; i<n; i++) {
+    var c=canvases[i];
+    var jb=b64b(c.toDataURL('image/jpeg',0.97).split(',')[1]);
+    var iN=3+i*3, cN=3+i*3+1, pN=3+i*3+2;
+    off[iN]=pos; pt(iN+' 0 obj\n<< /Type /XObject /Subtype /Image /Width '+c.width+' /Height '+c.height+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jb.length+' >>\nstream\n'); push(jb); pt('\nendstream\nendobj\n');
+    var cs='q '+A4W.toFixed(2)+' 0 0 '+A4H.toFixed(2)+' 0 0 cm /Im'+i+' Do Q';
+    off[cN]=pos; pt(cN+' 0 obj\n<< /Length '+cs.length+' >>\nstream\n'+cs+'\nendstream\nendobj\n');
+    off[pN]=pos; pt(pN+' 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+A4W.toFixed(2)+' '+A4H.toFixed(2)+'] /Contents '+cN+' 0 R /Resources << /XObject << /Im'+i+' '+iN+' 0 R >> >> >>\nendobj\n');
+  }
+  var tot=2+n*3, xr=pos;
+  var x='xref\n0 '+(tot+1)+'\n0000000000 65535 f \n';
+  for (var k=1; k<=tot; k++) x+=String(off[k]).padStart(10,'0')+' 00000 n \n';
+  x+='trailer\n<< /Size '+(tot+1)+' /Root 1 0 R >>\nstartxref\n'+xr+'\n%%EOF'; pt(x);
+  var total=cks.reduce(function(s,c){return s+c.length;},0);
+  var out=new Uint8Array(total); var o=0;
+  for (var ci=0; ci<cks.length; ci++) { out.set(cks[ci],o); o+=cks[ci].length; }
+  return out;
+}
+function dlBlob(data, name, mime) {
+  const url = URL.createObjectURL(new Blob([data],{type:mime}));
+  const a = document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 1500);
+}
+
+// ═══════════════════════════════════════════════════════
+//  WORD EXPORT — DOCX
+// ═══════════════════════════════════════════════════════
+
+let _docxLoaded = false;
+
+function loadDocxLib() {
+  if (_docxLoaded) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://unpkg.com/docx@8.5.0/build/index.umd.js';
+    s.onload = () => { _docxLoaded = true; resolve(); };
+    s.onerror = () => reject(new Error('Falha ao carregar biblioteca docx.js. Verifique sua conexão.'));
+    document.head.appendChild(s);
+  });
+}
+
+async function generateDOCX() {
+  if (S.pdfLoading) return;
+  S.pdfLoading = true;
+  const btn = document.getElementById('docx-btn');
+  btn.disabled = true; btn.textContent = '⏳ Gerando...';
+  try {
+    setStatus('Carregando biblioteca...');
+    await loadDocxLib();
+    setStatus('Carregando imagens...');
+    const imgMap = await preloadImgs(S.pages);
+    setStatus('Gerando Word...');
+    await new Promise(r => setTimeout(r, 40));
+    const doc = await buildDOCX(S.pages, imgMap);
+    const blob = await docx.Packer.toBlob(doc);
+    dlBlob(blob, 'catalogo-pecas.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    setStatus('');
+  } catch(e) { setStatus('Erro: '+e.message); setTimeout(() => setStatus(''), 4000); }
+  btn.disabled = false; btn.textContent = '⬇️ Baixar Word'; S.pdfLoading = false;
+}
+
+// buildDOCX — Etapa 4: Montagem final com margens A4
+async function buildDOCX(pages, imgMap) {
+  const { Document, Packer, SectionType, PageBreak } = docx;
+
+  const sections = [];
+
+  for (let i = 0; i < pages.length; i++) {
+    const pg = pages[i];
+    const children = await renderPageDocx(pg, imgMap, i === 0);
+    sections.push({
+      properties: {
+        page: {
+          margin: {
+            top: 720,    // ~12.7mm
+            right: 720,  // ~12.7mm
+            bottom: 720, // ~12.7mm
+            left: 720,   // ~12.7mm
+          }
+        }
+      },
+      children: children
+    });
+  }
+
+  return new Document({
+    creator: 'Catálogo de Peças',
+    title: 'Catálogo de Peças',
+    description: 'Catálogo gerado automaticamente',
+    styles: {
+      paragraphStyles: []
+    },
+    sections: sections
+  });
+}
+
+// renderPageDocx — SAPATA + COMPONENTE com tabelas FIXAS
+async function renderPageDocx(pg, imgMap, isFirst) {
+  const { Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, BorderStyle, ImageRun, PageBreak, TableLayoutType } = docx;
+
+  const RED_HEX = 'C0392B';
+  const DARK_HEX = '1A1A2E';
+  const children = [];
+
+  // Page break between pages
+  if (!isFirst) {
+    children.push(new Paragraph({ children: [new PageBreak()] }));
+  }
+
+  // ── HEADER: tabela de 3 colunas (logo | título | logo) ──
+  const headerCells = [];
+
+  // Coluna 1: Logo esquerdo
+  if (pg.leftLogoUrl && imgMap[pg.leftLogoUrl]) {
+    const buf = await fetch(pg.leftLogoUrl).then(r => r.arrayBuffer());
+    headerCells.push(new TableCell({
+      width: { size: 20, type: WidthType.PERCENTAGE },
+      borders: { top: { style: BorderStyle.NONE, size: 0 }, bottom: { style: BorderStyle.NONE, size: 0 }, left: { style: BorderStyle.NONE, size: 0 }, right: { style: BorderStyle.NONE, size: 0 } },
+      shading: { type: 'clear', fill: DARK_HEX },
+      verticalAlign: 'center',
+      children: [new Paragraph({
+        children: [new ImageRun({ data: buf, transformation: { width: 80, height: 38 } })],
+        alignment: AlignmentType.LEFT,
+        spacing: { before: 40, after: 40 }
+      })]
+    }));
+  } else {
+    headerCells.push(new TableCell({
+      width: { size: 20, type: WidthType.PERCENTAGE },
+      borders: { top: { style: BorderStyle.NONE, size: 0 }, bottom: { style: BorderStyle.NONE, size: 0 }, left: { style: BorderStyle.NONE, size: 0 }, right: { style: BorderStyle.NONE, size: 0 } },
+      shading: { type: 'clear', fill: DARK_HEX },
+      verticalAlign: 'center',
+      children: [new Paragraph({
+        children: [new TextRun({ text: 'Logo Produto', size: 14, color: '666666', italics: true })],
+        alignment: AlignmentType.LEFT,
+        spacing: { before: 40, after: 40 }
+      })]
+    }));
+  }
+
+  // Coluna 2: Título + Subtítulo (central)
+  const titleChildren = [
+    new TextRun({ text: (pg.headerTitle||'').toUpperCase(), bold: true, size: 32, font: 'Georgia', color: 'FFFFFF' })
+  ];
+  if (pg.headerSubtitle) {
+    titleChildren.push(new TextRun({ text: '\n' + pg.headerSubtitle, size: 18, font: 'Arial', color: 'CCCCCC' }));
+  }
+  headerCells.push(new TableCell({
+    width: { size: 60, type: WidthType.PERCENTAGE },
+    borders: { top: { style: BorderStyle.NONE, size: 0 }, bottom: { style: BorderStyle.NONE, size: 0 }, left: { style: BorderStyle.NONE, size: 0 }, right: { style: BorderStyle.NONE, size: 0 } },
+    shading: { type: 'clear', fill: DARK_HEX },
+    verticalAlign: 'center',
+    children: [new Paragraph({
+      children: titleChildren,
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 60, after: 60 }
+    })]
+  }));
+
+  // Coluna 3: Logo direito
+  if (pg.rightLogoUrl && imgMap[pg.rightLogoUrl]) {
+    const buf = await fetch(pg.rightLogoUrl).then(r => r.arrayBuffer());
+    headerCells.push(new TableCell({
+      width: { size: 20, type: WidthType.PERCENTAGE },
+      borders: { top: { style: BorderStyle.NONE, size: 0 }, bottom: { style: BorderStyle.NONE, size: 0 }, left: { style: BorderStyle.NONE, size: 0 }, right: { style: BorderStyle.NONE, size: 0 } },
+      shading: { type: 'clear', fill: DARK_HEX },
+      verticalAlign: 'center',
+      children: [new Paragraph({
+        children: [new ImageRun({ data: buf, transformation: { width: 80, height: 38 } })],
+        alignment: AlignmentType.RIGHT,
+        spacing: { before: 40, after: 40 }
+      })]
+    }));
+  } else {
+    headerCells.push(new TableCell({
+      width: { size: 20, type: WidthType.PERCENTAGE },
+      borders: { top: { style: BorderStyle.NONE, size: 0 }, bottom: { style: BorderStyle.NONE, size: 0 }, left: { style: BorderStyle.NONE, size: 0 }, right: { style: BorderStyle.NONE, size: 0 } },
+      shading: { type: 'clear', fill: DARK_HEX },
+      verticalAlign: 'center',
+      children: [new Paragraph({
+        children: [new TextRun({ text: 'Logo Empresa', size: 14, color: '666666', italics: true })],
+        alignment: AlignmentType.RIGHT,
+        spacing: { before: 40, after: 40 }
+      })]
+    }));
+  }
+
+  // Tabela do header com layout FIXO
+  children.push(new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    layout: TableLayoutType.FIXED,
+    borders: { top: { style: BorderStyle.NONE, size: 0 }, bottom: { style: BorderStyle.NONE, size: 0 }, left: { style: BorderStyle.NONE, size: 0 }, right: { style: BorderStyle.NONE, size: 0 }, insideH: { style: BorderStyle.NONE, size: 0 }, insideV: { style: BorderStyle.NONE, size: 0 } },
+    rows: [new TableRow({ children: headerCells, height: { value: 500 } })]
+  }));
+
+  // Espaço após header
+  children.push(new Paragraph({ children: [], spacing: { before: 40, after: 0 } }));
+
+  // ── ITEMS ──
+  if (pg.pageType === 'componente') {
+    for (let i = 0; i < pg.items.length; i += 2) {
+      const item1 = pg.items[i];
+      const item2 = pg.items[i + 1];
+      const rowTable = await renderComponenteRowDocx(item1, item2, imgMap);
+      children.push(rowTable);
+      children.push(new Paragraph({ children: [], spacing: { before: 40, after: 0 } }));
+    }
+  } else {
+    for (const it of pg.items) {
+      const itemTable = await renderSapataItemDocx(it, imgMap);
+      children.push(itemTable);
+      children.push(new Paragraph({ children: [], spacing: { before: 40, after: 0 } }));
+    }
+  }
+
+  return children;
+}
+
+// renderSapataItemDocx — tabela FIXA com bordas vermelhas
+async function renderSapataItemDocx(it, imgMap) {
+  const { Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, BorderStyle, ImageRun, TableLayoutType } = docx;
+
+  const RED_HEX = 'C0392B';
+  const redBorder = { style: BorderStyle.SINGLE, size: 12, color: RED_HEX };
+  const noBorder = { style: BorderStyle.NONE, size: 0 };
+
+  function label(text) {
+    return new TextRun({ text, bold: true, size: 18, font: 'Arial', color: '1A1A2E' });
+  }
+  function value(text) {
+    return new TextRun({ text: text||'', size: 18, font: 'Arial', color: '333333' });
+  }
+
+  // ── LEFT CELL: Imagem ──
+  let leftParas;
+  if (it.images[0] && imgMap[it.images[0]]) {
+    const buf = await fetch(it.images[0]).then(r => r.arrayBuffer());
+    leftParas = [new Paragraph({
+      children: [new ImageRun({ data: buf, transformation: { width: 120, height: 90 } })],
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 40, after: 40 }
+    })];
+  } else {
+    leftParas = [new Paragraph({
+      children: [new TextRun({ text: '📷', size: 28, color: 'CCCCCC' })],
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 60, after: 60 }
+    })];
+  }
+
+  const leftCell = new TableCell({
+    width: { size: 28, type: WidthType.PERCENTAGE },
+    borders: { top: redBorder, bottom: redBorder, left: redBorder, right: redBorder, insideH: noBorder, insideV: noBorder },
+    margins: { top: 40, bottom: 40, left: 60, right: 60 },
+    children: leftParas
+  });
+
+  // ── RIGHT CELL: Campos ──
+  const rightParas = [];
+  rightParas.push(new Paragraph({
+    children: [new TextRun({ text: 'LUSAR ' + (it.lusarCode||''), bold: true, size: 22, font: 'Georgia', color: RED_HEX })],
+    spacing: { before: 0, after: 40 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [label('Nº Original:'), new TextRun({ text: ' ', size: 18 }), value(it.nOriginal||'')],
+    spacing: { before: 20, after: 20 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [
+      label('FRAS-LE:'), new TextRun({ text: ' ', size: 18 }), value(it.lonasLe||''),
+      new TextRun({ text: '  |  ', size: 18, bold: true, color: RED_HEX }),
+      label('LONAFLEX:'), new TextRun({ text: ' ', size: 18 }), value(it.lonasLona||''),
+      new TextRun({ text: '  |  ', size: 18, bold: true, color: RED_HEX }),
+      label('THERMOID:'), new TextRun({ text: ' ', size: 18 }), value(it.lonasThermoid||'')
+    ],
+    spacing: { before: 20, after: 20 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [label('Similar:'), new TextRun({ text: ' ', size: 18 }), value(it.similar||'')],
+    spacing: { before: 20, after: 20 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [
+      label('Freio ' + (it.freio||'Óleo')),
+      new TextRun({ text: '  |  ', size: 18, bold: true, color: RED_HEX }),
+      label('OBS:'), new TextRun({ text: ' ', size: 18 }), value(it.obs||'')
+    ],
+    spacing: { before: 20, after: 20 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [label('Aplicação:')],
+    spacing: { before: 20, after: 10 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [value(it.aplicacao||'')],
+    spacing: { before: 0, after: 20 }
+  }));
+
+  const rightCell = new TableCell({
+    width: { size: 72, type: WidthType.PERCENTAGE },
+    borders: { top: redBorder, bottom: redBorder, left: redBorder, right: redBorder, insideH: noBorder, insideV: noBorder },
+    margins: { top: 40, bottom: 40, left: 60, right: 60 },
+    children: rightParas
+  });
+
+  return new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    layout: TableLayoutType.FIXED,
+    borders: { top: redBorder, bottom: redBorder, left: redBorder, right: redBorder, insideH: noBorder, insideV: noBorder },
+    rows: [new TableRow({ children: [leftCell, rightCell] })]
+  });
+}
+
+// renderComponenteRowDocx — linha com 2 componentes lado a lado (FIXED)
+async function renderComponenteRowDocx(item1, item2, imgMap) {
+  const { Table, TableRow, TableCell, WidthType, BorderStyle, TableLayoutType } = docx;
+
+  const noBorder = { style: BorderStyle.NONE, size: 0 };
+
+  const cell1 = await renderComponenteItemDocx(item1, imgMap);
+  const cell2 = item2 ? await renderComponenteItemDocx(item2, imgMap) : new TableCell({
+    borders: { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder, insideH: noBorder, insideV: noBorder },
+    children: []
+  });
+
+  return new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    layout: TableLayoutType.FIXED,
+    borders: { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder, insideH: noBorder, insideV: noBorder },
+    rows: [new TableRow({ children: [cell1, cell2] })]
+  });
+}
+
+// renderComponenteItemDocx — bloco com imagem+LUSAR | campos (FIXED)
+async function renderComponenteItemDocx(it, imgMap) {
+  const { Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, BorderStyle, ImageRun, TableLayoutType } = docx;
+
+  const RED_HEX = 'C0392B';
+  const DARK_HEX = '1A1A2E';
+  const redBorder = { style: BorderStyle.SINGLE, size: 12, color: RED_HEX };
+  const redLine = { style: BorderStyle.SINGLE, size: 8, color: RED_HEX };
+  const noBorder = { style: BorderStyle.NONE, size: 0 };
+
+  function label(text) {
+    return new TextRun({ text, bold: true, size: 16, font: 'Arial', color: DARK_HEX });
+  }
+  function value(text) {
+    return new TextRun({ text: text||'', size: 16, font: 'Arial', color: '333333' });
+  }
+
+  // ── LEFT BLOCK: Imagem + LUSAR ──
+  let imgPara;
+  if (it.images[0] && imgMap[it.images[0]]) {
+    const buf = await fetch(it.images[0]).then(r => r.arrayBuffer());
+    imgPara = new Paragraph({
+      children: [new ImageRun({ data: buf, transformation: { width: 100, height: 75 } })],
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 20, after: 40 }
+    });
+  } else {
+    imgPara = new Paragraph({
+      children: [new TextRun({ text: '📷', size: 24, color: 'CCCCCC' })],
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 30, after: 40 }
+    });
+  }
+
+  const lusarPara = new Paragraph({
+    children: [new TextRun({ text: 'LUSAR ' + (it.lusarCode||''), bold: true, size: 18, font: 'Georgia', color: RED_HEX })],
+    alignment: AlignmentType.CENTER,
+    spacing: { before: 0, after: 20 }
+  });
+
+  const leftCell = new TableCell({
+    width: { size: 35, type: WidthType.PERCENTAGE },
+    borders: { top: redBorder, bottom: redBorder, left: redBorder, right: redLine, insideH: noBorder, insideV: noBorder },
+    margins: { top: 30, bottom: 30, left: 40, right: 40 },
+    children: [imgPara, lusarPara]
+  });
+
+  // ── RIGHT BLOCK: Campos ──
+  const rightParas = [];
+  rightParas.push(new Paragraph({
+    children: [label('Nº Original:'), new TextRun({ text: ' ', size: 16 }), value(it.nOriginal||'')],
+    spacing: { before: 10, after: 30 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [label('Nº Similar:'), new TextRun({ text: ' ', size: 16 }), value(it.similar||'')],
+    spacing: { before: 0, after: 30 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [label('Descrição:')],
+    spacing: { before: 0, after: 10 }
+  }));
+  rightParas.push(new Paragraph({
+    children: [value(it.descricao||'')],
+    spacing: { before: 0, after: 20 }
+  }));
+
+  const rightCell = new TableCell({
+    width: { size: 65, type: WidthType.PERCENTAGE },
+    borders: { top: redBorder, bottom: redBorder, left: noBorder, right: redBorder, insideH: noBorder, insideV: noBorder },
+    margins: { top: 30, bottom: 30, left: 40, right: 40 },
+    children: rightParas
+  });
+
+  return new TableCell({
+    borders: { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder, insideH: noBorder, insideV: noBorder },
+    children: [new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      layout: TableLayoutType.FIXED,
+      borders: { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder, insideH: noBorder, insideV: noBorder },
+      rows: [new TableRow({ children: [leftCell, rightCell] })]
+    })]
+  });
+}
+
+async function generatePDF() {
+  if (S.pdfLoading) return;
+  S.pdfLoading = true;
+  const btn = document.getElementById('pdf-btn');
+  btn.disabled = true; btn.textContent = '⏳ Gerando...';
+  try {
+    setStatus('Carregando imagens...');
+    const imgMap = await preloadImgs(S.pages);
+    setStatus('Renderizando...'); await new Promise(r => setTimeout(r,40));
+    const cvs = [];
+    for (let i=0; i<S.pages.length; i++) {
+      setStatus(`Pág ${i+1}/${S.pages.length}...`); await new Promise(r => setTimeout(r,10));
+      cvs.push(renderPageCanvas(S.pages[i],PDF_W_LARGE,PDF_H_LARGE,imgMap));
+    }
+    setStatus('Montando PDF...'); await new Promise(r => setTimeout(r,40));
+    dlBlob(buildPDF(cvs), 'catalogo-pecas.pdf', 'application/pdf');
+    setStatus('');
+  } catch(e) { setStatus('Erro: '+e.message); setTimeout(() => setStatus(''), 4000); }
+  btn.disabled = false; btn.textContent = '⬇️ Baixar PDF'; S.pdfLoading = false;
+}
+
+// ═══════════════════════════════════════════════════════
+//  BACKUP / RESTORE
+// ═══════════════════════════════════════════════════════
+function saveBackup() {
+  const payload = {
+    version: 2,
+    savedAt: new Date().toISOString(),
+    pages: S.pages
+  };
+  const pretty = JSON.stringify(payload, null, 2);
+  dlBlob(new TextEncoder().encode(pretty),
+    'catalogo-backup-'+Date.now()+'.catbak', 'application/json');
+}
+let _restoreData = null;
+function loadBackupFile(inp) {
+  const f = inp.files[0]; if (!f) return; inp.value='';
+  const r = new FileReader();
+  r.onload = e => {
+    try { const d=JSON.parse(e.target.result); if (!d.pages) throw new Error('Inválido'); showRestoreModal(d); }
+    catch(err) { alert('Erro ao carregar backup: '+err.message); }
+  };
+  r.readAsText(f);
+}
+function showRestoreModal(data) {
+  _restoreData = data;
+  const at = new Date(data.savedAt).toLocaleString('pt-BR');
+  const tot = data.pages.reduce((s,p) => s+p.items.length, 0);
+  document.getElementById('restore-info').innerHTML = `Salvo em: <b>${at}</b><br><b>${data.pages.length} página(s)</b> · <b>${tot} item(ns)</b>`;
+  document.getElementById('restore-modal').classList.add('show');
+}
+function closeRestoreModal() { document.getElementById('restore-modal').classList.remove('show'); _restoreData=null; }
+function confirmRestore() {
+  if (_restoreData) {
+    S.pages = _restoreData.pages;
+    normalizePages();
+    _restoreData = null;
+    closeRestoreModal();
+    renderAll();
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  JSON IMPORT
+// ═══════════════════════════════════════════════════════
+function showImportModal() {
+  document.getElementById('import-textarea').value = '';
+  document.getElementById('import-error').textContent = '';
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('import-confirm-btn').disabled = true;
+  document.getElementById('import-modal').classList.add('show');
+}
+function closeImportModal() { document.getElementById('import-modal').classList.remove('show'); }
+// Converte um objeto JSON de peças em descritores de página agrupados por marca.
+// Retorna: [{subtitle:string, items:[...]}]
+// — Se o item tem "Marca", aparece em cada página da marca correspondente.
+// — Se não tem "Marca", vai para uma página "SEM MARCA".
+// — Cada marca tem páginas de até ITEMS_PER_PAGE itens.
+function parseImportJSON(raw) {
+  const parsed = JSON.parse(raw), keys = Object.keys(parsed);
+  if (keys.length === 0) throw new Error('JSON vazio');
+
+  // brandMap: Map<string, item[]> — mantém ordem de inserção
+  const brandMap = new Map();
+
+  for (const k of keys) {
+    const d = parsed[k];
+    const baseItem = {
+      images:       [null, null],
+      lusarCode:    d.LUSAR || k,
+      nOriginal:    d.N_Original  || '',
+      similar:      d.Similar     || '',
+      lonasLe:      d.FRAS_LE     || '',
+      lonasLona:    d.LONAFLEX    || '',
+      lonasThermoid:d.THERMOID    || '',
+      obs:          d.Obs         || '',
+      freio:        (d.Freio||'').toLowerCase().includes('ar') ? 'Ar' : 'Óleo',
+      aplicacao:    d.Aplicacao   || '',
+    };
+
+    const marcaStr = (d.Marca || '').trim();
+    const brands   = marcaStr
+      ? marcaStr.split(',').map(b => b.trim()).filter(Boolean)
+      : [];
+
+    if (brands.length === 0) {
+      // Sem marca → bucket especial
+      if (!brandMap.has('__NONE__')) brandMap.set('__NONE__', []);
+      brandMap.get('__NONE__').push({ ...baseItem, id: gid() });
+    } else {
+      for (const brand of brands) {
+        if (!brandMap.has(brand)) brandMap.set(brand, []);
+        // Cada aparição recebe ID próprio (item pode estar em múltiplas páginas)
+        brandMap.get(brand).push({ ...baseItem, id: gid() });
+      }
+    }
+  }
+
+  // Montar descritores de página (5 itens cada)
+  const pageDescs = [];
+  for (const [brand, items] of brandMap) {
+    const subtitle = brand === '__NONE__' ? 'SEM MARCA' : brand;
+    for (let i = 0; i < items.length; i += ITEMS_PER_PAGE) {
+      pageDescs.push({ subtitle, items: items.slice(i, i + ITEMS_PER_PAGE) });
+    }
+  }
+  return pageDescs;
+}
+function onImportChange() {
+  const raw = document.getElementById('import-textarea').value;
+  const errEl = document.getElementById('import-error');
+  const prevEl = document.getElementById('import-preview');
+  const btn = document.getElementById('import-confirm-btn');
+  errEl.textContent=''; prevEl.style.display='none'; btn.disabled=true;
+  if (!raw.trim()) return;
+  try {
+    const pageDescs = parseImportJSON(raw);
+    const totalEntries = pageDescs.reduce((s,p) => s+p.items.length, 0);
+    const brandSet = [...new Set(pageDescs.map(p => p.subtitle))];
+    prevEl.innerHTML = `✓ Válido — <b>${totalEntries} entradas</b> em <b>${brandSet.length} marca(s)</b> → <b>${pageDescs.length} página(s)</b> de até ${ITEMS_PER_PAGE} itens<br><span style="font-size:9px;color:#555">${brandSet.join(' · ')}</span>`;
+    prevEl.style.display='block'; btn.disabled=false;
+  } catch(e) { errEl.textContent='⚠ JSON inválido: '+e.message; }
+}
+function confirmImport() {
+  const raw = document.getElementById('import-textarea').value;
+  try {
+    const pageDescs = parseImportJSON(raw);
+    const tmpl = S.pages[0];
+    const newPgs = pageDescs.map(({ subtitle, items }) => ({
+      id:             gid(),
+      headerTitle:    tmpl.headerTitle,
+      headerSubtitle: subtitle,
+      pageType:       'sapata',
+      leftLogoUrl:    tmpl.leftLogoUrl,
+      rightLogoUrl:   tmpl.rightLogoUrl,
+      items,
+    }));
+    S.pages.push(...newPgs);
+    normalizePages();
+    closeImportModal();
+    renderAll();
+  } catch(e) { alert('Erro ao importar: '+e.message); }
+}
+
+
+
+
+
+// ═══════════════════════════════════════════════════════
+//  CROP EDITOR
+// ═══════════════════════════════════════════════════════
+const CE = {
+  canvas:null, ctx:null, img:null, rotation:0, crop:null, drag:null, cb:null,
+  DW:560, DH:400,
+
+  init() {
+    this.canvas = document.getElementById('crop-canvas');
+    this.ctx    = this.canvas.getContext('2d');
+    this.canvas.addEventListener('pointerdown',   e => this._pd(e));
+    this.canvas.addEventListener('pointermove',   e => this._pm(e));
+    this.canvas.addEventListener('pointerup',     e => this._pu(e));
+    this.canvas.addEventListener('pointercancel', e => this._pu(e));
+  },
+  open(src, cb) {
+    this.cb=cb; this.rotation=0; this.crop=null; this.drag=null;
+    document.getElementById('crop-modal').classList.add('show');
+    const img=new Image(); img.onload=()=>{this.img=img;this.draw();}; img.src=src;
+  },
+  close() { document.getElementById('crop-modal').classList.remove('show'); this.img=null; this.cb=null; },
+  metrics() {
+    const img=this.img; if(!img) return null;
+    const sw=this.rotation%180!==0;
+    const dW=sw?img.naturalHeight:img.naturalWidth, dH=sw?img.naturalWidth:img.naturalHeight;
+    const scale=Math.min((this.DW-20)/dW,(this.DH-20)/dH);
+    return {scale,drawW:img.naturalWidth*scale,drawH:img.naturalHeight*scale,dW,dH,iL:this.DW/2-dW*scale/2,iT:this.DH/2-dH*scale/2};
+  },
+  draw() {
+    const {ctx,img,DW,DH}=this; if(!img) return; const m=this.metrics(); if(!m) return;
+    ctx.fillStyle='#0d0d1a'; ctx.fillRect(0,0,DW,DH);
+    ctx.save(); ctx.translate(DW/2,DH/2); ctx.rotate(this.rotation*Math.PI/180);
+    ctx.drawImage(img,-m.drawW/2,-m.drawH/2,m.drawW,m.drawH); ctx.restore();
+    const c=this.crop;
+    if (c&&c.w>3&&c.h>3) {
+      const {x,y,w,h}=c;
+      ctx.fillStyle='rgba(0,0,0,.52)';
+      ctx.fillRect(0,0,DW,y); ctx.fillRect(0,y,x,h); ctx.fillRect(x+w,y,DW-x-w,h); ctx.fillRect(0,y+h,DW,DH-y-h);
+      ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.strokeRect(x,y,w,h);
+      ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=0.7;
+      [1/3,2/3].forEach(f=>{ctx.beginPath();ctx.moveTo(x+w*f,y);ctx.lineTo(x+w*f,y+h);ctx.stroke();ctx.beginPath();ctx.moveTo(x,y+h*f);ctx.lineTo(x+w,y+h*f);ctx.stroke();});
+      [[x,y],[x+w,y],[x,y+h],[x+w,y+h]].forEach(([hx,hy])=>{ctx.fillStyle='#fff';ctx.fillRect(hx-5,hy-5,10,10);ctx.strokeStyle='#333';ctx.lineWidth=0.8;ctx.strokeRect(hx-5,hy-5,10,10);});
+    }
+  },
+  pos(e) { const r=this.canvas.getBoundingClientRect(); return {x:(e.clientX-r.left)*(this.DW/r.width),y:(e.clientY-r.top)*(this.DH/r.height)}; },
+  hit(p) {
+    const c=this.crop; if(!c||c.w<5||c.h<5) return null;
+    const {x,y,w,h}=c;
+    for (const [hx,hy,k] of [[x,y,'tl'],[x+w,y,'tr'],[x,y+h,'bl'],[x+w,y+h,'br']]) if(Math.abs(p.x-hx)<12&&Math.abs(p.y-hy)<12) return k;
+    if(p.x>x&&p.x<x+w&&p.y>y&&p.y<y+h) return 'move'; return null;
+  },
+  _pd(e) { e.preventDefault(); this.canvas.setPointerCapture(e.pointerId); const p=this.pos(e),h=this.hit(p); if(h) this.drag={k:h==='move'?'move':'rs',h,s:p,o:{...this.crop}}; else{this.drag={k:'new',s:p};this.crop={x:p.x,y:p.y,w:0,h:0};} },
+  _pm(e) {
+    e.preventDefault(); const d=this.drag; if(!d) return; const p=this.pos(e);
+    if(d.k==='new'){this.crop={x:Math.min(p.x,d.s.x),y:Math.min(p.y,d.s.y),w:Math.abs(p.x-d.s.x),h:Math.abs(p.y-d.s.y)};}
+    else if(d.k==='move'){const{DW,DH}=this;this.crop={x:Math.max(0,Math.min(DW-d.o.w,d.o.x+p.x-d.s.x)),y:Math.max(0,Math.min(DH-d.o.h,d.o.y+p.y-d.s.y)),w:d.o.w,h:d.o.h};}
+    else{let{x,y,w,h}=d.o,dx=p.x-d.s.x,dy=p.y-d.s.y;if(d.h==='tl'){x+=dx;y+=dy;w-=dx;h-=dy;}if(d.h==='tr'){y+=dy;w+=dx;h-=dy;}if(d.h==='bl'){x+=dx;w-=dx;h+=dy;}if(d.h==='br'){w+=dx;h+=dy;}if(w>10&&h>10)this.crop={x:Math.max(0,x),y:Math.max(0,y),w:Math.max(10,w),h:Math.max(10,h)};}
+    this.draw();
+  },
+  _pu(e) { e.preventDefault(); this.drag=null; },
+  rotate(deg) { this.rotation=(this.rotation+deg+360)%360; this.crop=null; this.draw(); },
+  resetCrop() { this.crop=null; this.draw(); },
+  confirm() {
+    const img=this.img; if(!img) return;
+    const sw=this.rotation%180!==0,rW=sw?img.naturalHeight:img.naturalWidth,rH=sw?img.naturalWidth:img.naturalHeight;
+    const rc=document.createElement('canvas'); rc.width=rW; rc.height=rH;
+    const rctx=rc.getContext('2d');
+    // ← fundo branco antes de tudo: evita transparência virar preto no export JPEG
+    rctx.fillStyle='#ffffff'; rctx.fillRect(0,0,rW,rH);
+    rctx.save(); rctx.translate(rW/2,rH/2); rctx.rotate(this.rotation*Math.PI/180); rctx.drawImage(img,-img.naturalWidth/2,-img.naturalHeight/2); rctx.restore();
+    const c=this.crop;
+    if(!c||c.w<5||c.h<5){const u=rc.toDataURL('image/jpeg',.97);if(this.cb)this.cb(u);this.close();return;}
+    const m=this.metrics(); if(!m){const u=rc.toDataURL('image/jpeg',.97);if(this.cb)this.cb(u);this.close();return;}
+    const ppd=rW/(m.dW*m.scale);
+    const sX=Math.max(0,(c.x-m.iL)*ppd),sY=Math.max(0,(c.y-m.iT)*ppd);
+    const sW=Math.min(rW-sX,c.w*ppd),sH=Math.min(rH-sY,c.h*ppd);
+    if(sW<2||sH<2){const u=rc.toDataURL('image/jpeg',.97);if(this.cb)this.cb(u);this.close();return;}
+    const cc=document.createElement('canvas'); cc.width=Math.round(sW); cc.height=Math.round(sH);
+    const cctx=cc.getContext('2d');
+    // ← fundo branco no canvas de corte também
+    cctx.fillStyle='#ffffff'; cctx.fillRect(0,0,cc.width,cc.height);
+    cctx.drawImage(rc,sX,sY,sW,sH,0,0,cc.width,cc.height);
+    const u=cc.toDataURL('image/jpeg',.97); if(this.cb)this.cb(u); this.close();
+  },
+};
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  CE.init();
+  S.pages = [defaultPage()];
+  normalizePages();
+  renderAll();
+});
+ </script>
+<footer class="site-footer">
+  <div class="footer-credit">feito por <span>riq</span><small>Email: dev@riq.ia.br</small></div>
+  <div class="social-links">
+    <a class="social-link" href="https://instagram.com/riq74_" target="_blank" rel="noopener">@riq74_</a>
+    <a class="social-link" href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">henrique-coelho01</a>
+  </div>
+</footer>
+<script src="../shared/theme.js"></script>
+</body>
+</html>

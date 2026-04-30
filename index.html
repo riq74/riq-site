@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared/theme.css" />
 
   <style>
 
@@ -29,6 +30,20 @@
 
       --font-serif: 'DM Serif Display', Georgia, serif;
       --font-mono:  'DM Mono', 'Courier New', monospace;
+    }
+
+    html[data-theme="light"] {
+      --bg:           #f6f7fb;
+      --surface:      #ffffff;
+      --surface-high: #eef2f8;
+      --border:       #d7deeb;
+      --border-hover: #bac7dc;
+      --amber:        #c56b14;
+      --cyan:         #0f8f88;
+      --text:         #152033;
+      --muted:        #7f8799;
+      --muted-light:  #5e6880;
+      --white:        #0f172a;
     }
 
     /* ─────────────────────────────────────────
@@ -342,14 +357,16 @@
     /* ─────────────────────────────────────────
        FOOTER
     ───────────────────────────────────────── */
-    footer {
+    footer, .site-footer {
       border-top: 1px solid var(--border);
       padding: 24px 0 44px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      flex-direction: column;
       flex-wrap: wrap;
       gap: 16px;
+      text-align: center;
     }
 
     .footer-credit {
@@ -398,14 +415,14 @@
       .grid, .soon-grid {
         grid-template-columns: 1fr;
       }
-      footer {
+      footer, .site-footer {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
       }
     }
   </style>
 </head>
-<body>
+<body data-default-theme="dark">
 
   <div class="wrapper">
 
@@ -442,7 +459,7 @@
       <div class="hero-motivation">
         <p>
           Um hub para tudo que construo | ferramentas, experimentos e projetos que começaram como
-          <em> "e se eu tentasse?"</em>
+          <em> "e se eu tentasse"</em>
           Criei este espaço para que minhas ideias existam fora da minha cabeça.
         </p>
       </div>
@@ -462,45 +479,26 @@
 
       <div class="grid" id="projects-grid">
 
-        <!-- Card: Sudoku -->
-        <a class="card" href="sudoku/index.html" style="animation-delay: 0s;">
+        <!-- Card: Gerador de Pix -->
+        <a class="card" href="gerador-pix/index.html" style="animation-delay: 0s;">
           <div class="card-preview">
-            <div class="card-glow" style="background: #E8943A;"></div>
-            <span class="card-url">/sudoku</span>
-            
+            <div class="card-glow" style="background: #60A5FA;"></div>
+            <span class="card-url">/gerador-pix</span>
             <span class="card-arrow">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M7 17L17 7M17 7H7M17 7v10"/>
               </svg>
             </span>
-            <span class="card-tag" style="color: #E8943A;">jogo</span>
+            <span class="card-tag" style="color: #60A5FA;">ferramenta</span>
           </div>
           <div class="card-body">
-            <div class="card-name">Sudoku</div>
-            <div class="card-desc">Jogo de Sudoku com diferentes níveis de dificuldade.</div>
-          </div>
-        </a>
-
-        <!-- Card: Lary -->
-        <a class="card" href="paginas/contador-lary/index.html" style="animation-delay: .08s;">
-          <div class="card-preview">
-            <div class="card-glow" style="background: #d4a0c0;"></div>
-            <span class="card-url">/paginas/contador-lary</span>
-            <span class="card-arrow">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17L17 7M17 7H7M17 7v10"/>
-              </svg>
-            </span>
-            <span class="card-tag" style="color: #d4a0c0;">pessoal</span>
-          </div>
-          <div class="card-body">
-            <div class="card-name">Lary</div>
-            <div class="card-desc">Um espaço especial. Você sabe pra quem é.</div>
+            <div class="card-name">Gerador de Pix</div>
+            <div class="card-desc">Gere Pix estático com payload, QR Code, logo opcional e download da imagem.</div>
           </div>
         </a>
 
         <!-- Card: Remover Fundo -->
-        <a class="card" href="removedor-fundo/index.html" style="animation-delay: .16s;">
+        <a class="card" href="removedor-fundo/index.html" style="animation-delay: .08s;">
           <div class="card-preview">
             <div class="card-glow" style="background: #4ECDC4;"></div>
             <span class="card-url">/removedor-fundo</span>
@@ -517,54 +515,62 @@
           </div>
         </a>
 
-        <!--
-
-        <a class="card" href="https://riq.ia.br/SLUG" target="_blank" rel="noopener"
-           style="animation-delay: .40s;">
+        <!-- Card: Montar Catálogo -->
+        <a class="card" href="catalogo-online/catalogo-pecas-movendo-final.html" style="animation-delay: .16s;">
           <div class="card-preview">
-            <div class="card-glow" style="background: #4ECDC4;"></div>
-            <span class="card-url">riq.ia.br/SLUG</span>
+            <div class="card-glow" style="background: #f97316;"></div>
+            <span class="card-url">/catalogo-online</span>
             <span class="card-arrow">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M7 17L17 7M17 7H7M17 7v10"/>
               </svg>
             </span>
-            <span class="card-tag" style="color: #4ECDC4;">ferramenta</span>
+            <span class="card-tag" style="color: #f97316;">projeto</span>
           </div>
           <div class="card-body">
-            <div class="card-name">Nome do Projeto</div>
-            <div class="card-desc">Descrição.</div>
+            <div class="card-name">Montar Catálogo</div>
+            <div class="card-desc">meu projeto de criação de catalogo para empresa de sapata de freio</div>
           </div>
         </a>
-        -->
+
+        <!-- Card: Sudoku -->
+        <a class="card" href="sudoku/index.html" style="animation-delay: .24s;">
+          <div class="card-preview">
+            <div class="card-glow" style="background: #E8943A;"></div>
+            <span class="card-url">/sudoku</span>
+            <span class="card-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </span>
+            <span class="card-tag" style="color: #E8943A;">jogo</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Sudoku</div>
+            <div class="card-desc">Jogo de Sudoku com diferentes níveis de dificuldade.</div>
+          </div>
+        </a>
+
+        <!-- Card: Lary -->
+        <a class="card" href="contador-lary/index.html" style="animation-delay: .32s;">
+          <div class="card-preview">
+            <div class="card-glow" style="background: #d4a0c0;"></div>
+            <span class="card-url">/contador-lary</span>
+            <span class="card-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </span>
+            <span class="card-tag" style="color: #d4a0c0;">pessoal</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Lary</div>
+            <div class="card-desc">Um espaço especial. Você sabe pra quem é.</div>
+          </div>
+        </a>
 
       </div>
     </section><!-- /projects -->
-
-    <section class="soon">
-      <div class="section-header">
-        <span class="section-label">em breve</span>
-        <div class="section-line"></div>
-      </div>
-      <div class="soon-grid">
-        <div class="soon-card">
-          <div class="soon-card-tag">pessoal</div>
-          <div class="soon-card-name">Log</div>
-        </div>
-        <div class="soon-card">
-          <div class="soon-card-tag">ferramenta</div>
-          <div class="soon-card-name">QR Generator</div>
-        </div>
-        <div class="soon-card">
-          <div class="soon-card-tag">ferramenta</div>
-          <div class="soon-card-name">Montar Catálogo</div>
-        </div>
-      </div>
-      <p class="soon-caption">
-        Breve
-      </p>
-    </section>
-    -->
 
     <!-- caption always visible -->
     <p style="
@@ -582,7 +588,7 @@
     </p>
 
     <!-- ── FOOTER ──────────────────────────── -->
-    <footer>
+    <footer class="site-footer">
       <div class="footer-credit">
         feito por <span>riq</span>
         <small>Email: dev@riq.ia.br</small>
@@ -619,6 +625,10 @@
       count.textContent = String(n).padStart(2, '0');
     }
   </script>
+  <script src="shared/theme.js"></script>
 
 </body>
 </html>
+
+
+

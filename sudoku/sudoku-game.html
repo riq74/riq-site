@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" sizes="32x32" href="Logo-RIQ-S-Fundo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../Logo-RIQ-S-Fundo.png">
 <title>Sudoku-Riq</title>
+<link rel="stylesheet" href="../shared/theme.css">
+<script defer src="../shared/theme.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -14,6 +16,14 @@
   --err-bg:rgba(239,68,68,.12);--err-txt:#fca5a5;
   --sel-bg:rgba(59,130,246,.28);--hi-bg:rgba(59,130,246,.07);--same-bg:rgba(59,130,246,.16);
   --box-c:#94a3b8;--cell-c:#2d3f55;
+}
+html[data-theme="light"]{
+  --bg:#f3f6fb;--surf:#ffffff;--surf2:#e8eef7;--bdr:#cbd5e1;
+  --txt:#0f172a;--muted:#64748b;--acc:#2563eb;--acc-d:rgba(37,99,235,.12);
+  --given:#0f172a;--player:#2563eb;--hint-c:#15803d;
+  --err-bg:rgba(239,68,68,.1);--err-txt:#b91c1c;
+  --sel-bg:rgba(37,99,235,.18);--hi-bg:rgba(37,99,235,.06);--same-bg:rgba(37,99,235,.12);
+  --box-c:#64748b;--cell-c:#d9e2ef;
 }
 body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;
   min-height:100vh;display:flex;align-items:center;justify-content:center;overflow-x:hidden}
@@ -174,7 +184,8 @@ button{font-family:inherit;cursor:pointer}
 .heart.breaking{animation:heartBreak .35s ease forwards}
 </style>
 </head>
-<body>
+<body data-home-href="../index.html" data-default-theme="dark">
+<div class="theme-floating-slot" data-theme-slot></div>
 
 <div id="cheat-bar" class="hidden">👁 MODO TRAPAÇA ATIVO</div>
 <div id="toast"></div>
