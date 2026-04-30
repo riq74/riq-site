@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resultado do Pix Estático</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../Logo-RIQ-S-Fundo.png" />
+    <meta
+      name="description"
+      content="Resultado do gerador de Pix estático com QR Code, payload Copia e Cola e download."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="../shared/theme.css" />
+    <script defer src="https://unpkg.com/qr-code-styling@1.9.2/lib/qr-code-styling.js"></script>
+    <script defer src="./app.js"></script>
+    <script defer src="../shared/theme.js"></script>
+  </head>
+  <body data-page="result" data-home-href="../index.html" data-default-theme="dark">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand" aria-label="Gerador de Pix Estático">
+          <div class="brand-mark">$</div>
+          <div class="brand-copy">
+            <p class="brand-title">Gerador de Pix</p>
+            <p class="brand-subtitle">Resultado e Copia e Cola</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-button" type="button" id="back_to_form" aria-label="Voltar para editar">
+            ←
+          </button>
+          <span data-theme-slot></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="page shell">
+      <section class="hero" style="align-items: center; text-align: center; margin-bottom: 28px;">
+        <h1 class="page-title">Cobrança gerada</h1>
+        <p class="page-lead" id="result_status">
+          Seu QR Code está pronto para pagamento.
+        </p>
+      </section>
+
+      <section class="layout">
+        <div class="side-grid">
+          <section class="panel">
+            <div class="panel-inner">
+              <h2 class="panel-title">QR Code</h2>
+              <p class="panel-subtitle">Escaneie com o app do banco.</p>
+              <div class="qr-stage">
+                <div class="qr-frame" id="qr_container" aria-label="QR Code gerado"></div>
+              </div>
+              <div class="payload-card">
+                <h2 class="panel-title">Pix Copia e Cola</h2>
+                <div class="code-box">
+                  <div class="code-box-header">
+                    <span>Payload BR Code</span>
+                    <span id="payload_length"></span>
+                  </div>
+                  <pre id="payload_text" tabindex="0"></pre>
+                </div>
+                <div class="payload-actions" style="margin-top: 14px;">
+                  <button class="primary-button" type="button" id="copy_payload">Copiar PIX</button>
+                  <button class="secondary-button" type="button" id="download_qr">Baixar QR</button>
+                </div>
+                <p class="status-line" id="copy_status" data-tone="" aria-live="polite"></p>
+                <p class="status-line" id="download_status" data-tone="" aria-live="polite"></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-inner">
+              <h2 class="panel-title">Detalhes da cobrança</h2>
+              <p class="panel-subtitle">Os dados abaixo são os que o banco lê ao escanear o QR.</p>
+              <div class="details-grid">
+                <div class="detail-row">
+                  <span class="detail-label">Recebedor</span>
+                  <span class="detail-value" id="result_name"></span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Chave Pix</span>
+                  <span class="detail-value" id="result_key"></span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Valor</span>
+                  <span class="detail-value" id="result_value"></span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">TXID</span>
+                  <span class="detail-value" id="result_txid"></span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Cidade</span>
+                  <span class="detail-value" id="merchant_city"></span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">País</span>
+                  <span class="detail-value" id="merchant_country"></span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Modo</span>
+                  <span class="detail-value" id="result_mode"></span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-credit">feito por <span>riq</span><small>Email: dev@riq.ia.br</small></div>
+      <div class="social-links">
+        <a class="social-link" href="https://instagram.com/riq74_" target="_blank" rel="noopener">@riq74_</a>
+        <a class="social-link" href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">henrique-coelho01</a>
+      </div>
+    </footer>
+  </body>
+</html>
