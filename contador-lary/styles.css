@@ -15,6 +15,20 @@
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
+html[data-theme="dark"] {
+  --bg: #0f1117;
+  --surface: #171a23;
+  --surface-alt: #1d2230;
+  --text: #f3f4f6;
+  --muted: #b5bfd2;
+  --focus: #60a5fa;
+  --success-bg: #123d28;
+  --success-text: #98f5b8;
+  --waiting-bg: #4b3610;
+  --waiting-text: #ffd98d;
+  --shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -27,6 +41,10 @@ body {
   line-height: 1.5;
 }
 
+html[data-theme="dark"] body {
+  background: radial-gradient(circle at top right, #311222, var(--bg));
+}
+
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -36,6 +54,11 @@ body {
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   z-index: 99;
+}
+
+html[data-theme="dark"] .skip-link {
+  background: #171a23;
+  color: var(--text);
 }
 
 .skip-link:focus {
@@ -52,6 +75,10 @@ body {
   padding: 0.9rem 1rem;
   background: linear-gradient(90deg, var(--primary), #ef233c);
   color: #ffffff;
+}
+
+html[data-theme="dark"] .topbar {
+  background: linear-gradient(90deg, #5e0b1a, #9d0208);
 }
 
 .topbar__link {
@@ -105,6 +132,10 @@ body {
   font-weight: 600;
 }
 
+html[data-theme="dark"] .hero__next {
+  background: #0f2741;
+}
+
 .message-wheel__header {
   display: flex;
   justify-content: space-between;
@@ -152,6 +183,11 @@ body {
   margin-top: 0.8rem;
 }
 
+html[data-theme="dark"] .btn--ghost {
+  background: #34131d;
+  color: #ffccd6;
+}
+
 .message-wheel__result {
   margin-top: 0.75rem;
   border: 1px dashed #f3a6b6;
@@ -159,6 +195,11 @@ body {
   background: #fff5f8;
   padding: 0.8rem;
   min-height: 3rem;
+}
+
+html[data-theme="dark"] .message-wheel__result {
+  border-color: #6a2031;
+  background: #21141a;
 }
 
 .message-wheel__result.is-loading::before {
@@ -192,6 +233,10 @@ body {
   border: 1px solid #f7cad0;
   border-radius: 12px;
   padding: 0.85rem;
+}
+
+html[data-theme="dark"] .year-card {
+  border-color: #4c2631;
 }
 
 .year-card__head {
@@ -233,6 +278,11 @@ body {
   text-align: center;
 }
 
+html[data-theme="dark"] .countdown__item {
+  background: #121622;
+  border-color: #334155;
+}
+
 .countdown__value {
   display: block;
   font-weight: 800;
@@ -258,10 +308,19 @@ body {
   background: #ffffff;
 }
 
+html[data-theme="dark"] .memory-card {
+  border-color: #4c2631;
+  background: #171a23;
+}
+
 .memory-card__photo {
   min-height: 200px;
   background: linear-gradient(135deg, #ffe5ec, #ffd6e0, #fff0f3);
   position: relative;
+}
+
+html[data-theme="dark"] .memory-card__photo {
+  background: linear-gradient(135deg, #321320, #24111d, #3c1a28);
 }
 
 .memory-card__placeholder {

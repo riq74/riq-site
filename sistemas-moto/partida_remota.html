@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guia Partida Remota | Criador RIQ</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏍️</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="../Logo-RIQ-S-Fundo.png">
+<link rel="stylesheet" href="../shared/theme.css">
+<script defer src="../shared/theme.js"></script>
 
 <style>
   :root {
@@ -21,6 +23,21 @@
     --purple: #a78bfa;
     --text: #e2e8f0;
     --text2: #94a3b8;
+  }
+
+  html[data-theme="light"] {
+    --bg: #f5f7fb;
+    --bg2: #ffffff;
+    --bg3: #edf2fa;
+    --border: #d5deeb;
+    --amber: #d97706;
+    --amber2: #b45309;
+    --red: #dc2626;
+    --green: #16a34a;
+    --blue: #2563eb;
+    --purple: #7c3aed;
+    --text: #0f172a;
+    --text2: #64748b;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -251,7 +268,7 @@
   .ig-link:hover { opacity: 0.85; }
 </style>
 </head>
-<body>
+<body data-home-href="../index.html" data-default-theme="dark">
 
 <nav>
   <div class="nav-brand">⚡Partida pelo Controle</div>
@@ -266,6 +283,7 @@
   <a href="#chave-geral">Chave Geral</a>
   <a href="#fusivel">Fusíveis</a>
   <a href="#instalacao">Instalação</a>
+  <span data-theme-slot></span>
 </nav>
 
 <div class="hero">

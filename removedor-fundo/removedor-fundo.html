@@ -3,31 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" sizes="32x32" href="Logo-RIQ-S-Fundo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../Logo-RIQ-S-Fundo.png">
 <title>Removedor de Fundo do Riq</title>
+<link rel="stylesheet" href="../shared/theme.css">
+<script defer src="../shared/theme.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;background:#0f0f13;color:#e0e0e0;min-height:100vh;padding:24px;display:flex;flex-direction:column;}
+html[data-theme="light"] body{background:#f4f6fb;color:#111827}
 .tab-bar{display:flex;gap:6px;margin-bottom:24px;background:#1a1a24;padding:6px;border-radius:12px;border:1px solid #2a2a38;width:fit-content}
+html[data-theme="light"] .tab-bar{background:#ffffff;border-color:#d6deeb}
 .tab-btn{padding:9px 24px;border-radius:8px;border:none;cursor:pointer;font-size:.88rem;font-weight:600;background:transparent;color:#888;transition:all .2s}
 .tab-btn.active{background:#6c63ff;color:#fff}
 .tab-btn:hover:not(.active){color:#ccc;background:#2a2a38}
+html[data-theme="light"] .tab-btn{color:#64748b}
+html[data-theme="light"] .tab-btn:hover:not(.active){color:#1f2937;background:#eef2ff}
 .tab-pane{display:none;flex:1}.tab-pane.active{display:block}
 .btn{padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .15s}
 .btn-p{background:#6c63ff;color:#fff}.btn-p:hover{background:#5a52e0}
 .btn-s{background:#1e1e2e;color:#ccc;border:1px solid #333}.btn-s:hover{background:#2a2a3e;color:#fff}
+html[data-theme="light"] .btn-s{background:#ffffff;color:#334155;border-color:#d6deeb}
+html[data-theme="light"] .btn-s:hover{background:#eef2ff;color:#0f172a}
 .btn:disabled{opacity:.4;cursor:not-allowed}
 /* BATCH */
 h1{font-size:1.4rem;font-weight:600;color:#fff;margin-bottom:4px}
 .subtitle{font-size:.85rem;color:#888;margin-bottom:20px}
 .controls{background:#1a1a24;border:1px solid #2a2a38;border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+html[data-theme="light"] .controls,
+html[data-theme="light"] .rename-bar,
+html[data-theme="light"] .m-tb,
+html[data-theme="light"] .save-row,
+html[data-theme="light"] .card{background:#ffffff;border-color:#d6deeb}
 .ctrl-group{display:flex;flex-direction:column;gap:4px}
 .ctrl-group label{font-size:.78rem;color:#aaa}
+html[data-theme="light"] .ctrl-group label,
+html[data-theme="light"] .subtitle,
+html[data-theme="light"] .m-head p,
+html[data-theme="light"] .badge,
+html[data-theme="light"] .card-name,
+html[data-theme="light"] .save-row label,
+html[data-theme="light"] .rename-bar label{color:#64748b}
 .ctrl-group input[type=range]{width:160px;accent-color:#6c63ff}
 .ctrl-val{font-size:.85rem;color:#6c63ff;font-weight:600}
 .drop-zone{border:2px dashed #3a3a50;border-radius:14px;padding:40px;text-align:center;cursor:pointer;transition:all .2s;background:#13131d;margin-bottom:20px}
 .drop-zone:hover,.drop-zone.drag-over{border-color:#6c63ff;background:#1a1830}
+html[data-theme="light"] .drop-zone,
+html[data-theme="light"] .m-drop{border-color:#cbd5e1;background:#ffffff}
+html[data-theme="light"] .drop-zone:hover,
+html[data-theme="light"] .drop-zone.drag-over,
+html[data-theme="light"] .m-drop:hover{background:#eef2ff}
 .drop-zone svg{opacity:.4;margin-bottom:12px}
 .drop-zone p{color:#777;font-size:.9rem}
 .drop-zone span{color:#6c63ff;font-weight:600}
@@ -41,6 +66,8 @@ h1{font-size:1.4rem;font-weight:600;color:#fff;margin-bottom:4px}
 .card-imgs .orig{background:#eee}
 .card-imgs .result{background:repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/12px 12px}
 .cdivider{width:1px;background:#333;flex-shrink:0}
+html[data-theme="light"] .cdivider,
+html[data-theme="light"] .m-sep{background:#d6deeb}
 .card-info{padding:8px 10px;display:flex;justify-content:space-between;align-items:center}
 .card-name{font-size:.72rem;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
 .card-dl{background:none;border:none;color:#6c63ff;cursor:pointer;font-size:.78rem;font-weight:600;padding:2px 6px;border-radius:4px}
@@ -57,6 +84,12 @@ h1{font-size:1.4rem;font-weight:600;color:#fff;margin-bottom:4px}
 .rpreview{font-size:.78rem;color:#6c63ff;background:#1e1a3a;padding:4px 10px;border-radius:6px;white-space:nowrap}
 .rstart{display:flex;align-items:center;gap:8px}
 .rstart input[type=number]{background:#0f0f18;border:1px solid #3a3a52;border-radius:8px;color:#fff;font-size:.88rem;padding:7px 10px;width:70px;outline:none;text-align:center}
+html[data-theme="light"] .rename-bar input[type=text],
+html[data-theme="light"] .rstart input[type=number],
+html[data-theme="light"] .save-row input[type=text],
+html[data-theme="light"] .tbtn,
+html[data-theme="light"] .bgt{background:#ffffff;border-color:#cbd5e1;color:#334155}
+html[data-theme="light"] .rpreview{background:#eef2ff}
 /* MANUAL */
 .m-head{margin-bottom:16px}
 .m-head h2{font-size:1.3rem;color:#fff;margin-bottom:4px}
@@ -79,6 +112,7 @@ h1{font-size:1.4rem;font-weight:600;color:#fff;margin-bottom:4px}
 .m-sep{width:1px;background:#2a2a38;align-self:stretch;flex-shrink:0;margin:0 2px}
 .m-wrap{position:relative;border:1px solid #2a2a38;border-radius:12px;overflow:hidden;height:500px;cursor:crosshair;user-select:none}
 .m-wrap.pan-mode{cursor:grab}.m-wrap.panning{cursor:grabbing}
+html[data-theme="light"] .m-wrap{border-color:#d6deeb;background:#ffffff}
 #mCv{display:block;width:100%;height:100%}
 .m-status{display:flex;justify-content:space-between;font-size:.75rem;color:#555;padding:0 4px}
 .save-row{background:#1a1a24;border:1px solid #2a2a38;border-radius:12px;padding:12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
@@ -94,9 +128,11 @@ h1{font-size:1.4rem;font-weight:600;color:#fff;margin-bottom:4px}
 footer{margin-top:40px;padding-top:16px;border-top:1px solid #1e1e2e;text-align:center;font-size:.78rem;color:#444}
 footer a{color:#6c63ff;text-decoration:none}
 footer a:hover{text-decoration:underline}
+html[data-theme="light"] footer{border-top-color:#d6deeb;color:#64748b}
 </style>
 </head>
-<body>
+<body data-home-href="../index.html" data-default-theme="dark">
+<div class="theme-floating-slot" data-theme-slot></div>
 
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('batch')">📦 Removedor de Fundo Branco - Lote</button>
