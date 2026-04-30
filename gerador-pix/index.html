@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador de Pix Estático</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../Logo-RIQ-S-Fundo.png" />
+    <meta
+      name="description"
+      content="Gerador de Pix estático com payload BR Code, CRC16, QR Code e download em imagem."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="../shared/theme.css" />
+    <script defer src="./app.js"></script>
+    <script defer src="../shared/theme.js"></script>
+  </head>
+  <body data-page="form" data-home-href="../index.html" data-default-theme="dark">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand" aria-label="Gerador de Pix Estático">
+          <div class="brand-mark">$</div>
+          <div class="brand-copy">
+            <p class="brand-title">Gerador de Pix</p>
+            <p class="brand-subtitle">Pix Copia e Cola + QR Code</p>
+          </div>
+        </div>
+        <div class="topbar-actions" data-theme-slot></div>
+      </div>
+    </header>
+
+    <main class="page shell">
+      <section class="hero">
+        <h1 class="page-title">Gerador de Pix Estático</h1>
+        <p class="page-lead">
+          Preencha a chave Pix, o nome do recebedor e se quiser um valor fixo. O app monta
+          o QR Code e prepara tudo para o banco ler.
+        </p>
+      </section>
+
+      <section class="layout">
+        <form class="panel" id="pix_form" autocomplete="off" novalidate>
+          <div class="panel-inner">
+            <div id="notice" class="notice" data-visible="false" role="alert" aria-live="polite"></div>
+
+            <div class="form-grid">
+              <div class="section-card">
+                <div class="section-card-header">
+                  <h3>Tipo da chave Pix</h3>
+                </div>
+                <div class="chips" role="tablist" aria-label="Tipo da chave Pix">
+                  <button class="chip-button" type="button" id="key_type_random" data-pix-type="random">Chave aleatória</button>
+                  <button class="chip-button" type="button" id="key_type_phone" data-pix-type="phone">Telefone</button>
+                  <button class="chip-button" type="button" id="key_type_email" data-pix-type="email">E-mail</button>
+                  <button class="chip-button" type="button" id="key_type_cpf" data-pix-type="cpf">CPF</button>
+                  <button class="chip-button" type="button" id="key_type_cnpj" data-pix-type="cnpj">CNPJ</button>
+                </div>
+                <p class="helper" style="margin-top: 10px;">
+                  Selecione o tipo de Chave
+                </p>
+                <p class="error" data-error-for="pix_key_type"></p>
+              </div>
+
+              <div class="field">
+                <label for="chave_pix">Chave Pix *</label>
+                <input
+                  id="chave_pix"
+                  name="chave_pix"
+                  type="text"
+                  placeholder="CPF, CNPJ, e-mail, celular ou chave aleatória"
+                  maxlength="99"
+                  required
+                />
+                <p class="helper" id="pix_key_hint">Escolha o tipo de chave Pix para liberar a validação.</p>
+                <p class="error" data-error-for="chave_pix"></p>
+              </div>
+
+              <div class="field">
+                <label for="nome_recebedor">Nome do recebedor *</label>
+                <input
+                  id="nome_recebedor"
+                  name="nome_recebedor"
+                  type="text"
+                  placeholder="Ex: Joao da Silva"
+                  maxlength="40"
+                  required
+                />
+                <p class="error" data-error-for="nome_recebedor"></p>
+              </div>
+
+              <div class="section-card">
+                <div class="section-card-header">
+                  <h3>Modo de valor</h3>
+                </div>
+                <div class="chips" role="tablist" aria-label="Modo de valor">
+                  <button class="chip-button is-active" type="button" id="mode_fixed">Valor fixo</button>
+                  <button class="chip-button" type="button" id="mode_free">Valor livre</button>
+                </div>
+                <p class="helper" style="margin-top: 10px;">
+                  Valor livre deixa o pagador digitar no banco. Valor fixo trava o valor do Pix.
+                </p>
+              </div>
+
+              <div class="field-inline" id="valor_row">
+                <div class="field">
+                  <label for="valor_pix">Valor R$</label>
+                  <input
+                    id="valor_pix"
+                    name="valor_pix"
+                    type="text"
+                    inputmode="decimal"
+                    placeholder="0,00"
+                  />
+                  <p class="helper">Se ficar vazio, o pagamento será de valor livre.</p>
+                  <p class="error" data-error-for="valor_pix"></p>
+                </div>
+
+                <div class="field">
+                  <label for="txid_pix">TXID opcional</label>
+                  <input
+                    id="txid_pix"
+                    name="txid_pix"
+                    type="text"
+                    placeholder="Opcional"
+                    maxlength="40"
+                  />
+                  <p class="helper">Identificação opcional do Pix. Será sanitizado, sem espaços, em maiúsculas e com até 25 caracteres.</p>
+                  <p class="error" data-error-for="txid_pix"></p>
+                </div>
+              </div>
+
+              <div class="section-card">
+                <div class="section-card-header">
+                  <h3>Personalização do QR</h3>
+                </div>
+                <div class="field" style="margin-bottom: 14px;">
+                  <label for="include_logo">Adicionar logo</label>
+                  <div class="file-row">
+                    <input id="include_logo" name="include_logo" type="checkbox" />
+                    <p class="helper" style="margin: 0;">Marque para abrir a configuração da logo enviada por você.</p>
+                  </div>
+                </div>
+
+                <div id="logo_config" class="is-hidden">
+                  <div class="field" style="margin-bottom: 14px;">
+                    <label for="logo_pix">Logo opcional</label>
+                    <div class="file-row">
+                      <input
+                        id="logo_pix"
+                        name="logo_pix"
+                        type="file"
+                        accept="image/png,image/jpeg,image/jpg,image/webp,image/gif,image/avif,image/svg+xml"
+                      />
+                    </div>
+                    <div id="logo_preview" class="file-preview" hidden></div>
+                    <p class="helper">
+                      Imagem enviada por você. Para preservar a leitura, o app limita o tamanho da logo no centro e usa correção alta.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="field-inline">
+                  <div class="field">
+                    <label for="qr_color">Cor do QR</label>
+                    <input id="qr_color" name="qr_color" type="color" value="#111111" />
+                    <p class="helper">Mantenha contraste forte para não comprometer a leitura.</p>
+                  </div>
+
+                  <div class="field">
+                    <label for="bg_color">Cor de fundo</label>
+                    <input id="bg_color" name="bg_color" type="color" value="#ffffff" />
+                    <p class="helper">Evite fundos escuros ou com contraste baixo.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="button-row">
+                <button class="primary-button" type="submit" id="generate_qr">Gerar QR Code</button>
+                <button class="secondary-button" type="button" id="clear_form">Limpar campos</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <aside class="side-grid is-hidden">
+          <section class="panel">
+            <div class="panel-inner">
+              <h2 class="panel-title">O que o banco interpreta</h2>
+              <p class="panel-subtitle">
+                O BR Code carrega tudo que o banco precisa em uma sequência TLV: chave Pix,
+                nome, valor opcional, país, cidade, TXID e CRC16 no final.
+              </p>
+              <div class="info-list">
+                <div class="info-item">
+                  <strong>Sem servidor</strong>
+                  <span>
+                    Não há API nem banco de dados. O QR já leva a estrutura completa e o CRC16
+                    valida a integridade do payload.
+                  </span>
+                </div>
+                <div class="info-item">
+                  <strong>Valor opcional</strong>
+                  <span>
+                    Se o campo ficar vazio, o pagador escolhe o valor no app do banco.
+                    Se preencher, o valor vai travado no payload.
+                  </span>
+                </div>
+                <div class="info-item">
+                  <strong>Cidade fixa</strong>
+                  <span>
+                    O merchant city fica sempre como BRASIL, conforme a regra que você pediu.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </aside>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-credit">feito por <span>riq</span><small>Email: dev@riq.ia.br</small></div>
+      <div class="social-links">
+        <a class="social-link" href="https://instagram.com/riq74_" target="_blank" rel="noopener">@riq74_</a>
+        <a class="social-link" href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">henrique-coelho01</a>
+      </div>
+    </footer>
+  </body>
+</html>
