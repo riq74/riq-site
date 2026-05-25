@@ -3,176 +3,327 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Site do Riq</title>
-  <meta name="description" content="Oi eu sou o Riq e esse é meu site." />
+  <title>RIQ // Terminal</title>
+  <meta name="description" content="Portfolio do Riq - Cybersecurity, TI & IA" />
 
-  <!-- Fonts -->
   <link rel="icon" type="image/png" sizes="32x32" href="Logo-RIQ-S-Fundo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="shared/theme.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
-
+    /* ═══════════════════════════════════════════════════════════════════════════
+       THEME TOKENS
+       ═══════════════════════════════════════════════════════════════════════════ */
     :root {
-      --bg:           #0E0F13;
-      --surface:      #13151B;
-      --surface-high: #1A1D26;
-      --border:       #1E2130;
-      --border-hover: #2A2E40;
-      --amber:        #E8943A;
-      --cyan:         #4ECDC4;
-      --text:         #E2E4EA;
-      --muted:        #525869;
-      --muted-light:  #8891A8;
-      --white:        #F0EEE9;
-
-      --font-serif: 'DM Serif Display', Georgia, serif;
-      --font-mono:  'DM Mono', 'Courier New', monospace;
+      /* Dark Theme */
+      --bg: #050505;
+      --bg-elevated: #0a0a0a;
+      --bg-card: #111111;
+      --bg-card-hover: #181818;
+      --bg-input: #0d0d0d;
+      
+      --text: #f0f0f0;
+      --text-secondary: #a0a0a0;
+      --text-tertiary: #606060;
+      
+      --accent: #00ff88;
+      --accent-secondary: #00d4ff;
+      --accent-tertiary: #ff0080;
+      --accent-warm: #ff6600;
+      
+      --border: rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(0, 255, 136, 0.2);
+      
+      --glow: 0 0 30px rgba(0, 255, 136, 0.15);
+      --glow-accent: 0 0 20px rgba(0, 255, 136, 0.3);
+      
+      --font-body: 'Space Grotesk', sans-serif;
+      --font-mono: 'Space Mono', monospace;
     }
 
-    html[data-theme="light"] {
-      --bg:           #f6f7fb;
-      --surface:      #ffffff;
-      --surface-high: #eef2f8;
-      --border:       #d7deeb;
-      --border-hover: #bac7dc;
-      --amber:        #c56b14;
-      --cyan:         #0f8f88;
-      --text:         #152033;
-      --muted:        #7f8799;
-      --muted-light:  #5e6880;
-      --white:        #0f172a;
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg-elevated: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f5f5f5;
+      --bg-input: #f0f0f0;
+      
+      --text: #111111;
+      --text-secondary: #555555;
+      --text-tertiary: #999999;
+      
+      --accent: #0066cc;
+      --accent-secondary: #0099ff;
+      --accent-tertiary: #cc00aa;
+      --accent-warm: #ff6600;
+      
+      --border: rgba(0, 0, 0, 0.08);
+      --border-hover: rgba(0, 102, 204, 0.25);
+      
+      --glow: 0 0 30px rgba(0, 102, 204, 0.1);
+      --glow-accent: 0 0 20px rgba(0, 102, 204, 0.2);
     }
 
-    /* ─────────────────────────────────────────
-       RESET
-    ───────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
     html { scroll-behavior: smooth; }
+    
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-serif);
+      font-family: var(--font-body);
+      line-height: 1.6;
       min-height: 100vh;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+
     a { color: inherit; text-decoration: none; }
-    ::selection { background: #E8943A30; }
+    
+    ::selection { background: var(--accent); color: var(--bg); }
 
-    /* ─────────────────────────────────────────
-       ANIMAÇÕES
-    ───────────────────────────────────────── */
-    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fadeUp  {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0);    }
-    }
-    @keyframes pulse-ring {
-      0%   { transform: translate(-50%,-50%) scale(1); opacity: .5; }
-      100% { transform: translate(-50%,-50%) scale(2.6); opacity: 0; }
-    }
+    /* ═══════════════════════════════════════════════════════════════════════════
+       SCROLLBAR
+       ═══════════════════════════════════════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-elevated); }
+    ::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-    /* ─────────────────────────────────────────
-       LAYOUT
-    ───────────────────────────────────────── */
-    .wrapper {
-      max-width: 780px;
+    /* ═══════════════════════════════════════════════════════════════════════════
+       LAYOUT SYSTEM
+       ═══════════════════════════════════════════════════════════════════════════ */
+    .container {
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 48px;
     }
 
-    /* ─────────────────────────────────────────
-       HERO
-    ───────────────────────────────────────── */
-    .hero {
-      padding-top: clamp(72px, 13vw, 120px);
-      padding-bottom: clamp(56px, 9vw, 96px);
-      animation: fadeIn .8s ease both;
+    @media (max-width: 768px) {
+      .container { padding: 0 24px; }
     }
 
-    .hero-mark {
+    /* ═══════════════════════════════════════════════════════════════════════════
+       TOP BAR
+       ═══════════════════════════════════════════════════════════════════════════ */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 40px;
     }
 
-    .hero-domain {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 4px;
+    .brand-logo {
+      width: 36px;
+      height: 36px;
     }
 
-    .hero-headline {
-      font-family: var(--font-serif);
-      font-size: clamp(24px, 4.5vw, 32px);
-      font-weight: 400;
-      line-height: 1.3;
-      color: var(--white);
-      max-width: 480px;
-      margin-bottom: 16px;
-      letter-spacing: -.4px;
-    }
-
-    .hero-sub {
+    .brand-name {
       font-family: var(--font-mono);
       font-size: 13px;
-      color: var(--muted-light);
-      line-height: 1.8;
-      max-width: 480px;
-      margin-bottom: 28px;
-      font-weight: 300;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--accent);
     }
 
-    .hero-motivation {
-      border-left: 2px solid #E8943A40;
-      padding-left: 16px;
-      max-width: 460px;
+    .brand-status {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      letter-spacing: 1px;
+      margin-left: 20px;
+      padding-left: 20px;
+      border-left: 1px solid var(--border);
     }
 
-    .hero-motivation p {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.8;
-      font-weight: 300;
-    }
-
-    .hero-motivation em {
-      color: var(--muted-light);
-      font-style: italic;
-    }
-
-    /* ─────────────────────────────────────────
-       DIVIDER
-    ───────────────────────────────────────── */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, var(--border) 60%, transparent);
-      margin-bottom: clamp(40px, 7vw, 64px);
-    }
-
-    /* ─────────────────────────────────────────
-       SECTION HEADER
-    ───────────────────────────────────────── */
-    .section-header {
+    .theme-btn {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      padding: 10px 18px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .topbar { padding: 16px 24px; }
+      .brand-status { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════════════════════════════ */
+    .hero {
+      padding: clamp(100px, 15vw, 160px) 0 clamp(60px, 10vw, 100px);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .hero-main h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-main h1 span {
+      color: var(--accent);
+      position: relative;
+    }
+
+    .hero-description {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      line-height: 1.75;
       margin-bottom: 24px;
     }
 
-    .section-label {
+    .hero-quote {
+      padding: 20px 24px;
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      max-width: 480px;
+    }
+
+    .hero-quote p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .hero-quote em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .hero-aside {
+      padding-top: 20px;
+    }
+
+    .hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s;
+    }
+
+    .hero-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: var(--glow);
+    }
+
+    .hero-card-label {
       font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 4px;
-      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--text-tertiary);
       text-transform: uppercase;
-      white-space: nowrap;
+      margin-bottom: 16px;
+    }
+
+    .hero-card-value {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .hero-card-value + .hero-card-value {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .tag {
+      padding: 6px 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--accent);
+      transition: all 0.3s;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      box-shadow: var(--glow-accent);
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .hero-aside {
+        padding-top: 0;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       SECTION SPACING
+       ═══════════════════════════════════════════════════════════════════════════ */
+    .section {
+      padding: 60px 0 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent-secondary);
     }
 
     .section-line {
@@ -183,428 +334,437 @@
 
     .section-count {
       font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--muted);
+      font-size: 12px;
+      color: var(--accent);
     }
 
-    /* ─────────────────────────────────────────
-       PROJETOS GRID
-    ───────────────────────────────────────── */
-    .projects {
-      margin-bottom: clamp(48px, 8vw, 80px);
-    }
-
-    .grid {
+    /* ═══════════════════════════════════════════════════════════════════════════
+       PROJECTS GRID
+       ═══════════════════════════════════════════════════════════════════════════ */
+    .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 12px;
-    }
-
-    /* ─────────────────────────────────────────
-       CARD'S
-    ───────────────────────────────────────── */
-    .card {
-      display: block;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform .25s ease, box-shadow .25s ease,
-                  background .25s ease, border-color .25s ease;
-      animation: fadeUp .5s ease both;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      background: var(--surface-high);
-    }
-
-    .card-preview {
-      height: 130px;
-      background: var(--surface-high);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* subtle dot grid */
-    .card-preview::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle, #ffffff08 1px, transparent 1px);
-      background-size: 20px 20px;
-    }
-
-    .card-glow {
-      position: absolute;
-      width: 70px; height: 70px;
-      border-radius: 50%;
-      filter: blur(24px);
-      opacity: .04;
-      transition: opacity .3s;
-    }
-
-    .card:hover .card-glow { opacity: .12; }
-
-    .card-url {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 1px;
-      position: relative;
-      transition: color .25s;
-    }
-
-    .card:hover .card-url { color: var(--muted-light); }
-
-    .card-arrow {
-      position: absolute;
-      top: 10px; right: 10px;
-      color: var(--muted);
-      opacity: 0;
-      transition: opacity .25s, color .25s;
-    }
-
-    .card:hover .card-arrow {
-      opacity: 1;
-    }
-
-    .card-tag {
-      position: absolute;
-      bottom: 8px; left: 12px;
-      font-family: var(--font-mono);
-      font-size: 8px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      opacity: .6;
-    }
-
-    .card-body {
-      padding: 14px 16px 18px;
-    }
-
-    .card-name {
-      font-family: var(--font-serif);
-      font-size: 15px;
-      color: var(--text);
-      margin-bottom: 6px;
-      letter-spacing: -.2px;
-      transition: color .2s;
-    }
-
-    .card:hover .card-name { color: var(--white); }
-
-    .card-desc {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted-light);
-      line-height: 1.65;
-      font-weight: 300;
-    }
-
-    /* ─────────────────────────────────────────
-       EM BREVE
-    ───────────────────────────────────────── */
-    .soon {
-      margin-bottom: clamp(48px, 8vw, 80px);
-    }
-
-    .soon-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .soon-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 18px 16px;
-      opacity: .4;
-    }
-
-    .soon-card-tag {
-      font-family: var(--font-mono);
-      font-size: 8px;
-      letter-spacing: 3px;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .soon-card-name {
-      font-family: var(--font-serif);
-      font-size: 14px;
-      color: var(--text);
-    }
-
-    .soon-caption {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.75;
-      max-width: 460px;
-      font-style: italic;
-      font-weight: 300;
-    }
-
-    /* ─────────────────────────────────────────
-       FOOTER
-    ───────────────────────────────────────── */
-    footer, .site-footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      flex-wrap: wrap;
-      gap: 16px;
-      text-align: center;
-    }
-
-    .footer-credit {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 1px;
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    .footer-credit span { color: var(--muted-light); }
-
-    .footer-credit small {
-      font-size: 9px;
-      opacity: .4;
-      display: block;
-    }
-
-    .social-links {
-      display: flex;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 24px;
     }
 
-    .social-link {
+    /* ═══════════════════════════════════════════════════════════════════════════
+       PROJECT CARD
+       ═══════════════════════════════════════════════════════════════════════════ */
+    .project-card {
+      display: block;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--card-color);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-color);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), var(--glow);
+    }
+
+    .project-header {
+      padding: 32px 28px 24px;
+      background: var(--bg-elevated);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .project-path {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 1px;
+    }
+
+    .project-tag {
+      display: inline-flex;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid var(--card-color);
+      border-radius: 6px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--card-color);
+      width: fit-content;
+    }
+
+    .project-arrow {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
-      gap: 7px;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--card-color);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.3s;
+    }
+
+    .project-card:hover .project-arrow {
+      opacity: 1;
+      transform: translateX(0);
+      background: var(--card-color);
+      color: var(--bg);
+      border-color: var(--card-color);
+    }
+
+    .project-body {
+      padding: 24px 28px 28px;
+    }
+
+    .project-name {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       SOON SECTION
+       ═══════════════════════════════════════════════════════════════════════════ */
+    .soon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .soon-card {
+      background: var(--bg-card);
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      opacity: 0.6;
+      transition: all 0.3s;
+    }
+
+    .soon-card:hover {
+      opacity: 1;
+      border-color: var(--accent-secondary);
+      border-style: solid;
+    }
+
+    .soon-tag {
       font-family: var(--font-mono);
       font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 1px;
-      transition: color .2s;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 10px;
     }
 
-    .social-link:hover { color: var(--muted-light); }
-
-    .social-link svg {
-      flex-shrink: 0;
+    .soon-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
     }
 
-    /* ─────────────────────────────────────────
-       RESPONSIVIDADE
-    ───────────────────────────────────────── */
-    @media (max-width: 480px) {
-      .grid, .soon-grid {
-        grid-template-columns: 1fr;
-      }
-      footer, .site-footer {
+    .caption {
+      margin-top: 40px;
+      font-size: 15px;
+      color: var(--text-tertiary);
+      font-style: italic;
+      max-width: 500px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════════════════ */
+    footer {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-credit {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .footer-credit strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .footer-credit small {
+      display: block;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      transition: all 0.3s;
+    }
+
+    .footer-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      footer {
         flex-direction: column;
-        align-items: center;
+        text-align: center;
+      }
+      .footer-links {
+        flex-direction: column;
+        width: 100%;
+      }
+      .footer-link {
+        justify-content: center;
       }
     }
   </style>
 </head>
-<body data-default-theme="dark">
+<body>
 
-  <div class="wrapper">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="brand">
+      <img src="Logo-RIQ-S-Fundo.png" alt="riq" width="36" height="36" class="brand-logo" />
+      <span class="brand-name">RIQ</span>
+      <span class="brand-status">Cybersecurity • TI • IA</span>
+    </div>
+    
+    <button class="theme-btn" id="themeBtn">
+      <span>THEME</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+    </button>
+  </div>
 
-    <!-- ── HERO ───────────────────────────── -->
+  <!-- MAIN CONTENT -->
+  <div class="container">
+
+    <!-- HERO -->
     <section class="hero">
-
-      <!-- mark + domain -->
-      <div class="hero-mark">
-        <img
-          src="Logo-RIQ-S-Fundo.png"
-          alt="riq"
-          width="48"
-          height="48"
-          style="
-            display: block;
-            mix-blend-mode: screen;
-            object-fit: contain;
-          "
-        />
-        <span class="hero-domain">riq</span>
+      <div class="hero-inner">
+        <div class="hero-main">
+          <h1>
+            Sou o <span>Riq</span>.<br>
+            E construo com tecnologia.
+          </h1>
+          
+          <p class="hero-description">
+            Este é meu espaço onde ideias viram coisa real — entre o digital e o físico.
+            Cybersecurity, ferramentas, experimentos e soluções, com mais prática do que teoria.
+          </p>
+          
+          <div class="hero-quote">
+            <p>
+              Tudo aqui começou de um "<em>e se eu tentasse</em>" ou de um problema
+              que não tinha solução pronta. Cada projeto é uma invenção.
+            </p>
+          </div>
+        </div>
+        
+        <aside class="hero-aside">
+          <div class="hero-card">
+            <div class="hero-card-label">// STATUS</div>
+            <div class="hero-card-value">Inventário de projetos operando normalmente.</div>
+            <div class="hero-card-value">Última atualização: 2025</div>
+            
+            <div class="hero-card-tags">
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">Automação</span>
+              <span class="tag">IA Tools</span>
+              <span class="tag">Web Dev</span>
+            </div>
+          </div>
+        </aside>
       </div>
-
-      <!-- headline -->
-      <h1 class="hero-headline">
-        Sou o Riq. E tento resolver problemas com tecnologia.
-      </h1>
-
-      <!-- sub -->
-      <p class="hero-sub">
-        Este espaço é onde mostro minhas ideias e faço virarem coisa real | sempre entre o digital e o físico. Construo ferramentas, experimentos e soluções, com bastante curiosidade e mais prática do que teoria.
-      </p>
-
-      <!-- motivation -->
-      <div class="hero-motivation">
-        <p>
-          Um hub para tudo que construo | ferramentas, experimentos e projetos que começaram como
-          <em> "e se eu tentasse"</em>
-          Criei este espaço para que minhas ideias existam fora da minha cabeça.
-        </p>
-      </div>
-
     </section>
 
-    <!-- ── DIVIDER ─────────────────────────── -->
-    <div class="divider"></div>
-
-    <!-- ── PROJECTS ───────────────────────── -->
-    <section class="projects">
+    <!-- PROJECTS -->
+    <section class="section">
       <div class="section-header">
-        <span class="section-label">projetos</span>
+        <span class="section-title">// Projetos</span>
         <div class="section-line"></div>
-        <span class="section-count" id="project-count"></span>
+        <span class="section-count" id="projectCount">05</span>
       </div>
 
-      <div class="grid" id="projects-grid">
+      <div class="projects-grid" id="projectsGrid">
 
-        <!-- Card: Gerador de Pix -->
-        <a class="card" href="gerador-pix/index.html" style="animation-delay: 0s;">
-          <div class="card-preview">
-            <div class="card-glow" style="background: #60A5FA;"></div>
-            <span class="card-url">/gerador-pix</span>
-            <span class="card-arrow">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <a class="project-card" href="gerador-pix/index.html" style="--card-color: #00aaff;">
+          <div class="project-header">
+            <span class="project-path">/gerador-pix</span>
+            <span class="project-tag">ferramenta</span>
+            <span class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M7 17L17 7M17 7H7M17 7v10"/>
               </svg>
             </span>
-            <span class="card-tag" style="color: #60A5FA;">ferramenta</span>
           </div>
-          <div class="card-body">
-            <div class="card-name">Gerador de Pix</div>
-            <div class="card-desc">Gere Pix estático com payload, QR Code, logo opcional e download da imagem.</div>
+          <div class="project-body">
+            <div class="project-name">Gerador de Pix</div>
+            <div class="project-desc">Payload, QR Code, logo opcional e download. Automação financeira na prática.</div>
           </div>
         </a>
 
-        <!-- Card: Remover Fundo -->
-        <a class="card" href="removedor-fundo/index.html" style="animation-delay: .08s;">
-          <div class="card-preview">
-            <div class="card-glow" style="background: #4ECDC4;"></div>
-            <span class="card-url">/removedor-fundo</span>
-            <span class="card-arrow">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <a class="project-card" href="removedor-fundo/index.html" style="--card-color: #00ddaa;">
+          <div class="project-header">
+            <span class="project-path">/removedor-fundo</span>
+            <span class="project-tag">ferramenta</span>
+            <span class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M7 17L17 7M17 7H7M17 7v10"/>
               </svg>
             </span>
-            <span class="card-tag" style="color: #4ECDC4;">ferramenta</span>
           </div>
-          <div class="card-body">
-            <div class="card-name">Remover Fundo</div>
-            <div class="card-desc">Remova o fundo de qualquer imagem em segundos, sem instalar nada.</div>
+          <div class="project-body">
+            <div class="project-name">Removedor de Fundo</div>
+            <div class="project-desc">Um clique, fundo fora. Processamento de imagem com IA.</div>
           </div>
         </a>
 
-        <!-- Card: Montar Catálogo -->
-        <a class="card" href="catalogo-online/catalogo-pecas-movendo-final.html" style="animation-delay: .16s;">
-          <div class="card-preview">
-            <div class="card-glow" style="background: #f97316;"></div>
-            <span class="card-url">/catalogo-online</span>
-            <span class="card-arrow">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <a class="project-card" href="catalogo-online/catalogo-pecas-movendo-final.html" style="--card-color: #ff8800;">
+          <div class="project-header">
+            <span class="project-path">/catalogo-online</span>
+            <span class="project-tag">projeto</span>
+            <span class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M7 17L17 7M17 7H7M17 7v10"/>
               </svg>
             </span>
-            <span class="card-tag" style="color: #f97316;">projeto</span>
           </div>
-          <div class="card-body">
-            <div class="card-name">Montar Catálogo</div>
-            <div class="card-desc">meu projeto de criação de catalogo para empresa de sapata de freio</div>
+          <div class="project-body">
+            <div class="project-name">Catálogo Online</div>
+            <div class="project-desc">Sistema de catálogo pra empresa de sapata de freio. E-commerce funcional.</div>
           </div>
         </a>
 
-        <!-- Card: Sudoku -->
-        <a class="card" href="sudoku/index.html" style="animation-delay: .24s;">
-          <div class="card-preview">
-            <div class="card-glow" style="background: #E8943A;"></div>
-            <span class="card-url">/sudoku</span>
-            <span class="card-arrow">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <a class="project-card" href="sudoku/index.html" style="--card-color: #ff00aa;">
+          <div class="project-header">
+            <span class="project-path">/sudoku</span>
+            <span class="project-tag">jogo</span>
+            <span class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M7 17L17 7M17 7H7M17 7v10"/>
               </svg>
             </span>
-            <span class="card-tag" style="color: #E8943A;">jogo</span>
           </div>
-          <div class="card-body">
-            <div class="card-name">Sudoku</div>
-            <div class="card-desc">Jogo de Sudoku com diferentes níveis de dificuldade.</div>
+          <div class="project-body">
+            <div class="project-name">Sudoku</div>
+            <div class="project-desc">Jogo clássico com níveis de dificuldade. Algoritmo e interface limpa.</div>
           </div>
         </a>
 
-        <!-- Card: Lary -->
-        <a class="card" href="contador-lary/index.html" style="animation-delay: .32s;">
-          <div class="card-preview">
-            <div class="card-glow" style="background: #d4a0c0;"></div>
-            <span class="card-url">/contador-lary</span>
-            <span class="card-arrow">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <a class="project-card" href="contador-lary/index.html" style="--card-color: #aa66ff;">
+          <div class="project-header">
+            <span class="project-path">/contador-lary</span>
+            <span class="project-tag">pessoal</span>
+            <span class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M7 17L17 7M17 7H7M17 7v10"/>
               </svg>
             </span>
-            <span class="card-tag" style="color: #d4a0c0;">pessoal</span>
           </div>
-          <div class="card-body">
-            <div class="card-name">Lary</div>
-            <div class="card-desc">Um espaço especial. Você sabe pra quem é.</div>
+          <div class="project-body">
+            <div class="project-name">Lary</div>
+            <div class="project-desc">Espaço especial. Você sabe pra quem é.</div>
           </div>
         </a>
 
       </div>
-    </section><!-- /projects -->
+    </section>
 
-    <!-- caption always visible -->
-    <p style="
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.75;
-      max-width: 460px;
-      font-style: italic;
-      font-weight: 300;
-      margin-bottom: clamp(48px, 8vw, 80px);
-    ">
+    <!-- CAPTION -->
+    <p class="caption">
       A maioria das coisas aqui nasceu de um problema que quis resolver,
       ou de uma curiosidade que não quis deixar passar.
     </p>
 
-    <!-- ── FOOTER ──────────────────────────── -->
-    <footer class="site-footer">
-      <div class="footer-credit">
-        feito por <span>riq</span>
-        <small>Email: dev@riq.ia.br</small>
+    <!-- SOON -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-title">// Em Construção</span>
+        <div class="section-line"></div>
       </div>
 
-      <div class="social-links">
-        <a class="social-link" href="https://instagram.com/riq74_" target="_blank" rel="noopener">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <div class="soon-grid">
+        <div class="soon-card">
+          <div class="soon-tag">em breve</div>
+          <div class="soon-name">Novos Projetos</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="container">
+    <footer>
+      <div class="footer-credit">
+        <strong>riq</strong> — Cybersecurity & IA
+        <small>dev@riq.ia.br</small>
+      </div>
+
+      <div class="footer-links">
+        <a class="footer-link" href="https://instagram.com/riq74_" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
             <circle cx="12" cy="12" r="4"/>
             <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
           </svg>
           @riq74_
         </a>
-        <a class="social-link" href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <a class="footer-link" href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
             <rect x="2" y="9" width="4" height="12"/>
             <circle cx="4" cy="4" r="2"/>
@@ -613,22 +773,61 @@
         </a>
       </div>
     </footer>
-
-  </div><!-- /wrapper -->
+  </div>
 
   <script>
-    // Conta projetos e atualiza o label
-    const grid  = document.getElementById('projects-grid');
-    const count = document.getElementById('project-count');
-    if (grid && count) {
-      const n = grid.querySelectorAll('.card').length;
-      count.textContent = String(n).padStart(2, '0');
+    // ═══════════════════════════════════════════════════════════════════════════
+    // THEME TOGGLE
+    // ═══════════════════════════════════════════════════════════════════════════
+    const themeBtn = document.getElementById('themeBtn');
+    let theme = localStorage.getItem('riq-theme') || 'dark';
+    
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('riq-theme', t);
+      theme = t;
     }
+    
+    setTheme(theme);
+    
+    themeBtn.addEventListener('click', () => {
+      setTheme(theme === 'dark' ? 'light' : 'dark');
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PROJECT COUNTER
+    // ═══════════════════════════════════════════════════════════════════════════
+    const grid = document.getElementById('projectsGrid');
+    const count = document.getElementById('projectCount');
+    if (grid && count) {
+      count.textContent = String(grid.querySelectorAll('.project-card').length).padStart(2, '0');
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SCROLL REVEAL
+    // ═══════════════════════════════════════════════════════════════════════════
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.project-card').forEach((card, i) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = `all 0.5s ease ${i * 0.1}s`;
+      observer.observe(card);
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CONSOLE
+    // ═══════════════════════════════════════════════════════════════════════════
+    console.log('%c🛡️ RIQ TERMINAL', 'font-size: 22px; color: #00ff88; font-weight: bold;');
+    console.log('%cCybersecurity | TI | IA', 'color: #00d4ff;');
   </script>
-  <script src="shared/theme.js"></script>
 
 </body>
 </html>
-
-
-
