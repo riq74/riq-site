@@ -98,6 +98,8 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .project-index a { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(9.2rem, .35fr); gap: 1.5rem; align-items: center; padding: 1rem .2rem; text-decoration: none; }
 .project-index a:hover { background: var(--hover); }
 .project-index a:hover .project-name { text-decoration: underline; }
+.project-heading { display: grid; grid-template-columns: 2rem minmax(0, 1fr); align-items: center; gap: .625rem; }
+.project-icon { width: 2rem; height: 2rem; }
 .project-name { font-weight: 700; font-size: clamp(1.15rem, 2vw, 1.6rem); letter-spacing: -.04em; line-height: 1.2; }
 .project-name small { display: block; margin-top: .25rem; font: 500 .8rem/1.4 var(--mono); letter-spacing: 0; color: var(--muted); }
 .project-summary, .project-action { color: var(--muted); }
@@ -163,6 +165,7 @@ button { color: inherit; font: inherit; cursor: pointer; }
   .hero h1 { font-size: clamp(3.8rem, 14vw, 6rem); }
   .hero-feature img { aspect-ratio: 1.5; }
   .project-index a { grid-template-columns: 1fr; }
+  .project-summary, .project-action { padding-inline-start: 2.625rem; }
   .project-action { grid-column: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
