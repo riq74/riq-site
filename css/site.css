@@ -78,16 +78,7 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .section h2, .work-block h2 { margin: 0; font-size: clamp(2.15rem, 4.2vw, 4.4rem); letter-spacing: -.072em; line-height: 1.03; }
 .text-link { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
 .text-link:hover { color: var(--accent); }
-.feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-.project-feature { min-width: 0; border: 1px solid var(--line); }
-.project-feature a { display: block; height: 100%; text-decoration: none; }
-.project-feature img { width: 100%; aspect-ratio: 1.83; object-fit: cover; background: #dedfd1; border-bottom: 1px solid var(--line); }
-.feature-text { padding: 1.15rem clamp(1rem, 2.5vw, 1.7rem) 1.35rem; }
-.feature-text h3 { margin: .22em 0 .27em; font-size: clamp(1.6rem, 2.9vw, 3.2rem); line-height: 1; letter-spacing: -.06em; }
-.project-feature a:hover h3 { text-decoration: underline; text-decoration-thickness: 1px; }
-.feature-text p:last-child { margin: 0; color: var(--muted); }
 
-.index-section { border-top: 1px solid var(--line); }
 .filters { display: flex; flex-wrap: wrap; gap: .4rem; }
 .filters button { min-height: 44px; border: 1px solid var(--line); background: transparent; padding: .45rem .65rem; font-size: .9rem; font-weight: 600; }
 .filters button:hover { border-color: var(--ink); }
@@ -108,7 +99,6 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .work-band { margin-bottom: clamp(2rem, 5vw, 5rem); padding-inline: clamp(1rem, 4.5vw, 4.5rem); display: grid; grid-template-columns: 1fr .85fr; gap: clamp(1rem, 4.5vw, 4.5rem); align-items: center; color: var(--on-dark); background: var(--dark); }
 .work-band .eyebrow { color: var(--lime); }
 .work-band h2 { margin-block: .35em .4em; max-width: 14ch; }
-.work-band p:not(.eyebrow) { max-width: 49ch; color: #dddcd2; }
 .work-band :focus-visible { outline-color: var(--lime); }
 .work-band .button { margin-top: .5rem; }
 .work-band .button:hover { border-color: var(--lime); }
@@ -161,7 +151,7 @@ button { color: inherit; font: inherit; cursor: pointer; }
   .site-theme-toggle { margin-inline-start: auto; }
   .nav, .site-footer nav { gap: clamp(.65rem, 5vw, 1.5rem); }
   .nav a { font-size: .92rem; }
-  .hero, .feature-grid, .work-band { grid-template-columns: 1fr; }
+  .hero, .work-band { grid-template-columns: 1fr; }
   .hero h1 { font-size: clamp(3.8rem, 14vw, 6rem); }
   .hero-feature img { aspect-ratio: 1.5; }
   .project-index a { grid-template-columns: 1fr; }
