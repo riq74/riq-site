@@ -1,113 +1,141 @@
 <!doctype html>
-<html lang="pt-BR" data-default-theme="system">
+<html lang="pt-BR" data-default-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Currículo — Henrique Coelho</title>
   <meta name="description" content="Currículo público de Henrique Farias Ghedim Coelho. Cibersegurança, inteligência artificial aplicada e automação.">
-  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <meta name="theme-color" content="#060a10" data-light="#e9f0f1" data-dark="#060a10">
   <link rel="icon" type="image/png" href="Logo-RIQ-S-Fundo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <script src="shared/theme.js"></script>
-  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/redesign.css">
 </head>
-<body class="interior">
-  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-  <header class="site-header">
-    <div class="wrap">
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="field" aria-hidden="true">
+    <div class="field__clip">
+      <div class="field__stars"></div>
+      <div class="field__stars field__stars--dense"></div>
+      <div class="field__stars field__stars--bright"></div>
+      <div class="field__glow field__glow--top"></div>
+      <div class="field__glow field__glow--side"></div>
+      <div class="field__mesh"></div>
+      <svg class="field__arc" viewBox="0 0 1440 520" preserveAspectRatio="none" focusable="false">
+        <path d="M-80 0C380 190 1060 190 1520 0" fill="none" stroke="rgba(56,189,248,0.28)" stroke-width="1.2" stroke-dasharray="14 9"></path>
+        <path d="M-80 46C400 246 1080 246 1560 46" fill="none" stroke="rgba(216,240,87,0.16)" stroke-width="1" stroke-dasharray="3 11"></path>
+        <path d="M-80 96C420 306 1100 306 1580 96" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1"></path>
+      </svg>
+      <div class="field__glow field__glow--base"></div>
+    </div>
+  </div>
+
+  <header class="dock">
+    <div class="dock__inner glass glass--blur">
       <a class="brand" href="index.html">
-        <span class="brand-mark"><img src="Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
-        <span>riq<span class="brand-domain">.ia.br</span></span>
+        <span class="brand__mark"><img src="Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand__domain">.ia.br</span></span>
+        <span class="brand__dot" aria-hidden="true"></span>
       </a>
-      <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
-        <span data-theme-label>Tema escuro</span>
-      </button>
-      <nav class="nav" aria-label="Navegação principal">
-          <a href="index.html#oficina">Projetos</a>
-          <a href="trabalho.html">Trabalho</a>
-          <a href="index.html#ferramentas">Ferramentas</a>
-          <a href="sobre.html">Sobre</a>
-          <a href="curriculo.html" aria-current="page">Currículo</a>
+      <nav class="dock__nav" aria-label="Navegação principal">
+        <a class="dock__link" href="index.html#oficina">Projetos</a>
+        <a class="dock__link" href="trabalho.html">Trabalho</a>
+        <a class="dock__link" href="index.html#ferramentas">Ferramentas</a>
+        <a class="dock__link" href="sobre.html">Sobre</a>
+        <a class="dock__link" href="curriculo.html" aria-current="page">Currículo</a>
       </nav>
+      <div class="site-preferences dock__prefs">
+        <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+          <span data-theme-label>Tema escuro</span>
+        </button>
+        <label class="comfort" hidden><input type="checkbox" data-transparency-toggle> <span class="comfort__text">Reduzir transparência</span></label>
+      </div>
     </div>
   </header>
-<main id="conteudo" tabindex="-1">
-    <div class="wrap">
-      <header class="page-intro">
-        <p class="kicker">Currículo</p>
-        <h1>Henrique Farias Ghedim Coelho</h1>
-        <p class="lede">Cibersegurança, inteligência artificial aplicada e automação.</p>
-        <p class="byline"><a href="mailto:dev@riq.ia.br">dev@riq.ia.br</a> · <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">linkedin.com/in/henrique-coelho01</a></p>
-      </header>
 
-      <article class="essay resume">
-        <button type="button" class="button button-outline print-button" data-print hidden>Imprimir ou salvar em PDF</button>
-        <h2>Perfil</h2>
-        <p>Analista de cibersegurança com experiência em investigação digital, Brand Protection e automação. Tenho foco no uso de inteligência artificial no desenvolvimento de ferramentas, da definição de requisitos à revisão e aos testes.</p>
+  <main id="conteudo" class="page-main" tabindex="-1">
+    <header class="page-intro glass glass--blur">
+      <p class="kicker">Currículo</p>
+      <h1>Henrique Farias Ghedim Coelho</h1>
+      <p class="lede">Cibersegurança, inteligência artificial aplicada e automação.</p>
+      <p class="byline"><a href="mailto:dev@riq.ia.br">dev@riq.ia.br</a> · <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">linkedin.com/in/henrique-coelho01</a></p>
+    </header>
 
-        <h2>Soluções em destaque</h2>
-        <h3>Ferramenta de cadastro</h3>
-        <p>Criei uma extensão para reunir dados e evidências de páginas, verificar duplicidades e apoiar cadastros individuais e em lote. A pessoa confere as informações antes do envio, no lugar de repetir as mesmas etapas à mão.</p>
-        <h3>Ferramenta para formulários</h3>
-        <p>Criei uma extensão para configurar perfis e regras de preenchimento em formulários recorrentes de denúncia. A solução reduz a repetição de dados e mantém a conferência com quem envia.</p>
-        <p><a href="trabalho.html">Ver casos de trabalho</a></p>
+    <article class="essay resume">
+      <button type="button" class="pill-btn print-button" data-print hidden>Imprimir ou salvar em PDF</button>
 
-        <h2>Experiência</h2>
-        <h3>Serasa Experian</h3>
-        <p class="when">Analista de Cibersegurança · junho de 2026 até agora</p>
-        <ul>
-          <li>Atuo com investigação digital, análise de ameaças e proteção de marcas.</li>
-          <li>Desenvolvo e testo ferramentas para automatizar tarefas e apoiar a revisão das informações.</li>
-        </ul>
-        <h3>LUSAR Sistemas de Freio</h3>
-        <p class="when">Técnico de TI · agosto de 2025 a junho de 2026</p>
-        <ul>
-          <li>Desenvolvi uma aplicação web usada na rotina para centralizar cadastros e documentos de clientes, com importação de dados, perfis de acesso e histórico de alterações.</li>
-          <li>Atuei em infraestrutura e serviços de TI, automação de processos e integrações com APIs, planilhas e WhatsApp Business.</li>
-        </ul>
-        <h3>ClearSale</h3>
-        <p class="when">Analista de Cibersegurança · setembro de 2023 a março de 2025</p>
-        <ul>
-          <li>Investiguei perfis falsos, phishing e outros conteúdos fraudulentos com OSINT e monitoramento de ameaças.</li>
-          <li>Reuni evidências e apoiei denúncias e remoções, incluindo investigações de vazamentos e menções em fontes abertas, Deep Web e Dark Web.</li>
-        </ul>
+      <h2>Perfil</h2>
+      <p>Analista de cibersegurança com experiência em investigação digital, Brand Protection e automação. Tenho foco no uso de inteligência artificial no desenvolvimento de ferramentas, da definição de requisitos à revisão e aos testes.</p>
 
-        <h2>Competências</h2>
-        <ul>
-          <li>Investigação: Brand Protection, OSINT, fraudes e phishing, evidências digitais e takedown.</li>
-          <li>Desenvolvimento: Python, Flask, SQLite, JavaScript, HTML, CSS, extensões de navegador, Google Apps Script e n8n.</li>
-          <li>Integração e dados: APIs, CSV, JSON, planilhas, importação e validação de dados; Google Workspace e Cloudflare.</li>
-          <li>IA aplicada ao desenvolvimento e à documentação. Experimentos com diferentes modelos e ambientes de agentes, com testes e revisão humana.</li>
-        </ul>
+      <h2>Soluções em destaque</h2>
+      <div class="cases-grid">
+        <article class="work-block">
+          <h3>Ferramenta de cadastro</h3>
+          <p>Criei uma extensão para reunir dados e evidências de páginas, verificar duplicidades e apoiar cadastros individuais e em lote. A pessoa confere as informações antes do envio, no lugar de repetir as mesmas etapas à mão.</p>
+        </article>
+        <article class="work-block">
+          <h3>Ferramenta para formulários</h3>
+          <p>Criei uma extensão para configurar perfis e regras de preenchimento em formulários recorrentes de denúncia. A solução reduz a repetição de dados e mantém a conferência com quem envia.</p>
+        </article>
+      </div>
+      <p><a href="trabalho.html">Ver casos de trabalho</a></p>
 
-        <h2>Formação</h2>
-        <h3>Pós-graduação em Cibersegurança em Aplicações de Inteligência Artificial</h3>
-        <p class="when">Universidade Pitágoras Unopar Anhanguera · concluída em 2026</p>
-        <h3>Tecnólogo em Análise e Desenvolvimento de Sistemas</h3>
-        <p class="when">Unopar / Anhanguera · concluído em 2025</p>
+      <h2>Experiência</h2>
+      <h3>Serasa Experian</h3>
+      <p class="when">Analista de Cibersegurança · junho de 2026 até agora</p>
+      <ul>
+        <li>Atuo com investigação digital, análise de ameaças e proteção de marcas.</li>
+        <li>Desenvolvo e testo ferramentas para automatizar tarefas e apoiar a revisão das informações.</li>
+      </ul>
+      <h3>LUSAR Sistemas de Freio</h3>
+      <p class="when">Técnico de TI · agosto de 2025 a junho de 2026</p>
+      <ul>
+        <li>Desenvolvi uma aplicação web usada na rotina para centralizar cadastros e documentos de clientes, com importação de dados, perfis de acesso e histórico de alterações.</li>
+        <li>Atuei em infraestrutura e serviços de TI, automação de processos e integrações com APIs, planilhas e WhatsApp Business.</li>
+      </ul>
+      <h3>ClearSale</h3>
+      <p class="when">Analista de Cibersegurança · setembro de 2023 a março de 2025</p>
+      <ul>
+        <li>Investiguei perfis falsos, phishing e outros conteúdos fraudulentos com OSINT e monitoramento de ameaças.</li>
+        <li>Reuni evidências e apoiei denúncias e remoções, incluindo investigações de vazamentos e menções em fontes abertas, Deep Web e Dark Web.</li>
+      </ul>
 
-        <h2>Cursos e idioma</h2>
-        <ul>
-          <li>OSINT — Investigação e Inteligência Privada</li>
-          <li>LGPD</li>
-          <li>Analytics e Inteligência Artificial</li>
-          <li>Inglês intermediário com foco técnico</li>
-        </ul>
-      </article>
-    </div>
+      <h2>Competências</h2>
+      <ul>
+        <li>Investigação: Brand Protection, OSINT, fraudes e phishing, evidências digitais e takedown.</li>
+        <li>Desenvolvimento: Python, Flask, SQLite, JavaScript, HTML, CSS, extensões de navegador, Google Apps Script e n8n.</li>
+        <li>Integração e dados: APIs, CSV, JSON, planilhas, importação e validação de dados; Google Workspace e Cloudflare.</li>
+        <li>IA aplicada ao desenvolvimento e à documentação. Experimentos com diferentes modelos e ambientes de agentes, com testes e revisão humana.</li>
+      </ul>
+
+      <h2>Formação</h2>
+      <h3>Pós-graduação em Cibersegurança em Aplicações de Inteligência Artificial</h3>
+      <p class="when">Universidade Pitágoras Unopar Anhanguera · concluída em 2026</p>
+      <h3>Tecnólogo em Análise e Desenvolvimento de Sistemas</h3>
+      <p class="when">Unopar / Anhanguera · concluído em 2025</p>
+
+      <h2>Cursos e idioma</h2>
+      <ul>
+        <li>OSINT — Investigação e Inteligência Privada</li>
+        <li>LGPD</li>
+        <li>Analytics e Inteligência Artificial</li>
+        <li>Inglês intermediário com foco técnico</li>
+      </ul>
+    </article>
   </main>
+
   <footer class="site-footer">
-    <div class="wrap">
-      <a class="footer-name" href="index.html">Henrique Coelho<span>RIQ</span></a>
-      <nav aria-label="Contato">
-        <a href="mailto:dev@riq.ia.br">E-mail</a>
-        <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
-      </nav>
+    <div class="footer-panel glass glass--blur">
+      <div class="footer-panel__row">
+        <a class="footer-name" href="index.html">Henrique Coelho<span>RIQ</span></a>
+        <nav class="footer-panel__contact" aria-label="Contato">
+          <a href="mailto:dev@riq.ia.br">E-mail</a>
+          <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+        </nav>
+      </div>
     </div>
   </footer>
+
   <script src="js/site.js" defer></script>
 </body>
 </html>

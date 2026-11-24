@@ -1,50 +1,80 @@
 <!doctype html>
-<html lang="pt-BR" data-default-theme="system">
+<html lang="pt-BR" data-default-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sobre — Riq</title>
   <meta name="description" content="Henrique Coelho, o Riq. Cibersegurança, inteligência artificial aplicada e experimentos com modelos e agentes.">
-  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <meta name="theme-color" content="#060a10" data-light="#e9f0f1" data-dark="#060a10">
   <link rel="icon" type="image/png" href="Logo-RIQ-S-Fundo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <script src="shared/theme.js"></script>
-  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/redesign.css">
 </head>
-<body class="interior">
-  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-  <header class="site-header">
-    <div class="wrap">
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="field" aria-hidden="true">
+    <div class="field__clip">
+      <div class="field__stars"></div>
+      <div class="field__stars field__stars--dense"></div>
+      <div class="field__stars field__stars--bright"></div>
+      <div class="field__glow field__glow--top"></div>
+      <div class="field__glow field__glow--side"></div>
+      <div class="field__mesh"></div>
+      <svg class="field__arc" viewBox="0 0 1440 520" preserveAspectRatio="none" focusable="false">
+        <path d="M-80 0C380 190 1060 190 1520 0" fill="none" stroke="rgba(56,189,248,0.28)" stroke-width="1.2" stroke-dasharray="14 9"></path>
+        <path d="M-80 46C400 246 1080 246 1560 46" fill="none" stroke="rgba(216,240,87,0.16)" stroke-width="1" stroke-dasharray="3 11"></path>
+        <path d="M-80 96C420 306 1100 306 1580 96" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1"></path>
+      </svg>
+      <div class="field__glow field__glow--base"></div>
+    </div>
+  </div>
+
+  <header class="dock">
+    <div class="dock__inner glass glass--blur">
       <a class="brand" href="index.html">
-        <span class="brand-mark"><img src="Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
-        <span>riq<span class="brand-domain">.ia.br</span></span>
+        <span class="brand__mark"><img src="Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand__domain">.ia.br</span></span>
+        <span class="brand__dot" aria-hidden="true"></span>
       </a>
-      <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
-        <span data-theme-label>Tema escuro</span>
-      </button>
-      <nav class="nav" aria-label="Navegação principal">
-          <a href="index.html#oficina">Projetos</a>
-          <a href="trabalho.html">Trabalho</a>
-          <a href="index.html#ferramentas">Ferramentas</a>
-          <a href="sobre.html" aria-current="page">Sobre</a>
-          <a href="curriculo.html">Currículo</a>
+      <nav class="dock__nav" aria-label="Navegação principal">
+        <a class="dock__link" href="index.html#oficina">Projetos</a>
+        <a class="dock__link" href="trabalho.html">Trabalho</a>
+        <a class="dock__link" href="index.html#ferramentas">Ferramentas</a>
+        <a class="dock__link" href="sobre.html" aria-current="page">Sobre</a>
+        <a class="dock__link" href="curriculo.html">Currículo</a>
       </nav>
+      <div class="site-preferences dock__prefs">
+        <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+          <span data-theme-label>Tema escuro</span>
+        </button>
+        <label class="comfort" hidden><input type="checkbox" data-transparency-toggle> <span class="comfort__text">Reduzir transparência</span></label>
+      </div>
     </div>
   </header>
-<main id="conteudo" tabindex="-1">
-    <div class="wrap">
-      <header class="page-intro">
-        <p class="kicker">Sobre</p>
-        <h1>Henrique Coelho</h1>
-        <p class="lede">Sou o Riq. Trabalho com cibersegurança e tenho como foco aplicar inteligência artificial ao desenvolvimento de ferramentas e à automação.</p>
-      </header>
+
+  <main id="conteudo" class="page-main" tabindex="-1">
+    <header class="page-intro glass glass--blur">
+      <p class="kicker">Sobre</p>
+      <h1>Henrique Coelho</h1>
+      <p class="lede">Sou o Riq. Trabalho com cibersegurança e tenho como foco aplicar inteligência artificial ao desenvolvimento de ferramentas e à automação.</p>
+    </header>
+
+    <div class="section">
       <article class="essay">
         <p>Na oficina, desenvolvo ferramentas para criar vídeos de rotas, jogos em grupo e simulações. Também preparo materiais educativos sobre segurança online. Uso esses projetos para experimentar IA em tarefas concretas, como explorar uma implementação, levantar casos de teste e organizar a documentação.</p>
         <p>Testo modelos como DeepSeek e GLM e ambientes como OpenCode e DeepSeek Harness. Um <em>harness</em> é a estrutura que conecta o modelo a ferramentas e organiza a execução das tarefas. Nesses testes, observo como cada configuração segue instruções, usa as ferramentas disponíveis e lida com erros. Depois, reviso o que foi produzido e verifico se funciona no projeto.</p>
+      </article>
+    </div>
+
+    <div class="section">
+      <article class="essay">
         <p>Minha experiência profissional passa por investigação digital, análise de riscos e melhoria de processos. É desse contexto que vem meu interesse por automações e aplicações de IA que possam ser testadas e revisadas antes de entrar em uso.</p>
         <p>Tecnólogo em Análise e Desenvolvimento de Sistemas, Unopar / Anhanguera, concluído em 2025. Pós-graduação em Cibersegurança em Aplicações de Inteligência Artificial, Universidade Pitágoras Unopar Anhanguera, concluída em 2026.</p>
+      </article>
+    </div>
+
+    <div class="section">
+      <article class="essay">
         <ul class="career">
           <li>
             <span>Serasa Experian<small>Cibersegurança · desde junho de 2026</small></span>
@@ -59,91 +89,96 @@
             <span>Analista de Cibersegurança</span>
           </li>
         </ul>
-        <p class="note"><a href="curriculo.html">Ver currículo</a></p>
+        <p><a href="curriculo.html">Ver currículo</a></p>
       </article>
+    </div>
 
-      <section class="section tools-section" id="ferramentas" aria-labelledby="ferramentas-titulo">
-        <div class="section-heading">
+    <section class="section tools-section" id="ferramentas" aria-labelledby="ferramentas-titulo">
+      <div class="section-head">
+        <div class="section-head__meta">
           <h2 id="ferramentas-titulo">Ferramentas que uso</h2>
         </div>
+      </div>
+      <div class="tool-groups">
+        <div class="tool-group">
+          <h3>Agentes e fluxo de código</h3>
+          <ul class="tool-list" role="list">
+            <li><span class="tool-mark"><img src="assets/ferramentas/claude-code.png" width="24" height="24" alt="" loading="lazy"></span><span>Claude Code</span></li>
+            <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/cursor.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/cursor-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>Cursor IDE</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/antigravity.svg" width="24" height="24" alt="" loading="lazy"></span><span>Antigravity IDE</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/codex.png" width="24" height="24" alt="" loading="lazy"></span><span>Codex</span></li>
+            <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/opencode.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/opencode-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>OpenCode</span></li>
+          </ul>
+        </div>
+        <div class="tool-group">
+          <h3>IA, modelos e extração de dados</h3>
+          <ul class="tool-list" role="list">
+            <li><span class="tool-mark"><img class="tool-mark-surface" src="assets/ferramentas/ollama.png" width="24" height="24" alt="" loading="lazy"></span><span>Ollama</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/hugging-face.svg" width="24" height="24" alt="" loading="lazy"></span><span>Hugging Face</span></li>
+            <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/openrouter.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/openrouter-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>OpenRouter</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/firecrawl.png" width="24" height="24" alt="" loading="lazy"></span><span>Firecrawl</span></li>
+            <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/tavily.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/tavily-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>Tavily</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/playwright.svg" width="24" height="24" alt="" loading="lazy"></span><span>Playwright</span></li>
+          </ul>
+        </div>
+        <div class="tool-group">
+          <h3>Backend, cloud e bancos de dados</h3>
+          <ul class="tool-list" role="list">
+            <li><span class="tool-mark"><img src="assets/ferramentas/python.png" width="24" height="24" alt="" loading="lazy"></span><span>Python</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/fastapi.png" width="24" height="24" alt="" loading="lazy"></span><span>FastAPI</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/docker.png" width="24" height="24" alt="" loading="lazy"></span><span>Docker</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/cloudflare.png" width="24" height="24" alt="" loading="lazy"></span><span>Cloudflare</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/supabase.svg" width="24" height="24" alt="" loading="lazy"></span><span>Supabase</span></li>
+            <li><span class="tool-mark"><img src="assets/ferramentas/firebase.png" width="24" height="24" alt="" loading="lazy"></span><span>Firebase</span></li>
+            <li><span class="tool-mark"><img class="tool-mark-surface" src="assets/ferramentas/mysql.webp" width="24" height="24" alt="" loading="lazy"></span><span>MySQL</span></li>
+            <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/github.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/github-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>GitHub</span></li>
+          </ul>
+        </div>
+      </div>
+      <details class="tools-more">
+        <summary>Mais ferramentas <span class="tools-plus" aria-hidden="true">+</span><span class="tools-minus" aria-hidden="true">−</span></summary>
         <div class="tool-groups">
           <div class="tool-group">
-            <h3>Agentes e fluxo de código</h3>
+            <h3>Vídeo programático, áudio e 3D</h3>
             <ul class="tool-list" role="list">
-              <li><span class="tool-mark"><img src="assets/ferramentas/claude-code.png" width="24" height="24" alt="" loading="lazy"></span><span>Claude Code</span></li>
-              <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/cursor.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/cursor-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>Cursor IDE</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/antigravity.svg" width="24" height="24" alt="" loading="lazy"></span><span>Antigravity IDE</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/codex.png" width="24" height="24" alt="" loading="lazy"></span><span>Codex</span></li>
-              <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/opencode.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/opencode-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>OpenCode</span></li>
+              <li><span class="tool-mark"><img src="assets/ferramentas/remotion.png" width="24" height="24" alt="" loading="lazy"></span><span>Remotion</span></li>
+              <li><span class="tool-mark"><img src="assets/ferramentas/ffmpeg.ico" width="24" height="24" alt="" loading="lazy"></span><span>FFmpeg</span></li>
+              <li><span class="tool-mark"><img class="tool-mark-surface" src="assets/ferramentas/openai.svg" width="24" height="24" alt="" loading="lazy"></span><span>Whisper</span></li>
+              <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/threejs.ico" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/threejs-dark.ico" width="24" height="24" alt="" loading="lazy"><img src="assets/ferramentas/react.png" width="24" height="24" alt="" loading="lazy"></span><span>Three.js / React</span></li>
+              <li><span class="tool-mark"><img class="tool-mark-wide tool-mark-surface" src="assets/ferramentas/blender.svg" width="24" height="24" alt="" loading="lazy"></span><span>Blender</span></li>
             </ul>
           </div>
           <div class="tool-group">
-            <h3>IA, modelos e extração de dados</h3>
+            <h3>Interface e design</h3>
             <ul class="tool-list" role="list">
-              <li><span class="tool-mark"><img class="tool-mark-surface" src="assets/ferramentas/ollama.png" width="24" height="24" alt="" loading="lazy"></span><span>Ollama</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/hugging-face.svg" width="24" height="24" alt="" loading="lazy"></span><span>Hugging Face</span></li>
-              <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/openrouter.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/openrouter-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>OpenRouter</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/firecrawl.png" width="24" height="24" alt="" loading="lazy"></span><span>Firecrawl</span></li>
-              <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/tavily.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/tavily-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>Tavily</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/playwright.svg" width="24" height="24" alt="" loading="lazy"></span><span>Playwright</span></li>
+              <li><span class="tool-mark"><img src="assets/ferramentas/motion.svg" width="24" height="24" alt="" loading="lazy"></span><span>Motion</span></li>
+              <li><span class="tool-mark"><img src="assets/ferramentas/figma.svg" width="24" height="24" alt="" loading="lazy"></span><span>Figma</span></li>
             </ul>
           </div>
           <div class="tool-group">
-            <h3>Backend, cloud e bancos de dados</h3>
+            <h3>Automação, testes e gestão</h3>
             <ul class="tool-list" role="list">
-              <li><span class="tool-mark"><img src="assets/ferramentas/python.png" width="24" height="24" alt="" loading="lazy"></span><span>Python</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/fastapi.png" width="24" height="24" alt="" loading="lazy"></span><span>FastAPI</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/docker.png" width="24" height="24" alt="" loading="lazy"></span><span>Docker</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/cloudflare.png" width="24" height="24" alt="" loading="lazy"></span><span>Cloudflare</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/supabase.svg" width="24" height="24" alt="" loading="lazy"></span><span>Supabase</span></li>
-              <li><span class="tool-mark"><img src="assets/ferramentas/firebase.png" width="24" height="24" alt="" loading="lazy"></span><span>Firebase</span></li>
-              <li><span class="tool-mark"><img class="tool-mark-surface" src="assets/ferramentas/mysql.webp" width="24" height="24" alt="" loading="lazy"></span><span>MySQL</span></li>
-              <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/github.svg" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/github-dark.svg" width="24" height="24" alt="" loading="lazy"></span><span>GitHub</span></li>
+              <li><span class="tool-mark"><img src="assets/ferramentas/n8n.svg" width="24" height="24" alt="" loading="lazy"></span><span>n8n</span></li>
+              <li><span class="tool-mark"><img src="assets/ferramentas/postman.png" width="24" height="24" alt="" loading="lazy"></span><span>Postman</span></li>
+              <li><span class="tool-mark"><img src="assets/ferramentas/vscode.png" width="24" height="24" alt="" loading="lazy"></span><span>VS Code</span></li>
+              <li><span class="tool-mark"><img src="assets/ferramentas/clickup.png" width="24" height="24" alt="" loading="lazy"></span><span>ClickUp</span></li>
             </ul>
           </div>
         </div>
-        <details class="tools-more">
-          <summary>Mais ferramentas <span class="tools-plus" aria-hidden="true">+</span><span class="tools-minus" aria-hidden="true">−</span></summary>
-          <div class="tool-groups">
-            <div class="tool-group">
-              <h3>Vídeo programático, áudio e 3D</h3>
-              <ul class="tool-list" role="list">
-                <li><span class="tool-mark"><img src="assets/ferramentas/remotion.png" width="24" height="24" alt="" loading="lazy"></span><span>Remotion</span></li>
-                <li><span class="tool-mark"><img src="assets/ferramentas/ffmpeg.ico" width="24" height="24" alt="" loading="lazy"></span><span>FFmpeg</span></li>
-                <li><span class="tool-mark"><img class="tool-mark-surface" src="assets/ferramentas/openai.svg" width="24" height="24" alt="" loading="lazy"></span><span>Whisper</span></li>
-                <li><span class="tool-mark"><img class="tool-mark-light" src="assets/ferramentas/threejs.ico" width="24" height="24" alt="" loading="lazy"><img class="tool-mark-dark" src="assets/ferramentas/threejs-dark.ico" width="24" height="24" alt="" loading="lazy"><img src="assets/ferramentas/react.png" width="24" height="24" alt="" loading="lazy"></span><span>Three.js / React</span></li>
-                <li><span class="tool-mark"><img class="tool-mark-wide tool-mark-surface" src="assets/ferramentas/blender.svg" width="24" height="24" alt="" loading="lazy"></span><span>Blender</span></li>
-              </ul>
-            </div>
-            <div class="tool-group">
-              <h3>Interface e design</h3>
-              <ul class="tool-list" role="list">
-                <li><span class="tool-mark"><img src="assets/ferramentas/motion.svg" width="24" height="24" alt="" loading="lazy"></span><span>Motion</span></li>
-                <li><span class="tool-mark"><img src="assets/ferramentas/figma.svg" width="24" height="24" alt="" loading="lazy"></span><span>Figma</span></li>
-              </ul>
-            </div>
-            <div class="tool-group">
-              <h3>Automação, testes e gestão</h3>
-              <ul class="tool-list" role="list">
-                <li><span class="tool-mark"><img src="assets/ferramentas/n8n.svg" width="24" height="24" alt="" loading="lazy"></span><span>n8n</span></li>
-                <li><span class="tool-mark"><img src="assets/ferramentas/postman.png" width="24" height="24" alt="" loading="lazy"></span><span>Postman</span></li>
-                <li><span class="tool-mark"><img src="assets/ferramentas/vscode.png" width="24" height="24" alt="" loading="lazy"></span><span>VS Code</span></li>
-                <li><span class="tool-mark"><img src="assets/ferramentas/clickup.png" width="24" height="24" alt="" loading="lazy"></span><span>ClickUp</span></li>
-              </ul>
-            </div>
-          </div>
-        </details>
-      </section>
-    </div>
+      </details>
+    </section>
   </main>
+
   <footer class="site-footer">
-    <div class="wrap">
-      <a class="footer-name" href="index.html">Henrique Coelho<span>RIQ</span></a>
-      <nav aria-label="Contato">
-        <a href="mailto:dev@riq.ia.br">E-mail</a>
-        <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
-      </nav>
+    <div class="footer-panel glass glass--blur">
+      <div class="footer-panel__row">
+        <a class="footer-name" href="index.html">Henrique Coelho<span>RIQ</span></a>
+        <nav class="footer-panel__contact" aria-label="Contato">
+          <a href="mailto:dev@riq.ia.br">E-mail</a>
+          <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+        </nav>
+      </div>
     </div>
   </footer>
 </body>

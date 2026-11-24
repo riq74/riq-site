@@ -1,55 +1,74 @@
 <!doctype html>
-<html lang="pt-BR" data-default-theme="system">
+<html lang="pt-BR" data-default-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Trabalho — Riq</title>
   <meta name="description" content="Casos de Henrique Coelho em automação, desenvolvimento de ferramentas e documentação de Brand Protection.">
-  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <meta name="theme-color" content="#060a10" data-light="#e9f0f1" data-dark="#060a10">
   <link rel="icon" type="image/png" href="Logo-RIQ-S-Fundo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <script src="shared/theme.js"></script>
-  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/redesign.css">
 </head>
-<body class="interior">
-  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-  <header class="site-header">
-    <div class="wrap">
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="field" aria-hidden="true">
+    <div class="field__clip">
+      <div class="field__stars"></div>
+      <div class="field__stars field__stars--dense"></div>
+      <div class="field__stars field__stars--bright"></div>
+      <div class="field__glow field__glow--top"></div>
+      <div class="field__glow field__glow--side"></div>
+      <div class="field__mesh"></div>
+      <svg class="field__arc" viewBox="0 0 1440 520" preserveAspectRatio="none" focusable="false">
+        <path d="M-80 0C380 190 1060 190 1520 0" fill="none" stroke="rgba(56,189,248,0.28)" stroke-width="1.2" stroke-dasharray="14 9"></path>
+        <path d="M-80 46C400 246 1080 246 1560 46" fill="none" stroke="rgba(216,240,87,0.16)" stroke-width="1" stroke-dasharray="3 11"></path>
+        <path d="M-80 96C420 306 1100 306 1580 96" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1"></path>
+      </svg>
+      <div class="field__glow field__glow--base"></div>
+    </div>
+  </div>
+
+  <header class="dock">
+    <div class="dock__inner glass glass--blur">
       <a class="brand" href="index.html">
-        <span class="brand-mark"><img src="Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
-        <span>riq<span class="brand-domain">.ia.br</span></span>
+        <span class="brand__mark"><img src="Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand__domain">.ia.br</span></span>
+        <span class="brand__dot" aria-hidden="true"></span>
       </a>
-      <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
-        <span data-theme-label>Tema escuro</span>
-      </button>
-      <nav class="nav" aria-label="Navegação principal">
-          <a href="index.html#oficina">Projetos</a>
-          <a href="trabalho.html" aria-current="page">Trabalho</a>
-          <a href="index.html#ferramentas">Ferramentas</a>
-          <a href="sobre.html">Sobre</a>
-          <a href="curriculo.html">Currículo</a>
+      <nav class="dock__nav" aria-label="Navegação principal">
+        <a class="dock__link" href="index.html#oficina">Projetos</a>
+        <a class="dock__link" href="trabalho.html" aria-current="page">Trabalho</a>
+        <a class="dock__link" href="index.html#ferramentas">Ferramentas</a>
+        <a class="dock__link" href="sobre.html">Sobre</a>
+        <a class="dock__link" href="curriculo.html">Currículo</a>
       </nav>
+      <div class="site-preferences dock__prefs">
+        <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+          <span data-theme-label>Tema escuro</span>
+        </button>
+        <label class="comfort" hidden><input type="checkbox" data-transparency-toggle> <span class="comfort__text">Reduzir transparência</span></label>
+      </div>
     </div>
   </header>
-<main id="conteudo" tabindex="-1">
-    <div class="wrap">
-      <header class="page-intro">
-        <p class="kicker">Henrique Coelho</p>
-        <h1>No trabalho</h1>
-        <p class="lede">Desenvolvo ferramentas para cibersegurança, automação e gestão de dados. Uso inteligência artificial para explorar soluções, preparar testes e apoiar a documentação.</p>
-      </header>
 
-      <nav class="case-index" aria-label="Casos de trabalho">
-        <a href="#cadastro">Cadastro TX Unificado</a>
-        <a href="#autoform">TX Autoform</a>
-        <a href="#lusar">Painel de gestão de clientes</a>
-        <a href="#documentacao">Documentação de Brand Protection</a>
-        <a href="#triagem">Fila de triagem para checkouts</a>
-      </nav>
+  <main id="conteudo" class="page-main" tabindex="-1">
+    <header class="page-intro glass glass--blur">
+      <p class="kicker">Henrique Coelho</p>
+      <h1>No trabalho</h1>
+      <p class="lede">Desenvolvo ferramentas para cibersegurança, automação e gestão de dados. Uso inteligência artificial para explorar soluções, preparar testes e apoiar a documentação.</p>
+    </header>
 
-      <article class="work-block" id="cadastro">
+    <nav class="case-index" aria-label="Casos de trabalho">
+      <a href="#cadastro">Cadastro TX Unificado</a>
+      <a href="#autoform">TX Autoform</a>
+      <a href="#lusar">Painel de gestão de clientes</a>
+      <a href="#documentacao">Documentação de Brand Protection</a>
+      <a href="#triagem">Fila de triagem para checkouts</a>
+    </nav>
+
+    <div class="cases-grid">
+      <article class="work-block work-block--wide" id="cadastro">
         <p class="kicker">Extensão · uso operacional</p>
         <h2>Cadastro TX Unificado</h2>
         <p>Durante a rotina, eu buscava informações, organizava evidências e fazia cadastros. As informações estavam na página de origem, mas o registro pedia alternar de etapa e guardar a evidência em outro lugar.</p>
@@ -87,27 +106,32 @@
         </ul>
         <p class="note">Aplicação de uso interno.</p>
       </article>
-      <article class="work-block" id="documentacao">
+
+      <article class="work-block work-block--tight" id="documentacao">
         <p class="kicker">Base de conhecimento · material interno</p>
         <h2>Documentação de Brand Protection</h2>
         <p>Estruturei uma base para consulta e onboarding, com glossário, procedimentos, critérios de revisão e orientações sobre as ferramentas da rotina. A organização liga cada tema a fontes, modelos e verificações de aceite.</p>
         <p>O trabalho também gerou guias de configuração e materiais de apresentação das automações, em formatos adequados para consulta na tela e distribuição interna.</p>
       </article>
-      <article class="work-block" id="triagem">
+
+      <article class="work-block work-block--tight" id="triagem">
         <p class="kicker">Investigação digital · protótipo local</p>
         <h2>Fila de triagem para checkouts</h2>
         <p>Desenvolvi uma ferramenta local para reunir páginas públicas, remover domínios já analisados e organizar os resultados para revisão. A confirmação dos indícios acontece na análise manual.</p>
       </article>
     </div>
   </main>
+
   <footer class="site-footer">
-    <div class="wrap">
-      <a class="footer-name" href="index.html">Henrique Coelho<span>RIQ</span></a>
-      <nav aria-label="Contato">
-        <a href="mailto:dev@riq.ia.br">E-mail</a>
-        <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
-      </nav>
+    <div class="footer-panel glass glass--blur">
+      <div class="footer-panel__row">
+        <a class="footer-name" href="index.html">Henrique Coelho<span>RIQ</span></a>
+        <nav class="footer-panel__contact" aria-label="Contato">
+          <a href="mailto:dev@riq.ia.br">E-mail</a>
+          <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+        </nav>
+      </div>
     </div>
   </footer>
 </body>
