@@ -1,6 +1,6 @@
 # Fontes dos ícones de ferramentas
 
-Os arquivos foram obtidos de fontes mantidas por cada marca ou pelo fornecedor oficial.
+A tabela registra as fontes oficiais e os arquivos fornecidos pelo proprietário do portfólio.
 As marcas são citadas para identificar as ferramentas utilizadas.
 
 | Ferramenta | Arquivo | Fonte |
@@ -26,7 +26,7 @@ As marcas são citadas para identificar as ferramentas utilizadas.
 | Cloudflare | `cloudflare.png` | [Arquivo original](https://www.cloudflare.com/favicon.ico) |
 | Supabase | `supabase.svg` | [Arquivo original](https://supabase.com/brand-assets/supabase-icon-green-transparent.svg) |
 | Firebase | `firebase.png` | [Arquivo original](https://www.gstatic.com/devrel-devsite/prod/vc11e4c9d4c060345ba98585d538d4546e842f4a6ee5c5f9e85be4bd345767217/firebase/images/touchicon-180.png) |
-| MySQL | Sem ícone | [A Oracle exige hiperlink para o selo oficial](https://www.mysql.com/about/legal/logos.html) |
+| MySQL | `mysql.webp` | Imagem fornecida pelo proprietário do portfólio |
 | GitHub | `github.svg` | [Arquivo original](https://github.githubassets.com/favicons/favicon.svg) |
 | GitHub (tema escuro) | `github-dark.svg` | [Arquivo original](https://github.githubassets.com/favicons/favicon-dark.svg) |
 | Remotion | `remotion.png` | [Arquivo original](https://www.remotion.dev/img/favicon.png) |
