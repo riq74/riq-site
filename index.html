@@ -1,817 +1,222 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-BR" data-default-theme="system">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RIQ // Terminal</title>
-  <meta name="description" content="Portfolio do Riq - Cybersecurity, TI & IA" />
-
-  <link rel="icon" type="image/png" sizes="32x32" href="Logo-RIQ-S-Fundo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ═══════════════════════════════════════════════════════════════════════════
-       THEME TOKENS
-       ═══════════════════════════════════════════════════════════════════════════ */
-    :root {
-      /* Dark Theme */
-      --bg: #050505;
-      --bg-elevated: #0a0a0a;
-      --bg-card: #111111;
-      --bg-card-hover: #181818;
-      --bg-input: #0d0d0d;
-      
-      --text: #f0f0f0;
-      --text-secondary: #a0a0a0;
-      --text-tertiary: #606060;
-      
-      --accent: #00ff88;
-      --accent-secondary: #00d4ff;
-      --accent-tertiary: #ff0080;
-      --accent-warm: #ff6600;
-      
-      --border: rgba(255, 255, 255, 0.06);
-      --border-hover: rgba(0, 255, 136, 0.2);
-      
-      --glow: 0 0 30px rgba(0, 255, 136, 0.15);
-      --glow-accent: 0 0 20px rgba(0, 255, 136, 0.3);
-      
-      --font-body: 'Space Grotesk', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-    }
-
-    [data-theme="light"] {
-      --bg: #fafafa;
-      --bg-elevated: #ffffff;
-      --bg-card: #ffffff;
-      --bg-card-hover: #f5f5f5;
-      --bg-input: #f0f0f0;
-      
-      --text: #111111;
-      --text-secondary: #555555;
-      --text-tertiary: #999999;
-      
-      --accent: #0066cc;
-      --accent-secondary: #0099ff;
-      --accent-tertiary: #cc00aa;
-      --accent-warm: #ff6600;
-      
-      --border: rgba(0, 0, 0, 0.08);
-      --border-hover: rgba(0, 102, 204, 0.25);
-      
-      --glow: 0 0 30px rgba(0, 102, 204, 0.1);
-      --glow-accent: 0 0 20px rgba(0, 102, 204, 0.2);
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       RESET & BASE
-       ═══════════════════════════════════════════════════════════════════════════ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    html { scroll-behavior: smooth; }
-    
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    
-    ::selection { background: var(--accent); color: var(--bg); }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       SCROLLBAR
-       ═══════════════════════════════════════════════════════════════════════════ */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-elevated); }
-    ::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       LAYOUT SYSTEM
-       ═══════════════════════════════════════════════════════════════════════════ */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 48px;
-    }
-
-    @media (max-width: 768px) {
-      .container { padding: 0 24px; }
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       TOP BAR
-       ═══════════════════════════════════════════════════════════════════════════ */
-    .topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 16px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-logo {
-      width: 36px;
-      height: 36px;
-    }
-
-    .brand-name {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: var(--accent);
-    }
-
-    .brand-status {
-      font-size: 10px;
-      color: var(--text-tertiary);
-      letter-spacing: 1px;
-      margin-left: 20px;
-      padding-left: 20px;
-      border-left: 1px solid var(--border);
-    }
-
-    .theme-btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 18px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-secondary);
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .theme-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    @media (max-width: 768px) {
-      .topbar { padding: 16px 24px; }
-      .brand-status { display: none; }
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       HERO SECTION
-       ═══════════════════════════════════════════════════════════════════════════ */
-    .hero {
-      padding: clamp(100px, 15vw, 160px) 0 clamp(60px, 10vw, 100px);
-    }
-
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 80px;
-      align-items: start;
-    }
-
-    .hero-main h1 {
-      font-size: clamp(2.2rem, 5vw, 3.2rem);
-      font-weight: 600;
-      line-height: 1.15;
-      margin-bottom: 28px;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-main h1 span {
-      color: var(--accent);
-      position: relative;
-    }
-
-    .hero-description {
-      font-size: 17px;
-      color: var(--text-secondary);
-      max-width: 520px;
-      line-height: 1.75;
-      margin-bottom: 24px;
-    }
-
-    .hero-quote {
-      padding: 20px 24px;
-      background: var(--bg-elevated);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 12px 12px 0;
-      max-width: 480px;
-    }
-
-    .hero-quote p {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    .hero-quote em {
-      color: var(--accent);
-      font-style: normal;
-    }
-
-    .hero-aside {
-      padding-top: 20px;
-    }
-
-    .hero-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      transition: all 0.3s;
-    }
-
-    .hero-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: var(--glow);
-    }
-
-    .hero-card-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-
-    .hero-card-value {
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.7;
-    }
-
-    .hero-card-value + .hero-card-value {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-
-    .hero-card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 20px;
-    }
-
-    .tag {
-      padding: 6px 12px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 11px;
-      color: var(--accent);
-      transition: all 0.3s;
-    }
-
-    .tag:hover {
-      border-color: var(--accent);
-      box-shadow: var(--glow-accent);
-    }
-
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .hero-aside {
-        padding-top: 0;
-      }
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       SECTION SPACING
-       ═══════════════════════════════════════════════════════════════════════════ */
-    .section {
-      padding: 60px 0 80px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-
-    .section-title {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent-secondary);
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .section-count {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--accent);
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       PROJECTS GRID
-       ═══════════════════════════════════════════════════════════════════════════ */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 24px;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       PROJECT CARD
-       ═══════════════════════════════════════════════════════════════════════════ */
-    .project-card {
-      display: block;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--card-color);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s;
-    }
-
-    .project-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .project-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--card-color);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), var(--glow);
-    }
-
-    .project-header {
-      padding: 32px 28px 24px;
-      background: var(--bg-elevated);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-    }
-
-    .project-path {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-tertiary);
-      letter-spacing: 1px;
-    }
-
-    .project-tag {
-      display: inline-flex;
-      padding: 6px 14px;
-      background: transparent;
-      border: 1px solid var(--card-color);
-      border-radius: 6px;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--card-color);
-      width: fit-content;
-    }
-
-    .project-arrow {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      color: var(--card-color);
-      opacity: 0;
-      transform: translateX(-8px);
-      transition: all 0.3s;
-    }
-
-    .project-card:hover .project-arrow {
-      opacity: 1;
-      transform: translateX(0);
-      background: var(--card-color);
-      color: var(--bg);
-      border-color: var(--card-color);
-    }
-
-    .project-body {
-      padding: 24px 28px 28px;
-    }
-
-    .project-name {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      letter-spacing: -0.01em;
-    }
-
-    .project-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       SOON SECTION
-       ═══════════════════════════════════════════════════════════════════════════ */
-    .soon-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-    }
-
-    .soon-card {
-      background: var(--bg-card);
-      border: 2px dashed var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      opacity: 0.6;
-      transition: all 0.3s;
-    }
-
-    .soon-card:hover {
-      opacity: 1;
-      border-color: var(--accent-secondary);
-      border-style: solid;
-    }
-
-    .soon-tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin-bottom: 10px;
-    }
-
-    .soon-name {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .caption {
-      margin-top: 40px;
-      font-size: 15px;
-      color: var(--text-tertiary);
-      font-style: italic;
-      max-width: 500px;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       FOOTER
-       ═══════════════════════════════════════════════════════════════════════════ */
-    footer {
-      padding: 60px 0;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 24px;
-    }
-
-    .footer-credit {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .footer-credit strong {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .footer-credit small {
-      display: block;
-      font-size: 12px;
-      color: var(--text-tertiary);
-      margin-top: 4px;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 12px;
-    }
-
-    .footer-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 18px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      transition: all 0.3s;
-    }
-
-    .footer-link:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    @media (max-width: 600px) {
-      footer {
-        flex-direction: column;
-        text-align: center;
-      }
-      .footer-links {
-        flex-direction: column;
-        width: 100%;
-      }
-      .footer-link {
-        justify-content: center;
-      }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Henrique Coelho | RIQ</title>
+  <meta name="description" content="Portfólio de Henrique Coelho. Cibersegurança, automação, ferramentas, jogos e experimentos para a web.">
+  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <link rel="icon" type="image/png" href="Logo-RIQ-S-Fundo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="shared/theme.js"></script>
+  <link rel="stylesheet" href="css/site.css">
 </head>
-<body>
-
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="brand">
-      <img src="Logo-RIQ-S-Fundo.png" alt="riq" width="36" height="36" class="brand-logo" />
-      <span class="brand-name">RIQ</span>
-      <span class="brand-status">Cybersecurity • TI • IA</span>
+<body class="home">
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><img src="Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand-domain">.ia.br</span></span>
+      </a>
+      <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+        <span data-theme-label>Tema escuro</span>
+      </button>
+      <nav class="nav" aria-label="Navegação principal">
+          <a href="index.html#oficina" aria-current="page">Projetos</a>
+          <a href="trabalho.html">Trabalho</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="curriculo.html">Currículo</a>
+      </nav>
     </div>
-    
-    <button class="theme-btn" id="themeBtn">
-      <span>THEME</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="5"/>
-        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="container">
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-main">
-          <h1>
-            Sou o <span>Riq</span>.<br>
-            E construo com tecnologia.
-          </h1>
-          
-          <p class="hero-description">
-            Este é meu espaço onde ideias viram coisa real — entre o digital e o físico.
-            Cybersecurity, ferramentas, experimentos e soluções, com mais prática do que teoria.
-          </p>
-          
-          <div class="hero-quote">
-            <p>
-              Tudo aqui começou de um "<em>e se eu tentasse</em>" ou de um problema
-              que não tinha solução pronta. Cada projeto é uma invenção.
-            </p>
-          </div>
-        </div>
-        
-        <aside class="hero-aside">
-          <div class="hero-card">
-            <div class="hero-card-label">// STATUS</div>
-            <div class="hero-card-value">Inventário de projetos operando normalmente.</div>
-            <div class="hero-card-value">Última atualização: 2025</div>
-            
-            <div class="hero-card-tags">
-              <span class="tag">Cybersecurity</span>
-              <span class="tag">Automação</span>
-              <span class="tag">IA Tools</span>
-              <span class="tag">Web Dev</span>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section class="section">
-      <div class="section-header">
-        <span class="section-title">// Projetos</span>
-        <div class="section-line"></div>
-        <span class="section-count" id="projectCount">05</span>
-      </div>
-
-      <div class="projects-grid" id="projectsGrid">
-
-        <a class="project-card" href="gerador-pix/index.html" style="--card-color: #00aaff;">
-          <div class="project-header">
-            <span class="project-path">/gerador-pix</span>
-            <span class="project-tag">ferramenta</span>
-            <span class="project-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 17L17 7M17 7H7M17 7v10"/>
-              </svg>
-            </span>
-          </div>
-          <div class="project-body">
-            <div class="project-name">Gerador de Pix</div>
-            <div class="project-desc">Payload, QR Code, logo opcional e download. Automação financeira na prática.</div>
-          </div>
-        </a>
-
-        <a class="project-card" href="removedor-fundo/index.html" style="--card-color: #00ddaa;">
-          <div class="project-header">
-            <span class="project-path">/removedor-fundo</span>
-            <span class="project-tag">ferramenta</span>
-            <span class="project-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 17L17 7M17 7H7M17 7v10"/>
-              </svg>
-            </span>
-          </div>
-          <div class="project-body">
-            <div class="project-name">Removedor de Fundo</div>
-            <div class="project-desc">Um clique, fundo fora. Processamento de imagem com IA.</div>
-          </div>
-        </a>
-
-        <a class="project-card" href="catalogo-online/catalogo-pecas-movendo-final.html" style="--card-color: #ff8800;">
-          <div class="project-header">
-            <span class="project-path">/catalogo-online</span>
-            <span class="project-tag">projeto</span>
-            <span class="project-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 17L17 7M17 7H7M17 7v10"/>
-              </svg>
-            </span>
-          </div>
-          <div class="project-body">
-            <div class="project-name">Catálogo Online</div>
-            <div class="project-desc">Sistema de catálogo pra empresa de sapata de freio. E-commerce funcional.</div>
-          </div>
-        </a>
-
-        <a class="project-card" href="sudoku/index.html" style="--card-color: #ff00aa;">
-          <div class="project-header">
-            <span class="project-path">/sudoku</span>
-            <span class="project-tag">jogo</span>
-            <span class="project-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 17L17 7M17 7H7M17 7v10"/>
-              </svg>
-            </span>
-          </div>
-          <div class="project-body">
-            <div class="project-name">Sudoku</div>
-            <div class="project-desc">Jogo clássico com níveis de dificuldade. Algoritmo e interface limpa.</div>
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- CAPTION -->
-    <p class="caption">
-      A maioria das coisas aqui nasceu de um problema que quis resolver,
-      ou de uma curiosidade que não quis deixar passar.
-    </p>
-
-    <!-- SOON -->
-    <section class="section">
-      <div class="section-header">
-        <span class="section-title">// Em Construção</span>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="soon-grid">
-        <div class="soon-card">
-          <div class="soon-tag">em breve</div>
-          <div class="soon-name">Novos Projetos</div>
+  </header>
+  <main id="conteudo" class="wrap" tabindex="-1">
+    <section id="inicio" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Portfólio &amp; oficina digital</p>
+        <h1>Henrique<br>Coelho<span class="hero-period">.</span></h1>
+        <p class="hero-lede">Trabalho com investigação digital e automação em cibersegurança. Na oficina, construo ferramentas, jogos e experimentos para a web.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#oficina">Explorar projetos</a>
+          <a class="button button-outline" href="trabalho.html">Ver casos de trabalho</a>
         </div>
       </div>
+      <article class="hero-feature" aria-labelledby="caminho-em-destaque">
+        <img src="assets/projetos/route-films.webp" alt="Rota vermelha sobre um mapa de satélite" width="1440" height="1000" fetchpriority="high">
+        <span class="map-credit">Sentinel-2 cloudless · EOX · © OpenStreetMap</span>
+        <div class="feature-caption">
+          <p class="eyebrow">Editor de rotas e vídeo</p>
+          <h2 id="caminho-em-destaque">Desenhe seu Caminho</h2>
+          <p>Desenhe no mapa ou importe um GPX e transforme o trajeto em um vídeo animado.</p>
+          <div class="feature-actions">
+            <a class="button button-primary" href="desenhe-seu-caminho/">Abrir editor</a>
+            <a class="text-link" href="oficina/route-films.html">Conhecer o projeto</a>
+          </div>
+        </div>
+      </article>
     </section>
 
-  </div>
-
-  <!-- FOOTER -->
-  <div class="container">
-    <footer>
-      <div class="footer-credit">
-        <strong>riq</strong> — Cybersecurity & IA
-        <small>dev@riq.ia.br</small>
+    <section class="section selected" aria-labelledby="destaques">
+      <div class="section-heading">
+        <h2 id="destaques">Projetos em destaque</h2>
+        <a class="text-link" href="#oficina">Ver índice</a>
       </div>
-
-      <div class="footer-links">
-        <a class="footer-link" href="https://instagram.com/riq74_" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="2" y="2" width="20" height="20" rx="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-          </svg>
-          @riq74_
-        </a>
-        <a class="footer-link" href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
-            <rect x="2" y="9" width="4" height="12"/>
-            <circle cx="4" cy="4" r="2"/>
-          </svg>
-          henrique-coelho01
-        </a>
+      <div class="feature-grid">
+        <article class="project-feature">
+          <a href="oficina/cidade-viva.html">
+            <img src="assets/projetos/cidade-viva.webp" alt="Vista aérea da simulação Cidade Viva, com prédios, praça e ruas em pixel art" width="1200" height="750" loading="lazy">
+            <div class="feature-text"><p class="eyebrow">Simulação</p><h3>Cidade Viva</h3><p>Uma cidade em pixels onde os moradores têm memória, relações e rotina própria.</p></div>
+          </a>
+        </article>
+        <article class="project-feature">
+          <a href="oficina/operacao-reconhecimento.html">
+            <img src="assets/projetos/operacao.webp" alt="Tela de revelação de um elogio com nomes fictícios" width="1200" height="750" loading="lazy">
+            <div class="feature-text"><p class="eyebrow">Jogo de encontro</p><h3>Operação Reconhecimento</h3><p>Uma sala para trocar elogios antes do evento, revelar autores ao vivo e guardar memórias.</p></div>
+          </a>
+        </article>
       </div>
-    </footer>
-  </div>
+    </section>
 
-  <script>
-    // ═══════════════════════════════════════════════════════════════════════════
-    // THEME TOGGLE
-    // ═══════════════════════════════════════════════════════════════════════════
-    const themeBtn = document.getElementById('themeBtn');
-    let theme = localStorage.getItem('riq-theme') || 'dark';
-    
-    function setTheme(t) {
-      document.documentElement.setAttribute('data-theme', t);
-      localStorage.setItem('riq-theme', t);
-      theme = t;
-    }
-    
-    setTheme(theme);
-    
-    themeBtn.addEventListener('click', () => {
-      setTheme(theme === 'dark' ? 'light' : 'dark');
-    });
+    <section class="section index-section" id="oficina" aria-labelledby="indice">
+      <div class="section-heading">
+        <h2 id="indice">Índice de projetos</h2>
+        <div class="filters" role="group" aria-label="Filtrar projetos" hidden>
+          <button type="button" data-filter="all" aria-pressed="true">Todos</button>
+          <button type="button" data-filter="apps" aria-pressed="false">Ferramentas</button>
+          <button type="button" data-filter="games" aria-pressed="false">Jogos e dinâmicas</button>
+          <button type="button" data-filter="edu" aria-pressed="false">Guias e aulas</button>
+        </div>
+      </div>
+      <p class="sr-only" id="project-status" role="status"></p>
+      <ul class="project-index">
+          <li data-category="apps">
+            <a href="desenhe-seu-caminho/">
+              <span class="project-name">Desenhe seu Caminho<small>Mapa &amp; vídeo</small></span>
+              <span class="project-summary">Uma rota desenhada ou importada vira vídeo, com câmera e sobreposições configuráveis.</span>
+              <span class="project-action">Abrir editor</span>
+            </a>
+          </li>
+          <li data-category="apps">
+            <a href="criador-rota-gpx-pelo-maps/">
+              <span class="project-name">Google Maps para GPX<small>Ferramenta de rota</small></span>
+              <span class="project-summary">Converta um link de rota do Google Maps em um arquivo GPX para importar no Desenhe seu Caminho.</span>
+              <span class="project-action">Abrir conversor</span>
+            </a>
+          </li>
+          <li data-category="games">
+            <a href="oficina/cidade-viva.html">
+              <span class="project-name">Cidade Viva<small>Simulação</small></span>
+              <span class="project-summary">Uma cidade em pixels cujos moradores tomam decisões a partir de memória e relações.</span>
+              <span class="project-action">Estudo de caso</span>
+            </a>
+          </li>
+          <li data-category="games">
+            <a href="oficina/operacao-reconhecimento.html">
+              <span class="project-name">Operação Reconhecimento<small>Jogo de encontro</small></span>
+              <span class="project-summary">Elogios anônimos viram um jogo ao vivo. A sala também guarda memórias do encontro.</span>
+              <span class="project-action">Estudo de caso</span>
+            </a>
+          </li>
+          <li data-category="games">
+            <a href="oficina/outro-olhar.html">
+              <span class="project-name">Outro Olhar<small>Dinâmica em grupo</small></span>
+              <span class="project-summary">Cada pessoa recebe um ponto de vista diferente e o grupo reúne as partes.</span>
+              <span class="project-action">Estudo de caso</span>
+            </a>
+          </li>
+          <li data-category="apps">
+            <a href="oficina/riq-api.html">
+              <span class="project-name">Riq API<small>Extensão de navegador</small></span>
+              <span class="project-summary">Respostas simuladas de API para testar carregamento, erro e estados vazios na interface.</span>
+              <span class="project-action">Projeto local</span>
+            </a>
+          </li>
+          <li data-category="apps">
+            <a href="oficina/reconhecimento-visual.html">
+              <span class="project-name">Reconhecimento visual de perfis<small>Visão computacional</small></span>
+              <span class="project-summary">Miniaturas de perfis e um estudo separado para comparar logotipos em imagens.</span>
+              <span class="project-action">Protótipo</span>
+            </a>
+          </li>
+          <li data-category="apps">
+            <a href="oficina/alertas-discord.html">
+              <span class="project-name">Alertas Discord<small>Aplicativo Windows</small></span>
+              <span class="project-summary">Notificações do Windows acionam alertas locais com cartela e som configuráveis.</span>
+              <span class="project-action">Protótipo</span>
+            </a>
+          </li>
+          <li data-category="edu">
+            <a href="oficina/era-digital.html">
+              <span class="project-name">Segurança na era digital<small>Material educativo</small></span>
+              <span class="project-summary">Dois materiais para conversar com jovens e cuidadores sobre a vida online.</span>
+              <span class="project-action">Material preparado</span>
+            </a>
+          </li>
+          <li data-category="apps">
+            <a href="gerador-pix/index.html">
+              <span class="project-name">Gerador de Pix<small>Utilitário</small></span>
+              <span class="project-summary">Monta um código Pix, exibe o QR Code e permite baixar a imagem.</span>
+              <span class="project-action">Abrir ferramenta</span>
+            </a>
+          </li>
+          <li data-category="apps">
+            <a href="removedor-fundo/index.html">
+              <span class="project-name">Removedor de fundo<small>Utilitário</small></span>
+              <span class="project-summary">Remove o fundo de uma imagem no navegador.</span>
+              <span class="project-action">Abrir ferramenta</span>
+            </a>
+          </li>
+          <li data-category="apps">
+            <a href="catalogo-online/catalogo-pecas-movendo-final.html">
+              <span class="project-name">Catálogo de peças<small>Aplicação web</small></span>
+              <span class="project-summary">Catálogo de sapatas de freio para consulta por aplicação e referência.</span>
+              <span class="project-action">Abrir catálogo</span>
+            </a>
+          </li>
+          <li data-category="games">
+            <a href="sudoku/index.html">
+              <span class="project-name">Sudoku<small>Jogo de lógica</small></span>
+              <span class="project-summary">Partidas no navegador com níveis de dificuldade.</span>
+              <span class="project-action">Jogar</span>
+            </a>
+          </li>
+          <li data-category="edu">
+            <a href="sistemas-moto/partida_remota.html">
+              <span class="project-name">Partida remota<small>Guia técnico</small></span>
+              <span class="project-summary">Guia sobre um sistema de partida por controle de 433 MHz.</span>
+              <span class="project-action">Ler guia</span>
+            </a>
+          </li>
+      </ul>
+    </section>
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // PROJECT COUNTER
-    // ═══════════════════════════════════════════════════════════════════════════
-    const grid = document.getElementById('projectsGrid');
-    const count = document.getElementById('projectCount');
-    if (grid && count) {
-      count.textContent = String(grid.querySelectorAll('.project-card').length).padStart(2, '0');
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // SCROLL REVEAL
-    // ═══════════════════════════════════════════════════════════════════════════
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.project-card').forEach((card, i) => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(30px)';
-      card.style.transition = `all 0.5s ease ${i * 0.1}s`;
-      observer.observe(card);
-    });
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // CONSOLE
-    // ═══════════════════════════════════════════════════════════════════════════
-    console.log('%c🛡️ RIQ TERMINAL', 'font-size: 22px; color: #00ff88; font-weight: bold;');
-    console.log('%cCybersecurity | TI | IA', 'color: #00d4ff;');
-  </script>
-
+    <section class="section work-band" id="no-trabalho" aria-labelledby="casos">
+      <div>
+        <p class="eyebrow">Experiência profissional</p>
+        <h2 id="casos">Ferramentas que nasceram no trabalho.</h2>
+        <p>Da coleta de evidências à organização de cadastros e formulários, desenvolvo soluções para reduzir etapas repetitivas e preservar a conferência de quem usa.</p>
+        <a class="button button-primary" href="trabalho.html">Ver casos de trabalho</a>
+      </div>
+      <ul class="work-links">
+        <li><a href="trabalho.html#cadastro">Cadastro TX Unificado</a></li>
+        <li><a href="trabalho.html#autoform">TX Autoform</a></li>
+        <li><a href="trabalho.html#lusar">Painel de gestão de clientes</a></li>
+        <li><a href="trabalho.html#documentacao">Documentação de Brand Protection</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-name" href="index.html">Henrique Coelho<span>RIQ</span></a>
+      <nav aria-label="Contato">
+        <a href="mailto:dev@riq.ia.br">E-mail</a>
+        <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="js/site.js" defer></script>
 </body>
 </html>

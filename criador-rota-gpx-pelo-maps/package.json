@@ -1,0 +1,36 @@
+{
+  "name": "riq-criador-rota-gpx",
+  "version": "1.0.0",
+  "private": true,
+  "description": "rota-gpx-riq: converte link do Google Maps em rota com pontos e arquivo GPX. UI vanilla + servidor local opcional (Node 22, sem dependencias).",
+  "type": "module",
+  "main": "server.mjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test \"tests/*.test.mjs\" \"server/*.test.mjs\"",
+    "test:core": "node --test \"tests/*.test.mjs\"",
+    "test:server": "node --test \"server/*.test.mjs\"",
+    "test:offline": "node --test \"tests/*.test.mjs\" \"server/*.test.mjs\"",
+    "test:network": "node --test \"server/*.test.mjs\"",
+    "check": "node --check server.mjs"
+  },
+  "keywords": [
+    "gpx",
+    "google-maps",
+    "rota",
+    "osrm",
+    "valhalla",
+    "brouter",
+    "leaflet"
+  ],
+  "license": "MIT",
+  "_notas": {
+    "sem_dependencias": "Nao ha cross-env: os testes de rede sao ativados por variavel de ambiente.",
+    "offline_padrao": "npm test roda 100% offline com fixtures locais (servidor HTTP de fixture + OSRM_BASE_URL/VALHALLA_BASE_URL/BROUTER_BASE_URL/NOMINATIM_BASE_URL/ELEVATION_BASE_URL).",
+    "rede_opt_in": "RUN_NETWORK_TESTS=1 npm run test:network  (PowerShell: $env:RUN_NETWORK_TESTS='1'; npm run test:network)",
+    "glob_obrigatorio": "node --test server/ (diretorio) NAO funciona no Node 22 no Windows; use sempre os globs entre aspas."
+  }
+}

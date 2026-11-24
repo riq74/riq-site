@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR" data-default-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cidade Viva — Oficina do Riq</title>
+  <meta name="description" content="Cidade Viva é uma simulação social em pixel, com moradores, memória e decisões por regras ou por um modelo local.">
+  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <link rel="icon" type="image/png" href="../Logo-RIQ-S-Fundo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="../shared/theme.js"></script>
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="interior">
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark"><img src="../Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand-domain">.ia.br</span></span>
+      </a>
+      <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+        <span data-theme-label>Tema escuro</span>
+      </button>
+      <nav class="nav" aria-label="Navegação principal">
+          <a href="../index.html#oficina" aria-current="page">Projetos</a>
+          <a href="../trabalho.html">Trabalho</a>
+          <a href="../sobre.html">Sobre</a>
+          <a href="../curriculo.html">Currículo</a>
+      </nav>
+    </div>
+  </header>
+<main id="conteudo" tabindex="-1">
+    <div class="wrap">
+      <article class="essay">
+        <header class="page-intro">
+          <p class="kicker">Estudo de caso</p>
+          <h1>Cidade Viva</h1>
+          <p class="lede">Uma cidade pequena em pixel, feita para ver comportamento aparecer. Cada morador decide com personalidade, memória e relação, e o autor não escreve o dia seguinte.</p>
+        </header>
+        <figure class="case-image">
+          <img src="../assets/projetos/cidade-viva.webp" alt="Praça e ruas da simulação Cidade Viva em pixel art." width="1200" height="750">
+          <figcaption>Captura da simulação executada localmente.</figcaption>
+        </figure>
+        <h2>O problema</h2>
+        <p>Queria uma simulação em que as pessoas da cidade tivessem história, e não só um sorteio de ações. A decisão precisava caber na vida daquele morador e, ainda assim, poder surpreender.</p>
+        <h2>O que ficou de pé</h2>
+        <p>O mapa tem 44 por 28 tiles, com praça no centro e jardim no bairro leste. A cidade abre com dez moradores e aceita de um a dezesseis. Há economia, memória, crenças, relações e um registro do que aconteceu.</p>
+        <p>O painel Histórias da cidade separa conversa, decisão e consequência da rotina de deslocamento. Em Criar situação, a pessoa escreve uma ideia e revisa a proposta antes de aplicar. Encontro, discussão, dinheiro e feira têm caminho próprio. Um pedido fora disso é recusado, em vez de aparecer como se tivesse acontecido.</p>
+        <p>As metas são opcionais. A cidade não precisa de uma condição de vitória para continuar.</p>
+        <h2>Como está feito</h2>
+        <ul class="stack">
+          <li>TypeScript, Vite e interface em Canvas 2D</li>
+          <li>Motor de regras sempre disponível</li>
+          <li>Backend local opcional, em Hono, para decisões sociais</li>
+          <li>A chave do modelo fica na máquina e não entra no navegador</li>
+          <li>Se a chave falta, o limite estoura ou a chamada falha, a simulação segue nas regras</li>
+        </ul>
+        <h2>O que continua com a pessoa</h2>
+        <p>Dá para escolher a fonte das decisões e o limite de chamadas. A proposta de uma situação nova só entra depois da revisão. O histórico de uso e o salvamento ficam locais.</p>
+        <p class="note">Esta página conta a peça. A simulação roda na máquina local e não está publicada aqui.</p>
+        <p><a class="text-link" href="../index.html#oficina">Voltar ao índice de projetos</a></p>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-name" href="../index.html">Henrique Coelho<span>RIQ</span></a>
+      <nav aria-label="Contato">
+        <a href="mailto:dev@riq.ia.br">E-mail</a>
+        <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

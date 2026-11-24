@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR" data-default-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Riq API — Oficina do Riq</title>
+  <meta name="description" content="Riq API é uma extensão de navegador para simular respostas de API e inspecionar o que a página recebe durante um teste.">
+  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <link rel="icon" type="image/png" href="../Logo-RIQ-S-Fundo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="../shared/theme.js"></script>
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="interior">
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark"><img src="../Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand-domain">.ia.br</span></span>
+      </a>
+      <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+        <span data-theme-label>Tema escuro</span>
+      </button>
+      <nav class="nav" aria-label="Navegação principal">
+          <a href="../index.html#oficina" aria-current="page">Projetos</a>
+          <a href="../trabalho.html">Trabalho</a>
+          <a href="../sobre.html">Sobre</a>
+          <a href="../curriculo.html">Currículo</a>
+      </nav>
+    </div>
+  </header>
+<main id="conteudo" tabindex="-1">
+    <div class="wrap">
+      <article class="essay">
+        <header class="page-intro">
+          <p class="kicker">Estudo de caso</p>
+          <h1>Riq API</h1>
+          <p class="lede">Uma extensão para testar interface quando a API ainda não responde do jeito que a tela precisa. A resposta simulada fica na sessão de quem instalou.</p>
+        </header>
+
+        <h2>O problema</h2>
+        <p>Montar uma tela depende de respostas que às vezes não existem, mudam ou custam caro de repetir. Queria ver o que a página recebe e trocar essa resposta por um exemplo controlado, sem alterar o servidor.</p>
+        <h2>O que ficou de pé</h2>
+        <p>A Riq API é uma extensão Manifest V3. No popup, a pessoa organiza regras em grupos, inspeciona o tráfego da página em teste e define a resposta simulada. As regras ficam no armazenamento local do navegador.</p>
+        <p>O painel também aceita ajuda para redigir uma regra, com validação do que foi escrito antes de guardar. A interface tem mais de um idioma. A versão publicada nesta página é a 0.3.0.</p>
+        <h2>Como está feito</h2>
+        <ul class="stack">
+          <li>Extensão Chromium, Manifest V3</li>
+          <li>Popup em React e TypeScript</li>
+          <li>Regras conferidas por esquema antes de entrar em uso</li>
+          <li>Testes de unidade e uma passagem de fumaça da interface</li>
+        </ul>
+        <h2>O que continua com a pessoa</h2>
+        <p>Quem testa liga a regra, olha a resposta e desliga quando a tela já foi conferida. A extensão serve a sessão de desenvolvimento. Ela não publica dados e não substitui o contrato real da API.</p>
+        <p class="note">Esta página conta a peça. A extensão não está na loja nem publicada neste site.</p>
+        <p><a class="text-link" href="../index.html#oficina">Voltar ao índice de projetos</a></p>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-name" href="../index.html">Henrique Coelho<span>RIQ</span></a>
+      <nav aria-label="Contato">
+        <a href="mailto:dev@riq.ia.br">E-mail</a>
+        <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

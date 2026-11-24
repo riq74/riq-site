@@ -5,7 +5,10 @@
   function readTheme() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      return THEMES.has(stored) ? stored : null;
+      if (THEMES.has(stored)) return stored;
+      const legacyKey = document.documentElement.dataset.legacyThemeKey;
+      const legacy = legacyKey ? localStorage.getItem(legacyKey) : null;
+      return THEMES.has(legacy) ? legacy : null;
     } catch {
       return null;
     }
@@ -13,6 +16,9 @@
 
   function defaultTheme() {
     const configured = document.documentElement.getAttribute("data-default-theme");
+    if (configured === "system") {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
     return THEMES.has(configured) ? configured : "dark";
   }
 
@@ -28,10 +34,12 @@
     }
   }
 
-  function setTheme(theme) {
+  function setTheme(theme, persist = true) {
     const next = THEMES.has(theme) ? theme : defaultTheme();
     document.documentElement.setAttribute("data-theme", next);
-    persistTheme(next);
+    if (persist) persistTheme(next);
+    const meta = document.querySelector('meta[name="theme-color"][data-dark]');
+    if (meta) meta.content = next === "dark" ? meta.dataset.dark : meta.dataset.light;
     syncToggle(next);
   }
 
@@ -42,6 +50,8 @@
     toggle.setAttribute("aria-pressed", isDark ? "true" : "false");
     toggle.setAttribute("aria-label", isDark ? "Alternar para tema claro" : "Alternar para tema escuro");
     toggle.setAttribute("title", isDark ? "Alternar para tema claro" : "Alternar para tema escuro");
+    const label = toggle.querySelector("[data-theme-label]");
+    if (label) label.textContent = isDark ? "Tema claro" : "Tema escuro";
   }
 
   function homeHref() {
@@ -81,6 +91,14 @@
   }
 
   function mountControls() {
+    const existingToggle = document.querySelector("[data-theme-toggle][data-theme-managed]");
+    if (existingToggle) {
+      existingToggle.addEventListener("click", () => {
+        setTheme(activeTheme() === "dark" ? "light" : "dark");
+      });
+      syncToggle(activeTheme());
+      existingToggle.hidden = false;
+    }
     const slot = document.querySelector("[data-theme-slot]");
     const home = createHomeLink();
     const toggle = createToggle();
@@ -102,7 +120,10 @@
     }
   }
 
-  setTheme(activeTheme());
+  setTheme(activeTheme(), document.documentElement.dataset.defaultTheme !== "system");
+  window.addEventListener("storage", (event) => {
+    if (event.key === STORAGE_KEY && THEMES.has(event.newValue)) setTheme(event.newValue, false);
+  });
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", mountControls);
   } else {

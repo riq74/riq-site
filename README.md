@@ -11,6 +11,18 @@ stack
 html, css e js puro na página principal. os projetos internos variam conforme o que fizer mais sentido pra cada um.
 hospedado no github pages.
 
+## Desenhe seu Caminho
+
+O editor está em `desenhe-seu-caminho/`. Essa pasta contém o build estático que acompanha o site. O código-fonte continua em `Documents/¹Pessoal/Test-MAP/app`.
+
+Para atualizar o editor, rode no projeto fonte, com as dependências instaladas:
+
+```sh
+npm run build -- --mode riq --base ./ --outDir ../../../riq-site/desenhe-seu-caminho --emptyOutDir
+```
+
+O modo `riq` usa rotas com fragmento para reabrir projetos e páginas de ajuda ao recarregar no GitHub Pages. Sirva o site por HTTPS ou localhost para usar a exportação de vídeo.
+
 contato
 
 email: dev@riq.ia.br

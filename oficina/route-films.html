@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR" data-default-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Desenhe seu Caminho — Oficina do Riq</title>
+  <meta name="description" content="Desenhe ou importe uma rota, ajuste a câmera e exporte seu mapa animado em MP4 com o Desenhe seu Caminho.">
+  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <link rel="icon" type="image/png" href="../Logo-RIQ-S-Fundo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="../shared/theme.js"></script>
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="interior">
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark"><img src="../Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand-domain">.ia.br</span></span>
+      </a>
+      <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+        <span data-theme-label>Tema escuro</span>
+      </button>
+      <nav class="nav" aria-label="Navegação principal">
+          <a href="../index.html#oficina" aria-current="page">Projetos</a>
+          <a href="../trabalho.html">Trabalho</a>
+          <a href="../sobre.html">Sobre</a>
+          <a href="../curriculo.html">Currículo</a>
+      </nav>
+    </div>
+  </header>
+<main id="conteudo" tabindex="-1">
+    <div class="wrap">
+      <article class="essay">
+        <header class="page-intro">
+          <p class="kicker">Editor de rotas e vídeo</p>
+          <h1>Desenhe seu Caminho</h1>
+          <p class="lede">Desenhe no mapa ou importe um trajeto, ajuste a câmera e exporte o caminho como um vídeo MP4.</p>
+          <div class="case-actions">
+            <a class="button button-primary" href="../desenhe-seu-caminho/">Abrir editor</a>
+            <p>Para exportar em MP4, use Chrome ou Edge atualizado.</p>
+          </div>
+        </header>
+        <figure class="case-image">
+          <img src="../assets/projetos/route-films.webp" alt="Rota de teste sobre um mapa de satélite entre Zermatt e Breuil-Cervinia" width="1440" height="1000">
+          <figcaption>Rota de teste no tema satélite. Imagem Sentinel-2 cloudless por EOX. Dados cartográficos © OpenStreetMap.</figcaption>
+        </figure>
+        <h2>O problema</h2>
+        <p>Queria transformar uma rota em vídeo sem mandar o trajeto para um serviço. Desenhar no mapa, escolher o enquadramento e baixar o arquivo tinham que acontecer na mesma aba.</p>
+        <h2>O que ficou de pé</h2>
+        <p>A pessoa desenha a rota com cliques ou importa GPX, KML, KMZ ou IGC. Dá para pausar, inverter, suavizar e manter até seis rotas na mesma cena. O projeto fica no navegador, em IndexedDB, e também pode ser salvo num arquivo <code>.mapanim</code>.</p>
+        <p>O caminho tem seis etapas: rota, mapa, sinais, overlays, câmera e exportação. O mapa oferece 29 temas, inclusive satélite e relevo, com nomes de lugar em dezenas de idiomas. Os sinais têm 17 estilos. Os overlays cobrem título, distância, altitude, velocidade, perfil e bússola. A câmera segue, para, fica em tripé ou orbita.</p>
+        <p>A exportação gera MP4 em H.264, de 480p a 4K, entre 24 e 60 quadros por segundo. A prévia e o arquivo final usam o mesmo cálculo de tempo. A linha, os sinais e os overlays são desenhados por cima do mapa, então sobem de resolução junto com o vídeo.</p>
+        <h2>Como está feito</h2>
+        <ul class="stack">
+          <li>React, TypeScript e Vite</li>
+          <li>MapLibre para o mapa; Three.js para o relevo</li>
+          <li>WebCodecs para o MP4, em navegador Chromium atual</li>
+          <li>Domínio de geometria separado da interface, com testes próprios</li>
+          <li>Mapas de fontes abertas: OpenStreetMap, OpenFreeMap e serviços de terreno públicos</li>
+        </ul>
+        <h2>O que continua com a pessoa</h2>
+        <p>O editor guarda os arquivos e projetos no navegador. Os mapas e a busca de lugares usam serviços online. Para guardar uma cópia do projeto ou levá-lo para outro navegador, baixe um arquivo <code>.mapanim</code>.</p>
+        <p><a class="text-link" href="../index.html#oficina">Voltar ao índice de projetos</a></p>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-name" href="../index.html">Henrique Coelho<span>RIQ</span></a>
+      <nav aria-label="Contato">
+        <a href="mailto:dev@riq.ia.br">E-mail</a>
+        <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

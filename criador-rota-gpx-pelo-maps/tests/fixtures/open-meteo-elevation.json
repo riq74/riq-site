@@ -1,0 +1,1 @@
+{"_fixture":{"source":"https://api.open-meteo.com/v1/elevation?latitude=38.7223,38.7500,38.8029&longitude=-9.1393,-9.2500,-9.3817","fetchedAt":"2026-11-23T23:24:44.328Z"},"status":200,"body":{"elevation":[66,133,203]}}

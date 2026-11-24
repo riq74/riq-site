@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR" data-default-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trabalho — Riq</title>
+  <meta name="description" content="Casos de Henrique Coelho em automação, desenvolvimento de ferramentas e documentação de Brand Protection.">
+  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <link rel="icon" type="image/png" href="Logo-RIQ-S-Fundo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="shared/theme.js"></script>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="interior">
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><img src="Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand-domain">.ia.br</span></span>
+      </a>
+      <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+        <span data-theme-label>Tema escuro</span>
+      </button>
+      <nav class="nav" aria-label="Navegação principal">
+          <a href="index.html#oficina">Projetos</a>
+          <a href="trabalho.html" aria-current="page">Trabalho</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="curriculo.html">Currículo</a>
+      </nav>
+    </div>
+  </header>
+<main id="conteudo" tabindex="-1">
+    <div class="wrap">
+      <header class="page-intro">
+        <p class="kicker">Henrique Coelho</p>
+        <h1>No trabalho</h1>
+        <p class="lede">Desenvolvo ferramentas para coleta de evidências, formulários e gestão de dados. Também organizo a documentação que orienta essas rotinas.</p>
+      </header>
+
+      <nav class="case-index" aria-label="Casos de trabalho">
+        <a href="#cadastro">Cadastro TX Unificado</a>
+        <a href="#autoform">TX Autoform</a>
+        <a href="#lusar">Painel de gestão de clientes</a>
+        <a href="#documentacao">Documentação de Brand Protection</a>
+        <a href="#triagem">Fila de triagem para checkouts</a>
+      </nav>
+
+      <article class="work-block" id="cadastro">
+        <p class="kicker">Extensão · uso operacional</p>
+        <h2>Cadastro TX Unificado</h2>
+        <p>Durante a rotina, eu buscava informações, organizava evidências e fazia cadastros. As informações estavam na página de origem, mas o registro pedia alternar de etapa e guardar a evidência em outro lugar.</p>
+        <p>Desenvolvi uma extensão que reúne os dados e a captura da página num painel, com conferência antes do envio. A leitura muda conforme o tipo de página. O fluxo consulta listas conhecidas e também prepara itens em lote.</p>
+        <p>A captura espera a página estabilizar. Uma operação interrompida é tratada à parte, e um resultado incerto volta para revisão antes de um novo envio.</p>
+        <ul class="stack">
+          <li>JavaScript</li>
+          <li>Extensão Manifest V3</li>
+          <li>Integração com API</li>
+        </ul>
+      </article>
+
+      <article class="work-block" id="autoform">
+        <p class="kicker">Extensão · uso operacional</p>
+        <h2>TX Autoform</h2>
+        <p>Preencher formulários de denúncia repetia as mesmas informações e ainda pedia adaptar esses dados a campos diferentes.</p>
+        <p>Desenvolvi uma ferramenta para configurar e reutilizar preenchimentos. Perfis ficam ligados a sites. As regras cobrem tipos diferentes de campo. Um formulário já preenchido pode ser capturado, e a configuração tem backup local.</p>
+        <p>O preenchimento ajuda a operação. A conferência do formulário e a decisão de enviar continuam com a pessoa.</p>
+        <ul class="stack">
+          <li>JavaScript</li>
+          <li>Regras de preenchimento</li>
+          <li>Armazenamento local</li>
+        </ul>
+      </article>
+
+      <article class="work-block" id="lusar">
+        <p class="kicker">Aplicação web · experiência anterior</p>
+        <h2>Painel de gestão de clientes</h2>
+        <p>Na atuação como técnico de TI, desenvolvi uma aplicação web para centralizar informações e documentos de clientes.</p>
+        <p>A solução reúne consulta, edição, importação de dados, perfis de acesso, histórico de alterações e verificação de compras já feitas. Cadastros guardam os documentos ligados a eles. A importação aceita CSV. Usuários e representantes têm níveis de acesso, e as alterações ficam registradas.</p>
+        <ul class="stack">
+          <li>Python</li>
+          <li>Flask</li>
+          <li>SQLite</li>
+        </ul>
+        <p class="note">Aplicação de uso interno.</p>
+      </article>
+      <article class="work-block" id="documentacao">
+        <p class="kicker">Base de conhecimento · material interno</p>
+        <h2>Documentação de Brand Protection</h2>
+        <p>Estruturei uma base para consulta e onboarding, com glossário, procedimentos, critérios de revisão e orientações sobre as ferramentas da rotina. A organização liga cada tema a fontes, modelos e verificações de aceite.</p>
+        <p>O trabalho também gerou guias de configuração e materiais de apresentação das automações, em formatos adequados para consulta na tela e distribuição interna.</p>
+      </article>
+      <article class="work-block" id="triagem">
+        <p class="kicker">Investigação digital · protótipo local</p>
+        <h2>Fila de triagem para checkouts</h2>
+        <p>Desenvolvi uma ferramenta local para reunir páginas públicas, remover domínios já analisados e organizar os resultados para revisão. A confirmação dos indícios acontece na análise manual.</p>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-name" href="index.html">Henrique Coelho<span>RIQ</span></a>
+      <nav aria-label="Contato">
+        <a href="mailto:dev@riq.ia.br">E-mail</a>
+        <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

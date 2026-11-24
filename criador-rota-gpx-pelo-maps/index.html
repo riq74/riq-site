@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pt-BR" data-default-theme="system" data-legacy-theme-key="riq-rota-theme">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Google Maps para GPX | RIQ</title>
+  <meta name="description" content="Cole um link de rota do Google Maps e baixe o traçado em GPX. OpenStreetMap, OSRM, Leaflet e Open-Meteo. Sem chave de API, código aberto.">
+  <meta name="theme-color" content="#f4f2ea" data-light="#f4f2ea" data-dark="#14170f">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/rota.css">
+  <script src="../shared/theme.js"></script>
+</head>
+<body class="rota-page">
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="wrap header-top">
+      <a class="back-link" href="../index.html">
+        <span class="back-arrow" aria-hidden="true">&#8592;</span>
+        <span>riq<span class="back-domain">.ia.br</span></span>
+      </a>
+      <button class="theme-toggle" type="button" id="theme-toggle" data-theme-toggle data-theme-managed hidden>
+        <span class="theme-toggle-icon" aria-hidden="true"></span>
+        <span class="theme-toggle-text" data-theme-label>Tema escuro</span>
+      </button>
+    </div>
+
+    <div class="wrap masthead">
+      <p class="eyebrow">Oficina RIQ &middot; ferramenta de rota</p>
+      <h1>Google Maps <span class="masthead-arrow" aria-hidden="true">&#8594;</span> <abbr title="GPS Exchange Format">GPX</abbr></h1>
+      <p class="lede">
+        Cole o link de uma rota do Google Maps e gere um arquivo GPX com o traçado completo.
+      </p>
+    </div>
+  </header>
+
+  <main id="conteudo" class="wrap" tabindex="-1">
+    <!-- O app é feito de ES modules: com duplo clique no arquivo (file://), o
+         navegador bloqueia o import antes de qualquer código rodar. Este aviso
+         fica fora do app.js justamente porque o app.js não carrega nesse caso. -->
+    <div class="banner banner-warn" id="aviso-protocolo" hidden>
+      <p class="banner-title">Abra por um endereço http:// (não pelo arquivo)</p>
+      <p class="banner-text">
+        Você abriu esta página direto do disco. O navegador bloqueia módulos JavaScript em
+        <code>file://</code>. Rode <code>node server.mjs</code> na pasta do projeto e abra
+        <code>http://localhost:5178</code>, ou publique a pasta em qualquer servidor estático.
+      </p>
+    </div>
+
+    <div class="layout">
+      <form id="rota-form" class="form-panel" novalidate aria-busy="false">
+        <h2 class="sr-only">Configurar a rota</h2>
+
+        <div class="field field-url">
+          <label class="label" for="maps-url">Cole o link do Google Maps</label>
+          <p class="hint" id="maps-url-hint">
+            Aceita links de direções, inclusive os encurtados (<code>maps.app.goo.gl</code>).
+          </p>
+          <textarea id="maps-url" class="url-input" rows="2" spellcheck="false"
+            autocomplete="off" autocapitalize="off" placeholder="https://www.google.com/maps/dir/-23.55,-46.63/-22.90,-43.20"
+            aria-required="true" aria-describedby="maps-url-hint maps-url-feedback"></textarea>
+          <p class="feedback" id="maps-url-feedback" data-state="idle">Cole um link para começar.</p>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label class="label" for="modo">Modo de viagem</label>
+            <select id="modo" name="modo" aria-describedby="modo-hint">
+              <option value="driving">Carro</option>
+              <option value="bicycling">Ciclismo</option>
+              <option value="walking">Caminhada</option>
+            </select>
+            <p class="hint" id="modo-hint">
+              <strong>Carro:</strong> OSRM. <strong>Ciclismo e caminhada:</strong> Valhalla público,
+              com limite de ~150 km por rota e fallback automático para BRouter. Tudo direto no navegador.
+            </p>
+          </div>
+          <div class="field">
+            <label class="label" for="nome">Nome da rota <span class="opt">(opcional)</span></label>
+            <input id="nome" name="nome" type="text" maxlength="80" placeholder="ex.: pedal-serra-2026"
+              aria-describedby="nome-hint">
+            <p class="hint" id="nome-hint">Vai no nome do arquivo e no cabeçalho do GPX.</p>
+          </div>
+        </div>
+
+        <div class="options">
+          <div class="field field-check">
+            <label class="check">
+              <input type="checkbox" id="incluir-elevacao" aria-describedby="elevacao-hint">
+              <span>Incluir elevação</span>
+            </label>
+            <p class="hint" id="elevacao-hint">
+              Consulta a altitude de cada ponto no Open-Meteo e grava <code>&lt;ele&gt;</code> no GPX.
+            </p>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="button button-primary" id="btn-gerar">
+            <span class="btn-label">Gerar rota</span>
+          </button>
+          <button type="button" class="button button-outline" id="btn-baixar" disabled>
+            Baixar GPX
+          </button>
+          <button type="button" class="button button-ghost" id="btn-limpar">Limpar</button>
+        </div>
+
+        <p class="status" id="status" role="status" aria-live="polite">Cole um link e clique em &ldquo;Gerar rota&rdquo;.</p>
+
+        <div class="alert alert-error" id="erro" role="alert" hidden>
+          <p class="alert-title" id="erro-titulo"></p>
+          <p class="alert-text" id="erro-texto"></p>
+          <div class="alert-actions" id="erro-acao"></div>
+          <details class="alert-detail" id="erro-detalhe" hidden>
+            <summary>Detalhes técnicos</summary>
+            <pre><code id="erro-codigo"></code></pre>
+          </details>
+        </div>
+      </form>
+
+      <section class="results" id="resultados" hidden aria-labelledby="resultados-title" tabindex="-1">
+        <h2 class="sr-only" id="resultados-title">Resultado da rota</h2>
+
+        <div class="map-col">
+          <div class="map-shell">
+            <div id="mapa" class="map" role="region" aria-label="Mapa com o traçado da rota"></div>
+            <div class="map-fallback" id="mapa-fallback" hidden>
+              <p class="map-fallback-eyebrow">Mapa indisponível</p>
+              <h3>O Leaflet não carregou do CDN</h3>
+              <p>
+                Provavelmente o unpkg foi bloqueado ou você está sem rede. A rota, as estatísticas
+                e o GPX continuam funcionando normalmente.
+              </p>
+              <button type="button" class="button button-outline" id="btn-mapa-retry">Tentar carregar o mapa de novo</button>
+            </div>
+          </div>
+          <div class="map-foot">
+            <p class="map-credit">
+              Mapa: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>
+              &middot; <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a>
+            </p>
+            <p class="map-pending" id="mapa-detalhes" hidden></p>
+          </div>
+
+          <div class="alternatives" id="alternativas" hidden>
+            <h3 class="card-title" id="alternativas-title">Alternativas de rota</h3>
+            <div class="alt-list" id="alt-list" role="group" aria-labelledby="alternativas-title"></div>
+          </div>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <h3 class="card-title">Estatísticas</h3>
+            <dl class="stats" id="stats"></dl>
+          </div>
+
+          <div class="card card-download">
+            <h3 class="card-title">Arquivo GPX</h3>
+            <p class="hint" id="download-hint">Gere uma rota para liberar o download.</p>
+            <a class="button button-primary" id="link-gpx" href="#" download hidden>Baixar GPX</a>
+            <p class="file-meta" id="file-meta" aria-live="polite"></p>
+          </div>
+
+          <div class="card" id="card-avisos" hidden>
+            <h3 class="card-title">Avisos</h3>
+            <ul class="warn-list" id="avisos"></ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">Pontos da rota</h3>
+            <ol class="places" id="lista-pontos"></ol>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="footer-note">
+        Dados &copy; colaboradores do
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>,
+        sob licença ODbL &middot; rotas de carro por
+        <a href="https://project-osrm.org/" target="_blank" rel="noopener">OSRM</a> &middot; rotas de
+        bicicleta e caminhada por
+        <a href="https://valhalla.github.io/valhalla/" target="_blank" rel="noopener">Valhalla</a> e
+        <a href="https://brouter.de/" target="_blank" rel="noopener">BRouter</a> &middot; elevação por
+        <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> &middot; mapa com
+        <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a>, com tiles do
+        OpenStreetMap.
+      </p>
+      <nav aria-label="Navegação do projeto">
+        <a href="../index.html">RIQ</a>
+      </nav>
+    </div>
+  </footer>
+
+  <noscript>
+    <p class="noscript">Esta ferramenta precisa de JavaScript ativo para ler o link, calcular a rota e montar o GPX.</p>
+  </noscript>
+
+  <script>
+    // Guarda de protocolo: avisa ANTES de tentar carregar o módulo, porque em
+    // file:// o js/app.js nem chega a executar.
+    if (location.protocol === 'file:') {
+      var aviso = document.getElementById('aviso-protocolo');
+      if (aviso) aviso.hidden = false;
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
