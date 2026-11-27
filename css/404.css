@@ -1,0 +1,48 @@
+.not-found { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; padding: 16px var(--gutter) 28px; position: relative; overflow-x: clip; }
+.error-art { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.error-art picture, .error-glow-side { position: absolute; display: block; }
+.error-art img { display: block; max-width: none; }
+.error-glow { top: -180px; left: calc(50% - 590px); }
+.error-glow-side { top: 280px; left: calc(50% + 260px); }
+.error-arcs { top: 80px; left: calc(50% - 720px); }
+.error-dock, .error-footer { width: min(1280px, 100%); background: #121a2b; border: 1px solid rgba(255,255,255,.22); position: relative; }
+.error-dock { min-height: 60px; border-radius: 999px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 8px 12px; }
+.error-brand { display: flex; align-items: center; gap: 8px; color: var(--ink); font: 500 12px var(--font-mono); text-decoration: none; padding-left: 4px; }
+.error-brand strong { letter-spacing: .06em; }
+.error-domain { color: var(--ink-dim); }
+.error-logo { width: 28px; height: 28px; border-radius: 14px; border: 1px solid rgba(56,189,248,.42); background: #163044; display: grid; place-items: center; overflow: hidden; }
+.error-logo img { width: 20px; height: 20px; object-fit: contain; }
+.error-nav { display: flex; padding: 4px; background: #0a101c; border: 1px solid #2c384c; border-radius: 999px; }
+.error-nav a { padding: 8px 14px; font: 500 12px/16px var(--font-mono); color: var(--ink-dim); text-decoration: none; }
+.error-theme { display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 8px 12px 8px 10px; color: var(--ink-soft); background: #1c2638; font: 500 11px/14px var(--font-mono); cursor: pointer; }
+.error-content { flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; position: relative; text-align: center; padding: 40px 0; }
+.error-label { display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 8px; background: #1c2638; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--lime-text); font: 500 11px/14px var(--font-mono); letter-spacing: .04em; text-transform: uppercase; }
+.error-code { font: 700 168px/156px var(--font-display); letter-spacing: -.05em; color: var(--ink); }
+.error-code span { color: var(--lime-text); }
+.error-route { display: block; width: 220px; height: 28px; }
+.error-route img { display: block; }
+.error-content h1 { font: 700 44px/48px var(--font-display); letter-spacing: -.025em; }
+.error-description { max-width: 460px; font: 400 17px/28px var(--font-body); color: var(--ink-soft); }
+.error-actions { display: flex; gap: 12px; align-items: center; padding-top: 8px; }
+.error-footer { border-color: rgba(255,255,255,.14); border-radius: 24px; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.error-name { color: var(--ink); font: 700 16px var(--font-display); text-decoration: none; }
+.error-name span { margin-left: 8px; padding: 2px 6px; border: 1px solid rgba(216,240,87,.38); background: rgba(216,240,87,.12); border-radius: 5px; color: var(--lime-text); font: 700 10px var(--font-mono); }
+.error-footer nav { display: flex; gap: 20px; }
+.error-footer nav a { color: var(--ink-soft); font: 500 12px/16px var(--font-mono); text-decoration: none; }
+html[data-theme="light"] .error-dock, html[data-theme="light"] .error-footer { background: #f4f8fb; border-color: var(--line-strong); }
+html[data-theme="light"] .error-nav, html[data-theme="light"] .error-theme, html[data-theme="light"] .error-label { background: #e0e8ed; border-color: var(--line-strong); }
+@media (max-width: 700px) {
+  .not-found { padding: 12px 16px 16px; }
+  .error-glow { top: -60px; left: calc(50% - 225px); }
+  .error-glow-side { display: none !important; }
+  .error-arcs { top: 48px; left: calc(50% - 195px); }
+  .error-dock { min-height: 54px; }
+  .error-nav { display: none; }
+  .error-content { gap: 14px; padding: 30px 0; }
+  .error-code { font-size: 112px; line-height: 108px; }
+  .error-route { width: 180px; height: 24px; }
+  .error-content h1 { font-size: 28px; line-height: 32px; }
+  .error-actions { flex-direction: column; gap: 10px; padding-top: 4px; }
+  .error-footer { align-items: flex-start; flex-direction: column; padding: 16px; }
+  .error-footer nav { gap: 16px; }
+}
