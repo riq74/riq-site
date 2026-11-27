@@ -56,6 +56,7 @@
     posterOffset: { x: 0, y: 0 },
     posterPhoto: null,
     posterDrag: null,
+    posterZoom: 1,
     shuffleSeed: 42,
     paddlePromise: null,
     ocrWorkerPromise: null,
@@ -141,6 +142,11 @@
 
     posterDimsLabel: document.getElementById('posterDimsLabel'),
     posterCanvas: document.getElementById('posterCanvas'),
+    posterZoomRange: document.getElementById('posterZoomRange'),
+    posterZoomValue: document.getElementById('posterZoomValue'),
+    resetZoomBtn: document.getElementById('resetZoomBtn'),
+    sharePosterBtn: document.getElementById('sharePosterBtn'),
+    posterSaveHint: document.getElementById('posterSaveHint'),
     downloadPosterBtn: document.getElementById('downloadPosterBtn'),
     toastContainer: document.getElementById('toastContainer')
   };
@@ -213,6 +219,30 @@
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => resolve(null);
     });
+  }
+
+  function photoStorage(file) {
+    return new Promise((resolve) => {
+      if (!('indexedDB' in window)) { resolve(null); return; }
+      const request = indexedDB.open('riq-tipografia-foto-db', 1);
+      request.onupgradeneeded = () => request.result.createObjectStore('draft');
+      request.onerror = () => resolve(null);
+      request.onsuccess = () => {
+        const db = request.result;
+        const tx = db.transaction('draft', file ? 'readwrite' : 'readonly');
+        const op = file ? tx.objectStore('draft').put(file, 'photo') : tx.objectStore('draft').get('photo');
+        let value = null;
+        op.onsuccess = () => { value = file || op.result || null; };
+        tx.oncomplete = () => { db.close(); resolve(value); };
+        tx.onerror = tx.onabort = () => { db.close(); resolve(null); };
+      };
+    });
+  }
+
+  async function loadPosterPhoto(file) {
+    const url = URL.createObjectURL(file);
+    try { return await loadImage(url); }
+    finally { URL.revokeObjectURL(url); }
   }
 
   function dbGetAll() {
@@ -1504,7 +1534,7 @@
     ]));
     try {
       sessionStorage.setItem(STUDIO_DRAFT_KEY, JSON.stringify({
-        controls, mode: state.mode, seed: state.shuffleSeed, offset: state.posterOffset, variants: [...state.variantChoices]
+        controls, mode: state.mode, seed: state.shuffleSeed, offset: state.posterOffset, zoom: state.posterZoom, variants: [...state.variantChoices]
       }));
     } catch {
       // O compositor ainda funciona se o armazenamento da sessão estiver indisponível.
@@ -1522,7 +1552,8 @@
         if (control.type !== 'checkbox' && typeof value === 'string') control.value = value;
       }
       if (Number.isFinite(draft.offset?.x) && Number.isFinite(draft.offset?.y)) state.posterOffset = draft.offset;
-      if (draft.controls?.bgSelect === 'photo') el.bgSelect.value = 'paper';
+      if (Number.isFinite(draft.zoom)) state.posterZoom = Math.max(0.25, Math.min(3, draft.zoom));
+      if (draft.controls?.bgSelect === 'photo' && !state.posterPhoto) el.bgSelect.value = 'paper';
       if (draft.mode === 'specimen') state.mode = 'specimen';
       if (Number.isInteger(draft.seed)) state.shuffleSeed = draft.seed;
       if (Array.isArray(draft.variants)) state.variantChoices = new Map(draft.variants);
@@ -1536,6 +1567,8 @@
     }
     el.phraseGroup.classList.toggle('hidden', state.mode === 'specimen');
     el.customBgWrap.classList.toggle('hidden', el.bgSelect.value !== 'custom');
+    el.posterZoomRange.value = Math.round(state.posterZoom * 100);
+    el.posterZoomValue.textContent = el.posterZoomRange.value + '%';
     el.letterScaleValue.textContent = el.letterScaleRange.value + '%';
     el.trackingValue.textContent = el.trackingRange.value + 'px';
     el.jitterValue.textContent = el.jitterRange.value + '°';
@@ -1691,7 +1724,9 @@
     const availH = fmt.h - marginTop - footerSpace;
 
     ctx.save();
-    ctx.translate(state.posterOffset.x * fmt.w, state.posterOffset.y * fmt.h);
+    ctx.translate(fmt.w / 2 + state.posterOffset.x * fmt.w, fmt.h / 2 + state.posterOffset.y * fmt.h);
+    ctx.scale(state.posterZoom, state.posterZoom);
+    ctx.translate(-fmt.w / 2, -fmt.h / 2);
     if (state.mode === 'specimen') {
       // Modo Cartela do Alfabeto A-Z
       el.missingCharsHint.textContent = '';
@@ -2195,38 +2230,58 @@
       renderPoster();
     });
 
-    el.posterPhotoInput.addEventListener('change', () => {
+    el.posterPhotoInput.addEventListener('change', async () => {
       const file = el.posterPhotoInput.files?.[0];
       if (!file) return;
-      const url = URL.createObjectURL(file);
-      const img = new Image();
-      img.onload = () => {
-        state.posterPhoto = img;
+      try {
+        state.posterPhoto = await loadPosterPhoto(file);
         el.bgSelect.value = 'photo';
         el.customBgWrap.classList.add('hidden');
-        URL.revokeObjectURL(url);
         renderPoster();
-      };
-      img.onerror = () => { URL.revokeObjectURL(url); showToast('Não foi possível abrir a foto. Escolha outra imagem.', 'error'); };
-      img.src = url;
+        if (!await photoStorage(file)) showToast('Foto carregada, mas não foi possível salvá-la neste navegador.', 'error');
+      } catch {
+        showToast('Não foi possível abrir a foto. Escolha outra imagem.', 'error');
+      }
     });
 
-    el.posterCanvas.addEventListener('pointerdown', (event) => {
-      if (event.button !== 0) return;
-      el.posterCanvas.setPointerCapture(event.pointerId);
-      state.posterDrag = { x: event.clientX, y: event.clientY, offset: { ...state.posterOffset } };
+    const posterPointers = new Map();
+    function startPosterGesture() {
+      const points = [...posterPointers.values()];
+      if (!points.length) { state.posterDrag = null; el.posterCanvas.classList.remove('is-dragging'); return; }
+      const x = points.reduce((sum, point) => sum + point.x, 0) / points.length;
+      const y = points.reduce((sum, point) => sum + point.y, 0) / points.length;
+      const distance = points.length > 1 ? Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y) : 0;
+      state.posterDrag = { x, y, distance, offset: { ...state.posterOffset }, zoom: state.posterZoom };
       el.posterCanvas.classList.add('is-dragging');
+    }
+    function updatePosterZoom(zoom) {
+      state.posterZoom = Math.max(0.25, Math.min(3, zoom));
+      el.posterZoomRange.value = Math.round(state.posterZoom * 100);
+      el.posterZoomValue.textContent = `${el.posterZoomRange.value}%`;
+    }
+    el.posterZoomRange.addEventListener('input', () => { updatePosterZoom(Number(el.posterZoomRange.value) / 100); renderPoster(); });
+    el.resetZoomBtn.addEventListener('click', () => { updatePosterZoom(1); renderPoster(); });
+    document.querySelector('a[href="#acervo"]').addEventListener('click', () => { document.getElementById('acervo').open = true; });
+    el.posterCanvas.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0 || posterPointers.size >= 2) return;
+      posterPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      el.posterCanvas.setPointerCapture(event.pointerId);
+      startPosterGesture();
     });
     el.posterCanvas.addEventListener('pointermove', (event) => {
-      if (!state.posterDrag) return;
+      if (!posterPointers.has(event.pointerId) || !state.posterDrag) return;
+      posterPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      const points = [...posterPointers.values()];
+      const x = points.reduce((sum, point) => sum + point.x, 0) / points.length;
+      const y = points.reduce((sum, point) => sum + point.y, 0) / points.length;
       const rect = el.posterCanvas.getBoundingClientRect();
-      state.posterOffset = {
-        x: state.posterDrag.offset.x + (event.clientX - state.posterDrag.x) / rect.width,
-        y: state.posterDrag.offset.y + (event.clientY - state.posterDrag.y) / rect.height
-      };
+      state.posterOffset = { x: state.posterDrag.offset.x + (x - state.posterDrag.x) / rect.width, y: state.posterDrag.offset.y + (y - state.posterDrag.y) / rect.height };
+      if (points.length === 2 && state.posterDrag.distance > 0) {
+        updatePosterZoom(state.posterDrag.zoom * Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y) / state.posterDrag.distance);
+      }
       renderPoster();
     });
-    const endPosterDrag = () => { state.posterDrag = null; el.posterCanvas.classList.remove('is-dragging'); };
+    const endPosterDrag = (event) => { if (posterPointers.delete(event.pointerId)) startPosterGesture(); };
     el.posterCanvas.addEventListener('pointerup', endPosterDrag);
     el.posterCanvas.addEventListener('pointercancel', endPosterDrag);
     el.posterCanvas.addEventListener('lostpointercapture', endPosterDrag);
@@ -2241,6 +2296,23 @@
       renderPoster();
     });
     el.resetPositionBtn.addEventListener('click', () => { state.posterOffset = { x: 0, y: 0 }; renderPoster(); });
+    el.sharePosterBtn.addEventListener('click', async () => {
+      if (!navigator.share || !navigator.canShare) {
+        el.posterSaveHint.textContent = 'Compartilhamento indisponível neste navegador. Baixe o PNG e escolha a imagem no Instagram.';
+        return;
+      }
+      const blob = await new Promise((resolve) => el.posterCanvas.toBlob(resolve, 'image/png'));
+      if (!blob) { showToast('Não foi possível preparar a imagem. Tente baixar o PNG.', 'error'); return; }
+      const file = new File([blob], 'tipografia-de-rua.png', { type: 'image/png' });
+      if (!navigator.canShare({ files: [file] })) {
+        el.posterSaveHint.textContent = 'Este navegador não compartilha imagens. Baixe o PNG e escolha a imagem no Instagram.';
+        return;
+      }
+      try { await navigator.share({ files: [file] }); }
+      catch (error) {
+        if (error.name !== 'AbortError') el.posterSaveHint.textContent = 'Não foi possível compartilhar. Baixe o PNG e escolha a imagem no Instagram.';
+      }
+    });
     el.downloadTransparentBtn.addEventListener('click', () => {
       renderPoster(true);
       const link = document.createElement('a');
@@ -2248,7 +2320,7 @@
       link.href = el.posterCanvas.toDataURL('image/png');
       link.click();
       renderPoster();
-      showToast('PNG sem fundo baixado!', 'success');
+      el.posterSaveHint.textContent = 'Download iniciado. Depois, abra o Instagram e escolha a imagem salva no celular.';
     });
 
     el.downloadPosterBtn.addEventListener('click', () => {
@@ -2256,7 +2328,7 @@
       link.download = `tipografia-de-rua-${el.formatSelect.value}.png`;
       link.href = el.posterCanvas.toDataURL('image/png');
       link.click();
-      showToast('Pôster baixado em PNG!', 'success');
+      el.posterSaveHint.textContent = 'Download iniciado. Depois, abra o Instagram e escolha a imagem salva no celular.';
     });
 
 
@@ -2273,6 +2345,13 @@
     if (el.posterCanvas) {
       bindPosterEvents();
       renderCollectionCredits();
+      try {
+        const draft = JSON.parse(sessionStorage.getItem(STUDIO_DRAFT_KEY));
+        if (draft?.controls?.bgSelect === 'photo') {
+          const photo = await photoStorage();
+          if (photo) state.posterPhoto = await loadPosterPhoto(photo);
+        }
+      } catch { /* A edição continua sem a foto se ela não puder ser recuperada. */ }
       restoreStudioDraft();
     }
     renderAlphabetBank();

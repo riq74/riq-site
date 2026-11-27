@@ -62,7 +62,7 @@
       <a href="#acervo">Ver acervo</a>
     </nav>
     <div class="street-workspace street-composer">
-        <section class="street-card glass" aria-labelledby="titulo-compositor">
+        <section class="street-card glass" id="composicao" aria-labelledby="titulo-compositor">
           <div class="street-card-heading">
             <h2 id="titulo-compositor">Composição</h2>
           </div>
@@ -78,12 +78,14 @@
             <span id="missingCharsHint" class="helper-text" aria-live="polite"></span>
           </div>
 
+        </section>
+        <section class="street-card glass" id="composition-options" aria-label="Opções do pôster">
           <div class="crop-row-2">
             <div class="control-group">
               <label class="control-label" for="formatSelect">Formato da página</label>
               <select id="formatSelect">
-                <option value="story">Story Instagram (9:16)</option>
-                <option value="feed" selected>Feed Instagram (4:5)</option>
+                <option value="story" selected>Story Instagram (9:16)</option>
+                <option value="feed">Feed Instagram (4:5)</option>
                 <option value="square">Quadrado (1:1)</option>
                 <option value="a4">Pôster A4 (Vertical)</option>
                 <option value="wide">Desktop / Capa (16:9)</option>
@@ -107,7 +109,7 @@
           <div id="photoBgWrap" class="control-group">
             <label class="control-label" for="posterPhotoInput">Foto de fundo</label>
             <input type="file" id="posterPhotoInput" accept="image/*">
-            <span class="helper-text">A foto preenche o formato escolhido e fica disponível nesta página.</span>
+            <span class="helper-text">A foto preenche o formato escolhido e fica salva neste navegador para recuperar a edição.</span>
           </div>
 
           <div id="customBgWrap" class="control-group hidden">
@@ -175,27 +177,31 @@
       <section class="street-card street-stage glass" id="poster-stage" aria-labelledby="titulo-poster" tabindex="-1">
         <div class="street-card-heading">
           <h2 id="titulo-poster">Prévia do pôster</h2>
-          <span id="posterDimsLabel" class="control-value">1080 × 1350 px</span>
+          <span id="posterDimsLabel" class="control-value">1080 × 1920 px</span>
         </div>
 
         <div class="poster-viewport">
           <canvas id="posterCanvas" tabindex="0" aria-label="Prévia do pôster. Arraste a composição ou use as setas do teclado para movê-la."></canvas>
         </div>
 
-        <p class="helper-text">Arraste a composição na prévia ou use as setas do teclado para posicioná-la.</p>
+        <p class="helper-text">Arraste para mover. Use dois dedos em pinça para ajustar o tamanho.</p>
+        <div class="control-group poster-zoom">
+          <label class="control-label" for="posterZoomRange">Tamanho da composição <span id="posterZoomValue" class="control-value">100%</span></label>
+          <input type="range" id="posterZoomRange" min="25" max="300" step="1" value="100">
+          <button type="button" id="resetZoomBtn" class="pill-btn pill-btn--sm">Restaurar tamanho</button>
+        </div>
         <div class="stage-actions">
           <button type="button" id="shuffleVariantsBtn" class="pill-btn">Embaralhar letras</button>
-          <button type="button" id="downloadPosterBtn" class="pill-btn pill-btn--lime">Baixar PNG</button>
+          <button type="button" id="sharePosterBtn" class="pill-btn pill-btn--lime">Compartilhar imagem</button>
+          <button type="button" id="downloadPosterBtn" class="pill-btn">Baixar PNG</button>
           <button type="button" id="downloadTransparentBtn" class="pill-btn">Baixar sem fundo</button>
           <button type="button" id="resetPositionBtn" class="pill-btn">Centralizar composição</button>
           <button type="button" id="downloadCreditsBtn" class="pill-btn" hidden>Créditos do pôster</button>
         </div>
+        <p id="posterSaveHint" class="helper-text" aria-live="polite"></p>
       </section>
-    <section class="street-card street-collection glass" id="acervo" aria-labelledby="titulo-alfabeto">
-      <div class="street-card-heading">
-        <h2 id="titulo-alfabeto">Acervo de letras</h2>
-        <span id="alphabetStats" class="control-value"></span>
-      </div>
+    <details class="street-card street-collection glass" id="acervo">
+      <summary class="street-card-heading"><span>Acervo de letras</span><span id="alphabetStats" class="control-value"></span></summary>
       <div class="collection-options">
         <div class="control-group">
           <label class="control-label" for="collectionFilter">Exibir</label>
@@ -219,7 +225,7 @@
         </div>
         <div id="variantDrawerList" class="variant-list"></div>
       </div>
-    </section>
+    </details>
     </div>
   </main>
 
