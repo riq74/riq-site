@@ -53,6 +53,9 @@
     variantChoices: new Map(),
     posterSources: new Set(),
     mode: 'poster', // 'poster' | 'specimen'
+    posterOffset: { x: 0, y: 0 },
+    posterPhoto: null,
+    posterDrag: null,
     shuffleSeed: 42,
     paddlePromise: null,
     ocrWorkerPromise: null,
@@ -118,6 +121,10 @@
     formatSelect: document.getElementById('formatSelect'),
     bgSelect: document.getElementById('bgSelect'),
     customBgWrap: document.getElementById('customBgWrap'),
+    photoBgWrap: document.getElementById('photoBgWrap'),
+    posterPhotoInput: document.getElementById('posterPhotoInput'),
+    downloadTransparentBtn: document.getElementById('downloadTransparentBtn'),
+    resetPositionBtn: document.getElementById('resetPositionBtn'),
     customBgInput: document.getElementById('customBgInput'),
     footerTextInput: document.getElementById('footerTextInput'),
     letterScaleRange: document.getElementById('letterScaleRange'),
@@ -135,7 +142,6 @@
     posterDimsLabel: document.getElementById('posterDimsLabel'),
     posterCanvas: document.getElementById('posterCanvas'),
     downloadPosterBtn: document.getElementById('downloadPosterBtn'),
-    copyPosterBtn: document.getElementById('copyPosterBtn'),
     toastContainer: document.getElementById('toastContainer')
   };
 
@@ -1498,7 +1504,7 @@
     ]));
     try {
       sessionStorage.setItem(STUDIO_DRAFT_KEY, JSON.stringify({
-        controls, mode: state.mode, seed: state.shuffleSeed, variants: [...state.variantChoices]
+        controls, mode: state.mode, seed: state.shuffleSeed, offset: state.posterOffset, variants: [...state.variantChoices]
       }));
     } catch {
       // O compositor ainda funciona se o armazenamento da sessão estiver indisponível.
@@ -1515,6 +1521,8 @@
         if (control.type === 'checkbox' && typeof value === 'boolean') control.checked = value;
         if (control.type !== 'checkbox' && typeof value === 'string') control.value = value;
       }
+      if (Number.isFinite(draft.offset?.x) && Number.isFinite(draft.offset?.y)) state.posterOffset = draft.offset;
+      if (draft.controls?.bgSelect === 'photo') el.bgSelect.value = 'paper';
       if (draft.mode === 'specimen') state.mode = 'specimen';
       if (Number.isInteger(draft.seed)) state.shuffleSeed = draft.seed;
       if (Array.isArray(draft.variants)) state.variantChoices = new Map(draft.variants);
@@ -1639,7 +1647,7 @@
     ctx.restore();
   }
 
-  function renderPoster() {
+  function renderPoster(transparent = false) {
     if (!el.posterCanvas) return;
     state.posterSources.clear();
     const fmt = FORMATS[el.formatSelect.value] || FORMATS.feed;
@@ -1652,10 +1660,19 @@
     ctx.imageSmoothingQuality = 'high';
 
     const theme = getActiveBackground();
-    ctx.fillStyle = theme.bg;
-    ctx.fillRect(0, 0, fmt.w, fmt.h);
+    const background = el.bgSelect.value;
+    if (!transparent && background !== 'transparent') {
+      ctx.fillStyle = theme.bg;
+      ctx.fillRect(0, 0, fmt.w, fmt.h);
+      if (background === 'photo' && state.posterPhoto) {
+        const img = state.posterPhoto;
+        const scale = Math.max(fmt.w / img.width, fmt.h / img.height);
+        const w = img.width * scale, h = img.height * scale;
+        ctx.drawImage(img, (fmt.w - w) / 2, (fmt.h - h) / 2, w, h);
+      }
+    }
 
-    if (el.textureToggle.checked) {
+    if (!transparent && background !== 'transparent' && background !== 'photo' && el.textureToggle.checked) {
       drawPaperGrain(ctx, fmt.w, fmt.h, state.shuffleSeed);
     }
 
@@ -1673,6 +1690,8 @@
     const availW = fmt.w - marginX * 2;
     const availH = fmt.h - marginTop - footerSpace;
 
+    ctx.save();
+    ctx.translate(state.posterOffset.x * fmt.w, state.posterOffset.y * fmt.h);
     if (state.mode === 'specimen') {
       // Modo Cartela do Alfabeto A-Z
       el.missingCharsHint.textContent = '';
@@ -1831,6 +1850,7 @@
       ctx.textBaseline = 'middle';
       ctx.fillText(footer.toUpperCase(), fmt.w / 2, fmt.h - Math.round(footerSpace * 0.52), availW);
     }
+    ctx.restore();
     if (el.downloadCreditsBtn) el.downloadCreditsBtn.hidden = state.posterSources.size === 0;
     rememberStudioDraft();
   }
@@ -2142,10 +2162,11 @@
       ctrl.addEventListener('input', () => {
         if (ctrl === el.bgSelect) {
           el.customBgWrap.classList.toggle('hidden', el.bgSelect.value !== 'custom');
+          el.posterPhotoInput.value = '';
         }
         renderPoster();
       });
-      ctrl.addEventListener('change', renderPoster);
+      ctrl.addEventListener('change', () => renderPoster());
     });
 
     el.letterScaleRange.addEventListener('input', () => {
@@ -2174,6 +2195,62 @@
       renderPoster();
     });
 
+    el.posterPhotoInput.addEventListener('change', () => {
+      const file = el.posterPhotoInput.files?.[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        state.posterPhoto = img;
+        el.bgSelect.value = 'photo';
+        el.customBgWrap.classList.add('hidden');
+        URL.revokeObjectURL(url);
+        renderPoster();
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); showToast('Não foi possível abrir a foto. Escolha outra imagem.', 'error'); };
+      img.src = url;
+    });
+
+    el.posterCanvas.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      el.posterCanvas.setPointerCapture(event.pointerId);
+      state.posterDrag = { x: event.clientX, y: event.clientY, offset: { ...state.posterOffset } };
+      el.posterCanvas.classList.add('is-dragging');
+    });
+    el.posterCanvas.addEventListener('pointermove', (event) => {
+      if (!state.posterDrag) return;
+      const rect = el.posterCanvas.getBoundingClientRect();
+      state.posterOffset = {
+        x: state.posterDrag.offset.x + (event.clientX - state.posterDrag.x) / rect.width,
+        y: state.posterDrag.offset.y + (event.clientY - state.posterDrag.y) / rect.height
+      };
+      renderPoster();
+    });
+    const endPosterDrag = () => { state.posterDrag = null; el.posterCanvas.classList.remove('is-dragging'); };
+    el.posterCanvas.addEventListener('pointerup', endPosterDrag);
+    el.posterCanvas.addEventListener('pointercancel', endPosterDrag);
+    el.posterCanvas.addEventListener('lostpointercapture', endPosterDrag);
+    el.posterCanvas.addEventListener('keydown', (event) => {
+      const directions = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+      if (!directions[event.key]) return;
+      event.preventDefault();
+      const [x, y] = directions[event.key];
+      const step = event.shiftKey ? 0.05 : 0.01;
+      state.posterOffset.x += x * step;
+      state.posterOffset.y += y * step;
+      renderPoster();
+    });
+    el.resetPositionBtn.addEventListener('click', () => { state.posterOffset = { x: 0, y: 0 }; renderPoster(); });
+    el.downloadTransparentBtn.addEventListener('click', () => {
+      renderPoster(true);
+      const link = document.createElement('a');
+      link.download = `tipografia-de-rua-${el.formatSelect.value}-transparente.png`;
+      link.href = el.posterCanvas.toDataURL('image/png');
+      link.click();
+      renderPoster();
+      showToast('PNG sem fundo baixado!', 'success');
+    });
+
     el.downloadPosterBtn.addEventListener('click', () => {
       const link = document.createElement('a');
       link.download = `tipografia-de-rua-${el.formatSelect.value}.png`;
@@ -2182,21 +2259,7 @@
       showToast('Pôster baixado em PNG!', 'success');
     });
 
-    el.copyPosterBtn.addEventListener('click', () => {
-      if (!navigator.clipboard || typeof ClipboardItem === 'undefined') {
-        showToast('Seu navegador não suporta copiar imagem direto. Use "Baixar PNG".', 'error');
-        return;
-      }
-      el.posterCanvas.toBlob(async (blob) => {
-        if (!blob) return;
-        try {
-          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-          showToast('Imagem copiada para a área de transferência!', 'success');
-        } catch {
-          showToast('Não foi possível copiar. Use "Baixar PNG".', 'error');
-        }
-      }, 'image/png');
-    });
+
 
 
   }

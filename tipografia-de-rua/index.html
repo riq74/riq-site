@@ -53,19 +53,18 @@
     <div class="street-intro">
       <div>
         <h1>Tipografia de Rua</h1>
-        <p>Monte pôsteres com letras de bares, lojas antigas e placas do Brasil.</p>
+        <p>Monte pôsteres com letras de bares, lojas antigas e placas do Brasil e crie suas fontes com suas fotos.</p>
       </div>
     </div>
     <nav class="street-nav" aria-label="Seções da Tipografia de Rua">
       <a href="./" aria-current="page">Criar pôster</a>
-      <a href="recortar/">Recortar fotos</a>
+      <a href="recortar/">Monte sua fonte</a>
       <a href="#acervo">Ver acervo</a>
     </nav>
     <div class="street-workspace street-composer">
         <section class="street-card glass" aria-labelledby="titulo-compositor">
           <div class="street-card-heading">
             <h2 id="titulo-compositor">Composição</h2>
-            <button type="button" id="shuffleVariantsBtn" class="pill-btn">Embaralhar letras</button>
           </div>
 
           <div class="mode-switch" role="group" aria-label="Modo de composição">
@@ -99,8 +98,16 @@
                 <option value="clean">Branco limpo</option>
                 <option value="blueprint">Azul cianotipo</option>
                 <option value="custom">Cor personalizada</option>
+                <option value="photo" hidden>Foto selecionada</option>
+                <option value="transparent">Transparente</option>
               </select>
             </div>
+          </div>
+
+          <div id="photoBgWrap" class="control-group">
+            <label class="control-label" for="posterPhotoInput">Foto de fundo</label>
+            <input type="file" id="posterPhotoInput" accept="image/*">
+            <span class="helper-text">A foto preenche o formato escolhido e fica disponível nesta página.</span>
           </div>
 
           <div id="customBgWrap" class="control-group hidden">
@@ -172,16 +179,18 @@
         </div>
 
         <div class="poster-viewport">
-          <canvas id="posterCanvas" role="img" aria-label="Prévia do pôster"></canvas>
+          <canvas id="posterCanvas" tabindex="0" aria-label="Prévia do pôster. Arraste a composição ou use as setas do teclado para movê-la."></canvas>
         </div>
 
+        <p class="helper-text">Arraste a composição na prévia ou use as setas do teclado para posicioná-la.</p>
         <div class="stage-actions">
+          <button type="button" id="shuffleVariantsBtn" class="pill-btn">Embaralhar letras</button>
           <button type="button" id="downloadPosterBtn" class="pill-btn pill-btn--lime">Baixar PNG</button>
-          <button type="button" id="copyPosterBtn" class="pill-btn">Copiar imagem</button>
+          <button type="button" id="downloadTransparentBtn" class="pill-btn">Baixar sem fundo</button>
+          <button type="button" id="resetPositionBtn" class="pill-btn">Centralizar composição</button>
           <button type="button" id="downloadCreditsBtn" class="pill-btn" hidden>Créditos do pôster</button>
         </div>
       </section>
-    </div>
     <section class="street-card street-collection glass" id="acervo" aria-labelledby="titulo-alfabeto">
       <div class="street-card-heading">
         <h2 id="titulo-alfabeto">Acervo de letras</h2>
@@ -211,6 +220,7 @@
         <div id="variantDrawerList" class="variant-list"></div>
       </div>
     </section>
+    </div>
   </main>
 
   <footer class="site-footer">
