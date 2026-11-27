@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stories de lançamento — riq.ia.br</title>
+  <style>
+    @font-face {
+      font-family: "Space Grotesk";
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: block;
+      src: url("../../assets/fonts/space-grotesk-3.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 300 700;
+      font-display: block;
+      src: url("../../assets/fonts/inter-7.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: block;
+      src: url("../../assets/fonts/jetbrains-mono-6.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    :root {
+      --bg: #05080e;
+      --ink: #e8eef8;
+      --soft: #c7d2e2;
+      --dim: #8b98ad;
+      --faint: #6d7b90;
+      --lime: #d8f057;
+      --lime-ink: #101400;
+      --cyan: #38bdf8;
+      --cyan-text: #7dd3fc;
+      --display: "Space Grotesk", "Segoe UI", sans-serif;
+      --body: "Inter", "Segoe UI", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #02040a; color: var(--ink); }
+    body { font-family: var(--body); }
+
+    .brief {
+      width: min(880px, calc(100% - 48px));
+      margin: 48px auto 56px;
+      color: var(--soft);
+    }
+    .brief h1 {
+      font-family: var(--display);
+      font-weight: 560;
+      letter-spacing: -0.04em;
+      font-size: 40px;
+      margin: 0 0 12px;
+    }
+    .brief p { margin: 0 0 10px; line-height: 1.55; color: var(--dim); font-size: 16px; }
+    .brief ol { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+    .brief li { font-size: 15px; color: var(--soft); }
+    .brief code { font-family: var(--mono); color: var(--lime); font-size: 13px; }
+
+    .reel { display: flex; flex-direction: column; align-items: center; gap: 48px; padding-bottom: 80px; }
+
+    .story {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      padding: 292px 88px 292px;
+      flex: none;
+    }
+    .story--cover {
+      height: 1080px;
+      padding: 120px 88px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .bg__stars {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1.2px 1.2px at 58% 72%, rgba(255,255,255,0.62) 45%, transparent 52%),
+        radial-gradient(1px 1px at 66% 76%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(2px 2px at 66% 61%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 24% 13%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 19% 12%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 82% 6%, rgba(255,255,255,0.62) 45%, transparent 52%),
+        radial-gradient(2px 2px at 58% 84%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 84% 21%, rgba(255,255,255,0.28) 45%, transparent 52%),
+        radial-gradient(1px 1px at 68% 9%, rgba(255,255,255,0.28) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 25% 31%, rgba(255,255,255,0.28) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 60% 42%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1px 1px at 26% 67%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1px 1px at 38% 64%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(2px 2px at 11% 59%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1px 1px at 53% 71%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1px 1px at 33% 41%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1px 1px at 37% 4%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1px 1px at 88% 1%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 7% 61%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1px 1px at 51% 54%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(2px 2px at 81% 26%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1px 1px at 44% 12%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1px 1px at 2% 53%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(1px 1px at 32% 91%, rgba(255,255,255,0.28) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 8% 60%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(1px 1px at 88% 72%, rgba(255,255,255,0.62) 45%, transparent 52%),
+        radial-gradient(2px 2px at 66% 25%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(1px 1px at 35% 76%, rgba(255,255,255,0.28) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 27% 24%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 19% 28%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 12% 27%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 32% 2%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 48% 80%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 76% 62%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(2px 2px at 50% 24%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(1px 1px at 93% 25%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1px 1px at 81% 71%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1px 1px at 54% 7%, rgba(255,255,255,0.28) 45%, transparent 52%),
+        radial-gradient(1px 1px at 5% 66%, rgba(255,255,255,0.38) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 95% 91%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 17% 30%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1px 1px at 36% 28%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1px 1px at 3% 9%, rgba(255,255,255,0.62) 45%, transparent 52%),
+        radial-gradient(1px 1px at 23% 37%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1px 1px at 74% 17%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1px 1px at 18% 58%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 94% 89%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(2px 2px at 61% 46%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 5% 3%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1px 1px at 10% 62%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 10% 58%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(2px 2px at 95% 6%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1px 1px at 91% 17%, rgba(255,255,255,0.5) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 54% 4%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1px 1px at 49% 75%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1px 1px at 10% 11%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 15% 33%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 75% 59%, rgba(255,255,255,0.62) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 70% 11%, rgba(255,255,255,0.8) 45%, transparent 52%),
+        radial-gradient(1px 1px at 62% 3%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1.6px 1.6px at 15% 64%, rgba(255,255,255,0.92) 45%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 72% 18%, rgba(56,189,248,0.85) 45%, transparent 52%),
+        radial-gradient(1.4px 1.4px at 28% 78%, rgba(216,240,87,0.7) 45%, transparent 52%);
+    }
+    .bg__mesh {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(980px 720px at 78% -8%, rgba(56,189,248,0.20), transparent 62%),
+        radial-gradient(820px 640px at -12% 108%, rgba(216,240,87,0.10), transparent 58%),
+        radial-gradient(640px 520px at 110% 72%, rgba(192,132,252,0.08), transparent 60%),
+        radial-gradient(120% 70% at 50% 120%, rgba(0,0,0,0.55), transparent 50%);
+    }
+    .bg__arc { position: absolute; left: -80px; right: -80px; width: calc(100% + 160px); height: 640px; top: -40px; }
+    .bg__arc--low { top: auto; bottom: -180px; height: 520px; transform: scaleY(-1); opacity: 0.7; }
+    .bg__vignette {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(5,8,14,0.2), transparent 18%, transparent 78%, rgba(5,8,14,0.35)),
+        radial-gradient(ellipse at center, transparent 46%, rgba(2,4,10,0.55) 100%);
+    }
+    .bg__grain {
+      position: absolute; inset: -20%;
+      opacity: 0.18;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.55'/></svg>");
+    }
+
+    .top, .stack, .foot { position: relative; z-index: 2; }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 52px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0;
+      padding: 12px 22px 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.05);
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .eyebrow i {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 16px rgba(216,240,87,0.85);
+    }
+    .index {
+      font-family: var(--mono);
+      font-size: 24px;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+    }
+    .index em { font-style: normal; color: var(--faint); }
+
+    .stack { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+    h2 {
+      margin: 0;
+      font-family: var(--display);
+      font-weight: 560;
+      letter-spacing: -0.045em;
+      line-height: 0.9;
+      font-size: 148px;
+    }
+    .period { color: var(--lime); text-shadow: 0 0 28px rgba(216,240,87,0.55); }
+    .lede {
+      margin: 28px 0 0;
+      max-width: 820px;
+      font-size: 36px;
+      line-height: 1.35;
+      font-weight: 400;
+      color: var(--soft);
+      letter-spacing: -0.015em;
+    }
+    .mark {
+      width: 228px;
+      height: 228px;
+      object-fit: contain;
+      margin: 0 0 36px;
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,0.45));
+    }
+
+    .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+    }
+    .domain {
+      font-family: var(--mono);
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+    }
+    .domain span { color: var(--faint); }
+    .meter { display: flex; gap: 10px; align-items: center; }
+    .meter i {
+      display: block;
+      width: 36px;
+      height: 4px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.18);
+    }
+    .meter i.on {
+      width: 64px;
+      background: var(--lime);
+      box-shadow: 0 0 16px rgba(216,240,87,0.65);
+    }
+    .meter i.done { background: rgba(255,255,255,0.72); }
+
+    .specs { list-style: none; margin: 42px 0 0; padding: 0; display: grid; gap: 16px; }
+    .specs li, .card {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 8px 18px;
+      align-items: center;
+      padding: 26px 28px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 18px 40px rgba(0,0,0,0.28);
+    }
+    .specs b, .card b {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 24px;
+      letter-spacing: 0.08em;
+      color: var(--cyan-text);
+    }
+    .specs strong, .card strong {
+      display: block;
+      font-family: var(--display);
+      font-weight: 560;
+      font-size: 36px;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+    .specs small, .card small {
+      display: block;
+      margin-top: 6px;
+      font-size: 26px;
+      line-height: 1.25;
+      color: var(--dim);
+    }
+    .story--who h2 { font-size: 112px; margin-bottom: 8px; }
+    .story--who .lede { font-size: 34px; max-width: 860px; }
+
+    .story--index h2 { font-size: 96px; }
+    .story--index .stack { justify-content: center; gap: 28px; }
+    .cards { display: grid; gap: 16px; }
+    .card { grid-template-columns: 88px 1fr; padding: 20px 24px 20px 20px; }
+    .card img {
+      width: 84px; height: 84px; border-radius: 20px;
+      background: rgba(0,0,0,0.25);
+    }
+    .card .copy { min-width: 0; }
+    .card strong { font-size: 34px; }
+    .card small { font-size: 24px; }
+
+    .story--feature { padding-top: 250px; }
+    .story--feature .stack { justify-content: flex-end; padding-bottom: 28px; }
+    .plate {
+      position: relative;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 30px 70px rgba(0,0,0,0.45);
+      margin-bottom: 36px;
+      background: #0a1218;
+    }
+    .plate img.shot {
+      display: block;
+      width: 100%;
+      height: 620px;
+      object-fit: cover;
+      object-position: center 42%;
+    }
+    .plate__veil {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to top, rgba(5,8,14,0.55), transparent 42%),
+        radial-gradient(90% 80% at 50% 40%, transparent, rgba(5,8,14,0.18));
+      pointer-events: none;
+    }
+    .reticle {
+      position: absolute; left: 28px; top: 28px; width: 92px; height: 92px;
+      pointer-events: none;
+    }
+    .plate__tag {
+      position: absolute; left: 28px; bottom: 22px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #f3ffe0;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+    }
+    .plate__tag i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
+    .credit {
+      margin: 18px 0 0;
+      font-family: var(--mono);
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      color: rgba(232,238,248,0.42);
+    }
+    .story--feature h2 { font-size: 84px; }
+    .story--feature .lede { font-size: 32px; margin-top: 18px; }
+
+    .story--cta .stack { align-items: flex-start; }
+    .story--cta .mark { width: 168px; height: 168px; margin-bottom: 28px; }
+    .word {
+      margin: 0;
+      font-family: var(--display);
+      font-weight: 560;
+      letter-spacing: -0.055em;
+      line-height: 0.86;
+      font-size: 168px;
+    }
+    .word small {
+      display: block;
+      margin-top: 8px;
+      font-size: 92px;
+      letter-spacing: -0.04em;
+      color: var(--cyan-text);
+      font-weight: 500;
+    }
+    .pill {
+      margin-top: 40px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 84px;
+      padding: 0 36px;
+      border-radius: 999px;
+      border: 0;
+      color: var(--lime-ink);
+      background: linear-gradient(180deg, #ecff90 0%, #d8f057 48%, #aecc1e 53%, #d8f057 100%);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.8), inset 0 -1px 2px rgba(0,0,0,0.3), 0 0 28px rgba(216,240,87,0.45), 0 10px 24px rgba(0,0,0,0.4);
+      font-family: var(--body);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+    }
+    .handle {
+      margin: 22px 0 0;
+      font-family: var(--mono);
+      font-size: 26px;
+      color: var(--dim);
+      letter-spacing: 0.04em;
+    }
+
+    .story--cover { padding: 0; }
+    .story--cover .stack { align-items: center; text-align: center; flex: none; }
+    .story--cover .mark { width: 380px; height: 380px; margin: 0; }
+    .ring {
+      position: absolute; left: 50%; top: 50%;
+      width: 560px; height: 560px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1.5px dashed rgba(56,189,248,0.34);
+      z-index: 1;
+    }
+    .ring::after {
+      content: "";
+      position: absolute; inset: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(216,240,87,0.16);
+    }
+  </style>
+</head>
+<body>
+  <div class="brief">
+    <h1>Lançamento do site, para os stories.</h1>
+    <p>Cinco quadros em 1080×1920, na ordem, mais uma capa redonda para o destaque. O texto usa a voz do site: cibersegurança, inteligência artificial e a oficina. A área de cima e a de baixo ficam livres para o nome e a barra do Instagram.</p>
+    <ol>
+      <li>01 — está no ar</li>
+      <li>02 — quem é</li>
+      <li>03 — o que tem lá dentro</li>
+      <li>04 — Desenhe seu Caminho</li>
+      <li>05 — o endereço. Cola o sticker de link em <code>https://riq.ia.br</code></li>
+    </ol>
+  </div>
+
+  <main class="reel">
+    <section class="story story--launch" id="s1">
+      <div class="bg" aria-hidden="true">
+        <div class="bg__stars"></div>
+        <div class="bg__mesh"></div>
+        <svg class="bg__arc" viewBox="0 0 1440 520" preserveAspectRatio="none">
+          <path d="M-80 40C380 230 1060 230 1520 40" fill="none" stroke="rgba(56,189,248,0.32)" stroke-width="1.4" stroke-dasharray="14 9"></path>
+          <path d="M-80 92C400 292 1080 292 1560 92" fill="none" stroke="rgba(216,240,87,0.2)" stroke-width="1.2" stroke-dasharray="3 11"></path>
+          <path d="M-80 148C420 360 1100 360 1580 148" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"></path>
+        </svg>
+        <svg class="bg__arc bg__arc--low" viewBox="0 0 1440 520" preserveAspectRatio="none">
+          <path d="M-80 40C380 230 1060 230 1520 40" fill="none" stroke="rgba(56,189,248,0.22)" stroke-width="1.2" stroke-dasharray="14 9"></path>
+        </svg>
+        <div class="bg__vignette"></div>
+        <div class="bg__grain"></div>
+      </div>
+      <header class="top">
+        <p class="eyebrow"><i></i>lançamento</p>
+        <span class="index">01 <em>/ 05</em></span>
+      </header>
+      <div class="stack">
+        <img class="mark" src="logo-mark.png" alt="">
+        <h2>está<br>no ar<span class="period">.</span></h2>
+        <p class="lede">Portfólio e oficina digital de Henrique Coelho.</p>
+      </div>
+      <footer class="foot">
+        <span class="domain">riq<span>.ia.br</span></span>
+        <span class="meter" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span>
+      </footer>
+    </section>
+
+    <section class="story story--who" id="s2">
+      <div class="bg" aria-hidden="true">
+        <div class="bg__stars"></div>
+        <div class="bg__mesh"></div>
+        <svg class="bg__arc" viewBox="0 0 1440 520" preserveAspectRatio="none">
+          <path d="M-80 40C380 230 1060 230 1520 40" fill="none" stroke="rgba(56,189,248,0.32)" stroke-width="1.4" stroke-dasharray="14 9"></path>
+          <path d="M-80 92C400 292 1080 292 1560 92" fill="none" stroke="rgba(216,240,87,0.2)" stroke-width="1.2" stroke-dasharray="3 11"></path>
+        </svg>
+        <div class="bg__vignette"></div>
+        <div class="bg__grain"></div>
+      </div>
+      <header class="top">
+        <p class="eyebrow"><i></i>quem</p>
+        <span class="index">02 <em>/ 05</em></span>
+      </header>
+      <div class="stack">
+        <h2>Henrique<br>Coelho<span class="period">.</span></h2>
+        <p class="lede">Trabalho com cibersegurança e uso inteligência artificial para desenvolver e testar automações.</p>
+        <ul class="specs">
+          <li><b>01</b><div><strong>Cibersegurança</strong><small>investigação, risco e processo</small></div></li>
+          <li><b>02</b><div><strong>Inteligência artificial</strong><small>agentes, testes e automação</small></div></li>
+          <li><b>03</b><div><strong>Oficina</strong><small>ferramentas, jogos e experimentos</small></div></li>
+        </ul>
+      </div>
+      <footer class="foot">
+        <span class="domain">riq<span>.ia.br</span></span>
+        <span class="meter" aria-hidden="true"><i class="done"></i><i class="on"></i><i></i><i></i><i></i></span>
+      </footer>
+    </section>
+
+    <section class="story story--index" id="s3">
+      <div class="bg" aria-hidden="true">
+        <div class="bg__stars"></div>
+        <div class="bg__mesh"></div>
+        <svg class="bg__arc" viewBox="0 0 1440 520" preserveAspectRatio="none">
+          <path d="M-80 40C380 230 1060 230 1520 40" fill="none" stroke="rgba(56,189,248,0.32)" stroke-width="1.4" stroke-dasharray="14 9"></path>
+          <path d="M-80 92C400 292 1080 292 1560 92" fill="none" stroke="rgba(216,240,87,0.2)" stroke-width="1.2" stroke-dasharray="3 11"></path>
+        </svg>
+        <div class="bg__vignette"></div>
+        <div class="bg__grain"></div>
+      </div>
+      <header class="top">
+        <p class="eyebrow"><i></i>oficina</p>
+        <span class="index">03 <em>/ 05</em></span>
+      </header>
+      <div class="stack">
+        <h2>O que tem<br>lá dentro<span class="period">.</span></h2>
+        <div class="cards">
+          <article class="card">
+            <img src="../../desenhe-seu-caminho/favicon.png" alt="">
+            <div class="copy"><strong>Desenhe seu Caminho</strong><small>Uma rota no mapa vira vídeo</small></div>
+          </article>
+          <article class="card">
+            <img src="../../assets/icones/gerador-pix.png" alt="">
+            <div class="copy"><strong>Ferramentas</strong><small>Pix, fundo, GPX e catálogo</small></div>
+          </article>
+          <article class="card">
+            <img src="../../assets/icones/cidade-viva.png" alt="">
+            <div class="copy"><strong>Jogos e dinâmicas</strong><small>Cidade Viva, Sudoku, encontros</small></div>
+          </article>
+          <article class="card">
+            <img src="../../assets/icones/era-digital.png" alt="">
+            <div class="copy"><strong>Guias</strong><small>Segurança na era digital</small></div>
+          </article>
+        </div>
+      </div>
+      <footer class="foot">
+        <span class="domain">riq<span>.ia.br</span></span>
+        <span class="meter" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="on"></i><i></i><i></i></span>
+      </footer>
+    </section>
+
+    <section class="story story--feature" id="s4">
+      <div class="bg" aria-hidden="true">
+        <div class="bg__stars"></div>
+        <div class="bg__mesh"></div>
+        <svg class="bg__arc" viewBox="0 0 1440 520" preserveAspectRatio="none">
+          <path d="M-80 40C380 230 1060 230 1520 40" fill="none" stroke="rgba(56,189,248,0.32)" stroke-width="1.4" stroke-dasharray="14 9"></path>
+          <path d="M-80 92C400 292 1080 292 1560 92" fill="none" stroke="rgba(216,240,87,0.2)" stroke-width="1.2" stroke-dasharray="3 11"></path>
+        </svg>
+        <div class="bg__vignette"></div>
+        <div class="bg__grain"></div>
+      </div>
+      <header class="top">
+        <p class="eyebrow"><i></i>em destaque</p>
+        <span class="index">04 <em>/ 05</em></span>
+      </header>
+      <div class="stack">
+        <div class="plate">
+          <img class="shot" src="../../assets/projetos/route-films.webp" alt="">
+          <div class="plate__veil"></div>
+          <svg class="reticle" viewBox="0 0 92 92" aria-hidden="true">
+            <circle cx="46" cy="46" r="34" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.4" stroke-dasharray="3 5"></circle>
+            <circle cx="46" cy="46" r="2" fill="rgba(216,240,87,0.95)"></circle>
+            <path d="M46 8v12M46 72v12M8 46h12M72 46h12" stroke="rgba(255,255,255,0.7)" stroke-width="1.4"></path>
+          </svg>
+          <span class="plate__tag"><i></i>editor de rotas e vídeo</span>
+        </div>
+        <h2>Desenhe seu<br>Caminho<span class="period">.</span></h2>
+        <p class="lede">Desenhe no mapa ou importe um GPX e transforme o trajeto em um vídeo.</p>
+        <p class="credit">Sentinel-2 cloudless · EOX · © OpenStreetMap</p>
+      </div>
+      <footer class="foot">
+        <span class="domain">riq<span>.ia.br</span></span>
+        <span class="meter" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="on"></i><i></i></span>
+      </footer>
+    </section>
+
+    <section class="story story--cta" id="s5">
+      <div class="bg" aria-hidden="true">
+        <div class="bg__stars"></div>
+        <div class="bg__mesh"></div>
+        <svg class="bg__arc" viewBox="0 0 1440 520" preserveAspectRatio="none">
+          <path d="M-80 40C380 230 1060 230 1520 40" fill="none" stroke="rgba(56,189,248,0.32)" stroke-width="1.4" stroke-dasharray="14 9"></path>
+          <path d="M-80 92C400 292 1080 292 1560 92" fill="none" stroke="rgba(216,240,87,0.2)" stroke-width="1.2" stroke-dasharray="3 11"></path>
+          <path d="M-80 148C420 360 1100 360 1580 148" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"></path>
+        </svg>
+        <svg class="bg__arc bg__arc--low" viewBox="0 0 1440 520" preserveAspectRatio="none">
+          <path d="M-80 40C380 230 1060 230 1520 40" fill="none" stroke="rgba(56,189,248,0.22)" stroke-width="1.2" stroke-dasharray="14 9"></path>
+        </svg>
+        <div class="bg__vignette"></div>
+        <div class="bg__grain"></div>
+      </div>
+      <header class="top">
+        <p class="eyebrow"><i></i>entra</p>
+        <span class="index">05 <em>/ 05</em></span>
+      </header>
+      <div class="stack">
+        <img class="mark" src="logo-mark.png" alt="">
+        <p class="word">riq<small>.ia.br</small></p>
+        <span class="pill">Link na bio</span>
+        <p class="handle">@riq74_</p>
+      </div>
+      <footer class="foot">
+        <span class="domain">portfólio · oficina · experimentos</span>
+        <span class="meter" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="on"></i></span>
+      </footer>
+    </section>
+
+    <section class="story story--cover" id="capa">
+      <div class="bg" aria-hidden="true">
+        <div class="bg__stars"></div>
+        <div class="bg__mesh"></div>
+        <svg class="bg__arc" viewBox="0 0 1440 520" preserveAspectRatio="none">
+          <path d="M-80 80C380 250 1060 250 1520 80" fill="none" stroke="rgba(56,189,248,0.28)" stroke-width="1.4" stroke-dasharray="14 9"></path>
+          <path d="M-80 130C400 310 1080 310 1560 130" fill="none" stroke="rgba(216,240,87,0.18)" stroke-width="1.2" stroke-dasharray="3 11"></path>
+        </svg>
+        <div class="bg__vignette"></div>
+        <div class="bg__grain"></div>
+        <div class="ring"></div>
+      </div>
+      <div class="stack">
+        <img class="mark" src="logo-mark.png" alt="">
+      </div>
+    </section>
+  </main>
+</body>
+</html>
