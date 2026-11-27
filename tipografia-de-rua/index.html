@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR" class="street-document" data-default-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tipografia de Rua | RIQ</title>
+  <meta name="description"
+    content="Monte um pôster com letras recortadas de fachadas, bares e placas brasileiras.">
+  <meta name="theme-color" content="#060a10" data-light="#e9f0f1" data-dark="#060a10">
+  <link rel="icon" type="image/png" href="../Logo-RIQ-S-Fundo.png">
+  <script src="../shared/theme.js"></script>
+  <script src="../js/home.js"></script>
+  <link rel="stylesheet" href="../css/redesign.css">
+  <link rel="stylesheet" href="tipografia.css">
+</head>
+
+<body class="street-page street-studio">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="field" aria-hidden="true">
+    <div class="field__clip">
+      <div class="field__stars"></div>
+      <div class="field__stars field__stars--dense"></div>
+      <div class="field__glow field__glow--top"></div>
+      <div class="field__glow field__glow--side"></div>
+      <div class="field__mesh"></div>
+      <div class="field__glow field__glow--base"></div>
+    </div>
+  </div>
+
+  <header class="dock">
+    <div class="dock__inner glass glass--blur">
+      <a class="brand" href="../index.html">
+        <span class="brand__mark"><img src="../Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand__domain">.ia.br</span></span>
+        <span class="brand__dot" aria-hidden="true"></span>
+      </a>
+      <a class="dock__link" href="../index.html">Voltar ao início</a>
+      <div class="site-preferences dock__prefs">
+        <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+          <span data-theme-label>Tema escuro</span>
+        </button>
+        <label class="comfort" hidden>
+          <input type="checkbox" data-transparency-toggle>
+          <span class="comfort__text">Reduzir transparência</span>
+          <span class="street-compact-comfort">Sem vidro</span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <main class="street-main" id="conteudo" tabindex="-1">
+    <div class="street-intro">
+      <div>
+        <h1>Tipografia de Rua</h1>
+        <p>Monte pôsteres com letras de bares, lojas antigas e placas do Brasil.</p>
+      </div>
+    </div>
+    <nav class="street-nav" aria-label="Seções da Tipografia de Rua">
+      <a href="./" aria-current="page">Criar pôster</a>
+      <a href="recortar/">Recortar fotos</a>
+      <a href="#acervo">Ver acervo</a>
+    </nav>
+    <div class="street-workspace street-composer">
+        <section class="street-card glass" aria-labelledby="titulo-compositor">
+          <div class="street-card-heading">
+            <h2 id="titulo-compositor">Composição</h2>
+            <button type="button" id="shuffleVariantsBtn" class="pill-btn">Embaralhar letras</button>
+          </div>
+
+          <div class="mode-switch" role="group" aria-label="Modo de composição">
+            <button type="button" class="mode-btn is-active" data-mode="poster" aria-pressed="true">Frase livre</button>
+            <button type="button" class="mode-btn" data-mode="specimen" aria-pressed="false">Cartela do acervo</button>
+          </div>
+
+          <div id="phraseGroup" class="control-group">
+            <label class="control-label" for="posterTextInput">Texto do pôster</label>
+            <textarea id="posterTextInput" rows="3" maxlength="180" placeholder="Digite uma frase...">A RUA&#10;É SUA</textarea>
+            <span id="missingCharsHint" class="helper-text" aria-live="polite"></span>
+          </div>
+
+          <div class="crop-row-2">
+            <div class="control-group">
+              <label class="control-label" for="formatSelect">Formato da página</label>
+              <select id="formatSelect">
+                <option value="story">Story Instagram (9:16)</option>
+                <option value="feed" selected>Feed Instagram (4:5)</option>
+                <option value="square">Quadrado (1:1)</option>
+                <option value="a4">Pôster A4 (Vertical)</option>
+                <option value="wide">Desktop / Capa (16:9)</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="bgSelect">Fundo do pôster</label>
+              <select id="bgSelect">
+                <option value="paper" selected>Papel jornal</option>
+                <option value="concrete">Concreto escuro</option>
+                <option value="gallery">Preto galeria</option>
+                <option value="clean">Branco limpo</option>
+                <option value="blueprint">Azul cianotipo</option>
+                <option value="custom">Cor personalizada</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="customBgWrap" class="control-group hidden">
+            <label class="control-label" for="customBgInput">Cor do fundo</label>
+            <input type="color" id="customBgInput" value="#16202a">
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="footerTextInput">Rodapé / assinatura (opcional)</label>
+            <input type="text" id="footerTextInput" maxlength="60" value="">
+          </div>
+
+          <details class="street-advanced">
+            <summary>Estilo de colagem e alinhamento</summary>
+
+            <div class="control-group">
+              <label class="control-label" for="letterScaleRange">
+                Tamanho das letras
+                <span class="control-value" id="letterScaleValue">100%</span>
+              </label>
+              <input type="range" id="letterScaleRange" min="55" max="140" value="100" step="5">
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="trackingRange">
+                Espaçamento
+                <span class="control-value" id="trackingValue">12px</span>
+              </label>
+              <input type="range" id="trackingRange" min="-10" max="48" value="12" step="2">
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="jitterRange">
+                Inclinação orgânica (zine)
+                <span class="control-value" id="jitterValue">3°</span>
+              </label>
+              <input type="range" id="jitterRange" min="0" max="10" value="3" step="0.5">
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="alignSelect">Alinhamento</label>
+              <select id="alignSelect">
+                <option value="center" selected>Centralizado</option>
+                <option value="left">Esquerda</option>
+                <option value="right">Direita</option>
+              </select>
+            </div>
+
+            <label class="toggle-row" for="collageBorderToggle">
+              Borda de papel e sombra de colagem
+              <input type="checkbox" id="collageBorderToggle" checked>
+            </label>
+
+            <label class="toggle-row" for="autoMixToggle">
+              Alternar variantes repetidas automaticamente
+              <input type="checkbox" id="autoMixToggle" checked>
+            </label>
+
+            <label class="toggle-row" for="textureToggle">
+              Granulação sutil de papel
+              <input type="checkbox" id="textureToggle" checked>
+            </label>
+          </details>
+        </section>
+      <section class="street-card street-stage glass" id="poster-stage" aria-labelledby="titulo-poster" tabindex="-1">
+        <div class="street-card-heading">
+          <h2 id="titulo-poster">Prévia do pôster</h2>
+          <span id="posterDimsLabel" class="control-value">1080 × 1350 px</span>
+        </div>
+
+        <div class="poster-viewport">
+          <canvas id="posterCanvas" role="img" aria-label="Prévia do pôster"></canvas>
+        </div>
+
+        <div class="stage-actions">
+          <button type="button" id="downloadPosterBtn" class="pill-btn pill-btn--lime">Baixar PNG</button>
+          <button type="button" id="copyPosterBtn" class="pill-btn">Copiar imagem</button>
+          <button type="button" id="downloadCreditsBtn" class="pill-btn" hidden>Créditos do pôster</button>
+        </div>
+      </section>
+    </div>
+    <section class="street-card street-collection glass" id="acervo" aria-labelledby="titulo-alfabeto">
+      <div class="street-card-heading">
+        <h2 id="titulo-alfabeto">Acervo de letras</h2>
+        <span id="alphabetStats" class="control-value"></span>
+      </div>
+      <div class="collection-options">
+        <div class="control-group">
+          <label class="control-label" for="collectionFilter">Exibir</label>
+          <select id="collectionFilter">
+            <option value="streetscape">Bares e fachadas</option>
+            <option value="all" selected>Acervo completo</option>
+            <option value="facade">Lojas e fachadas</option>
+            <option value="bar">Bares, botecos e cafés</option>
+            <option value="sign">Placas e sinalização</option>
+            <option value="personal">Meus recortes</option>
+          </select>
+        </div>
+        <a class="pill-btn" href="recortar/">Adicionar letras das minhas fotos</a>
+      </div>
+      <div id="alphabetGrid" class="alphabet-grid" aria-label="Letras disponíveis"></div>
+      <p id="alphabetEmptyHint" class="helper-text hidden">Ainda não há recortes nesta categoria.</p>
+      <div id="variantDrawer" class="variant-drawer hidden">
+        <div class="variant-drawer-head">
+          <h3 id="variantDrawerTitle">Variantes da letra</h3>
+          <button type="button" id="closeVariantDrawerBtn" class="pill-btn pill-btn--sm">Fechar</button>
+        </div>
+        <div id="variantDrawerList" class="variant-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-panel glass glass--blur">
+      <div class="footer-panel__row">
+        <a class="footer-name" href="../index.html">Henrique Coelho<span>RIQ</span></a>
+        <nav class="footer-panel__contact" aria-label="Contato">
+          <a href="mailto:dev@riq.ia.br">E-mail</a>
+          <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="acervo/acervo.js"></script>
+  <script src="tipografia.js"></script>
+</body>
+
+</html>

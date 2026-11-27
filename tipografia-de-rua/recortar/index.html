@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR" class="street-document" data-default-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recortar fotos | Tipografia de Rua</title>
+  <meta name="description"
+    content="Recorte letras das suas fotos e use-as no compositor Tipografia de Rua.">
+  <meta name="theme-color" content="#060a10" data-light="#e9f0f1" data-dark="#060a10">
+  <link rel="icon" type="image/png" href="../../Logo-RIQ-S-Fundo.png">
+  <script src="../../shared/theme.js"></script>
+  <script src="../../js/home.js"></script>
+  <link rel="stylesheet" href="../../css/redesign.css">
+  <link rel="stylesheet" href="../tipografia.css">
+</head>
+
+<body class="street-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="field" aria-hidden="true">
+    <div class="field__clip">
+      <div class="field__stars"></div>
+      <div class="field__stars field__stars--dense"></div>
+      <div class="field__glow field__glow--top"></div>
+      <div class="field__glow field__glow--side"></div>
+      <div class="field__mesh"></div>
+      <div class="field__glow field__glow--base"></div>
+    </div>
+  </div>
+
+  <header class="dock">
+    <div class="dock__inner glass glass--blur">
+      <a class="brand" href="../../index.html">
+        <span class="brand__mark"><img src="../../Logo-RIQ-S-Fundo.png" alt="" width="28" height="28"></span>
+        <span>riq<span class="brand__domain">.ia.br</span></span>
+        <span class="brand__dot" aria-hidden="true"></span>
+      </a>
+      <a class="dock__link" href="../../index.html">Voltar ao início</a>
+      <div class="site-preferences dock__prefs">
+        <button type="button" class="site-theme-toggle" data-theme-toggle data-theme-managed hidden>
+          <span data-theme-label>Tema escuro</span>
+        </button>
+        <label class="comfort" hidden>
+          <input type="checkbox" data-transparency-toggle>
+          <span class="comfort__text">Reduzir transparência</span>
+          <span class="street-compact-comfort">Sem vidro</span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <main class="street-main" id="conteudo" tabindex="-1">
+    <div class="street-intro">
+      <div>
+        <h1>Recortar fotos</h1>
+        <p>Envie uma foto, recorte uma letra e use-a no seu pôster.</p>
+      </div>
+    </div>
+    <nav class="street-nav" aria-label="Seções da Tipografia de Rua">
+      <a href="../">Criar pôster</a>
+      <a href="./" aria-current="page">Recortar fotos</a>
+    </nav>
+    <div class="street-cut-layout">
+        <section class="street-card glass" aria-labelledby="titulo-recorte">
+          <div class="street-card-heading">
+            <h2 id="titulo-recorte">Selecionar uma letra na foto</h2>
+
+          </div>
+
+          <div class="source-bar">
+            <button type="button" id="uploadPhotoBtn" class="dropzone">
+              <strong>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <path d="m17 8-5-5-5 5m5-5v12"></path>
+                </svg>
+                <span>Escolher foto da rua</span>
+              </strong>
+              <span class="dropzone-hint">Arraste uma imagem, clique ou cole com Ctrl+V.</span>
+            </button>
+            <input type="file" id="photoInput" accept="image/*" hidden>
+
+            <div class="sample-actions">
+              <button type="button" id="sampleSignBtn" class="pill-btn">Placa retrô (teste)</button>
+              <button type="button" id="sampleNeonBtn" class="pill-btn">Letreiro urbano (teste)</button>
+            </div>
+
+            <div class="auto-pipeline-bar">
+              <label class="toggle-row" for="autoScanOnUploadToggle">
+                <span>Sugerir letras automaticamente ao enviar foto (você escolhe quais salvar)</span>
+                <input type="checkbox" id="autoScanOnUploadToggle" checked>
+              </label>
+              <span id="aiPipelineStatus" class="control-value" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div id="cropperArea" class="cropper-area hidden">
+            <div class="cropper-canvas-wrap" id="cropperWrap">
+              <canvas id="cropperCanvas"></canvas>
+              <p class="cropper-tip">Arraste sobre a letra para selecionar · arraste os cantos para ajustar</p>
+            </div>
+
+            <div class="cropper-controls">
+              <div class="crop-preview-box">
+                <span class="control-label">Recorte atual</span>
+                <div class="crop-thumb-frame">
+                  <canvas id="cropPreviewCanvas" width="120" height="120"></canvas>
+                </div>
+                <span id="cropQualityLabel" class="control-value"></span>
+              </div>
+
+              <div class="crop-fields">
+                <div class="crop-row-2">
+                  <div class="control-group">
+                    <label class="control-label" for="charInput">
+                      Qual letra/símbolo?
+                      <span id="ocrStatusLabel" class="control-value" aria-live="polite"></span>
+                    </label>
+                    <div class="char-detect-row">
+                      <input type="text" id="charInput" maxlength="2" placeholder="A, É, Ç" autocomplete="off">
+                      <button type="button" id="detectCharBtn" class="pill-btn pill-btn--sm" title="Identificar letra com OCR local">Detectar</button>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="cutFilterSelect">Tratamento do recorte</label>
+                    <select id="cutFilterSelect">
+                      <option value="enhanced" selected>Ampliado e suavizado</option>
+                      <option value="original">Foto original</option>
+                      <option value="bw">Preto e branco (recorte limpo)</option>
+                      <option value="duotone">Tinta / Jornal (recorte limpo)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <label class="toggle-row" for="autoOcrToggle">
+                  Identificar letra automaticamente ao recortar (OCR local)
+                  <input type="checkbox" id="autoOcrToggle" checked>
+                </label>
+
+                <div class="control-group">
+                  <label class="control-label" for="originInput">Origem / local (opcional)</label>
+                  <input type="text" id="originInput" maxlength="40" placeholder="Ex: Padaria Central, Rua Augusta">
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="rotateRange">
+                    Endireitar placa
+                    <span class="control-value" id="rotateValue">0°</span>
+                  </label>
+                  <input type="range" id="rotateRange" min="-15" max="15" value="0" step="0.5">
+                </div>
+
+                <div class="crop-actions">
+                  <button type="button" id="saveLetterBtn" class="pill-btn pill-btn--lime">Salvar no alfabeto</button>
+                  <button type="button" id="autoScanSelectionBtn" class="pill-btn" title="Detectar todas as letras dentro da caixa amarela">Escanear seleção</button>
+                  <button type="button" id="autoScanPhotoBtn" class="pill-btn" title="Detectar letras na foto inteira">Escanear foto</button>
+                  <button type="button" id="resetCropBoxBtn" class="pill-btn">Centralizar caixa</button>
+                </div>
+
+                <div id="detectedLettersBar" class="detected-bar hidden" aria-live="polite">
+                  <div class="detected-bar-head">
+                    <strong id="detectedBarTitle">Letras encontradas na foto</strong>
+                    <div class="detected-bar-actions">
+                      <button type="button" id="saveAllDetectedBtn" class="pill-btn pill-btn--lime pill-btn--sm">Salvar todas</button>
+                      <button type="button" id="closeDetectedBtn" class="pill-btn pill-btn--sm">Fechar</button>
+                    </div>
+                  </div>
+                  <div id="detectedList" class="detected-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="street-card glass" aria-labelledby="titulo-alfabeto">
+          <div class="street-card-heading">
+            <h2 id="titulo-alfabeto">Meus recortes</h2>
+            <span id="alphabetStats" class="control-value">0 recortes</span>
+          </div>
+
+          <div id="alphabetGrid" class="alphabet-grid" aria-label="Letras salvas"></div>
+          <p id="alphabetEmptyHint" class="helper-text">
+            Seus recortes aparecem aqui e ficam disponíveis no compositor.
+          </p>
+
+          <div id="variantDrawer" class="variant-drawer hidden" aria-live="polite">
+            <div class="variant-drawer-head">
+              <strong id="variantDrawerTitle">Variantes da letra</strong>
+              <button type="button" id="closeVariantDrawerBtn" class="pill-btn pill-btn--sm">Fechar</button>
+            </div>
+            <div id="variantDrawerList" class="variant-list"></div>
+          </div>
+
+          <div class="alphabet-io">
+            <button type="button" id="exportAlphabetBtn" class="pill-btn">Exportar alfabeto (.json)</button>
+            <button type="button" id="importAlphabetBtn" class="pill-btn">Importar (.json)</button>
+            <input type="file" id="importAlphabetInput" accept="application/json,.json" hidden>
+            <button type="button" id="clearAlphabetBtn" class="pill-btn btn-danger">Limpar meus recortes</button>
+          </div>
+        </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-panel glass glass--blur">
+      <div class="footer-panel__row">
+        <a class="footer-name" href="../../index.html">Henrique Coelho<span>RIQ</span></a>
+        <nav class="footer-panel__contact" aria-label="Contato">
+          <a href="mailto:dev@riq.ia.br">E-mail</a>
+          <a href="https://linkedin.com/in/henrique-coelho01/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://instagram.com/riq74_" target="_blank" rel="noopener">Instagram</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="../tipografia.js"></script>
+</body>
+
+</html>
